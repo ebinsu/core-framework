@@ -30,7 +30,11 @@
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId> core-modules-mysql</artifactId>
+            <artifactId>core-modules-mysql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>core-framework</groupId>
+            <artifactId>core-modules-shared</artifactId>
         </dependency>
     </dependencies>
 </project>

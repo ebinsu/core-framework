@@ -45,6 +45,11 @@
                 <artifactId>core-modules-jpa-hibernate</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-shared</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

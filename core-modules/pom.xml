@@ -18,6 +18,7 @@
         <module>core-modules-jpa</module>
         <module>core-modules-json</module>
         <module>core-modules-mysql</module>
+        <module>core-modules-shared</module>
     </modules>
 
     <build>

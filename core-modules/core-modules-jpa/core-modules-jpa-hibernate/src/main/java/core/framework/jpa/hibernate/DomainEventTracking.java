@@ -2,10 +2,11 @@ package core.framework.jpa.hibernate;
 
 import framework.json.JSON;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.ZonedDateTime;
@@ -14,7 +15,8 @@ import java.util.Objects;
 /**
  * @author ebin
  */
-@MappedSuperclass
+@Entity
+@Table(name = "domain_event_tracking")
 public class DomainEventTracking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
