@@ -9,8 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>core-framework-dependencies</module>
-        <module>core-framework-parent</module>
-        <module>core-framework-modules</module>
+        <module>core-dependencies</module>
+        <module>core-parent</module>
+        <module>core-modules</module>
     </modules>
 </project>
