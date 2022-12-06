@@ -26,7 +26,7 @@ import java.util.List;
  */
 @SpringBootTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-class DDDHibernateTest {
+class HibernateDDDTest {
     @Autowired
     TestDomainRepo testDomainRepo;
     @Autowired

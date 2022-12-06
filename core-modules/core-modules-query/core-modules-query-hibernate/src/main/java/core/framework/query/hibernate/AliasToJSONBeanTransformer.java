@@ -22,7 +22,7 @@ public class AliasToJSONBeanTransformer implements TupleTransformer<Object> {
         for (int i = 0; i < tuple.length; i++) {
             String alias = aliases[i];
             if (alias != null) {
-                result.put(alias, tuple[i]);
+                result.put(alias.toLowerCase(), tuple[i]);
             }
         }
         return JSON.fromJSON(resultClass, JSON.toJSON(result));
