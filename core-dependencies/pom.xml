@@ -20,6 +20,7 @@
         <changelist>-SNAPSHOT</changelist>
 
         <version.mybatis>3.5.11</version.mybatis>
+        <version.bson>4.7.1</version.bson>
 
         <version.flatten-maven-plugin>1.2.2</version.flatten-maven-plugin>
         <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
@@ -63,6 +64,11 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>${version.mybatis}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>bson</artifactId>
+                <version>${version.bson}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

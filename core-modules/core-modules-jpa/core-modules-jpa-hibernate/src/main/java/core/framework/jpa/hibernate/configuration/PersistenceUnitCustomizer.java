@@ -8,7 +8,10 @@ import org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor;
 import org.springframework.util.ClassUtils;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author ebin
@@ -24,6 +27,20 @@ public class PersistenceUnitCustomizer implements PersistenceUnitPostProcessor {
 
     private void scanFinder(MutablePersistenceUnitInfo pui) {
         List<String> managedPackages = pui.getManagedPackages();
+        scanPackages(managedPackages, pui);
+
+        Set<String> packages = pui.getManagedClassNames().stream().map(className -> {
+            int index = className.lastIndexOf(".");
+            if (index != -1) {
+                return className.substring(0, index);
+            } else {
+                return className;
+            }
+        }).collect(Collectors.toSet());
+        scanPackages(packages, pui);
+    }
+
+    private void scanPackages(Collection<String> managedPackages, MutablePersistenceUnitInfo pui) {
         for (String pkg : managedPackages) {
             String pattern = ClassUtils.convertClassNameToResourcePath(pkg) + XML_RESOURCE_PATTERN;
             try {

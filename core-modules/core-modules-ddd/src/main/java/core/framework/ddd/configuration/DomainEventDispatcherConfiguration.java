@@ -13,7 +13,7 @@ public class DomainEventDispatcherConfiguration {
     private static final int DOMAIN_EVENT_TASK_EXECUTOR_AWAIT_TERMINATION_SECONDS = 60 * 2;
 
     @Bean
-    public DomainEventDispatcherInitialize domainEventRegistrationListener() {
+    public DomainEventDispatcherInitialize domainEventDispatcherInitialize() {
         return new DomainEventDispatcherInitialize();
     }
 

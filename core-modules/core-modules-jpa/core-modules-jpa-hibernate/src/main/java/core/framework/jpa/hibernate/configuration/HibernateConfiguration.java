@@ -13,7 +13,7 @@ import java.sql.Connection;
 @Configuration
 public class HibernateConfiguration {
     @Bean
-    public DomainEventTrackingPersistentUnitHolderInitializer domainEventRegistrationListener() {
+    public DomainEventTrackingPersistentUnitHolderInitializer domainEventTrackingPersistentUnitHolderInitializer() {
         return new DomainEventTrackingPersistentUnitHolderInitializer();
     }
 

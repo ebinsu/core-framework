@@ -12,5 +12,6 @@
         <module>core-dependencies</module>
         <module>core-parent</module>
         <module>core-modules</module>
+        <module>core-framework-test-project</module>
     </modules>
 </project>

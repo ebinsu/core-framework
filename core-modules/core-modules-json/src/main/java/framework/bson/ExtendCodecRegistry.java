@@ -1,8 +1,8 @@
 package framework.bson;
 
-import core.framework.bson.codec.BigDecimalCodec;
-import core.framework.bson.codec.LocalDateTimeCodec;
-import core.framework.bson.codec.ZonedDateTimeCodec;
+import framework.bson.codec.BigDecimalCodec;
+import framework.bson.codec.LocalDateTimeCodec;
+import framework.bson.codec.ZonedDateTimeCodec;
 import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
