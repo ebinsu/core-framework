@@ -16,12 +16,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * @author ebin
@@ -95,8 +93,8 @@ class DDDHibernateTest {
         transactionManager.commit(status);
 
         status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-        TestDomain test = testDomainRepo.findByQueryString("TestDomainFinder.selectById", 1);
-        List<TestDomain> tests = testDomainRepo.selectByQueryString("TestDomainFinder.selectById", 1);
+        TestDomain test = testDomainRepo.findByQueryString("TestDomainFinder.selectById", testDomain.getId());
+        List<TestDomain> tests = testDomainRepo.selectByQueryString("TestDomainFinder.selectById", testDomain.getId());
         transactionManager.commit(status);
         Assertions.assertNotNull(test.getId());
         Assertions.assertFalse(tests.isEmpty());
@@ -110,8 +108,8 @@ class DDDHibernateTest {
         transactionManager.commit(status);
 
         status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-        TestDomain test = testDomainRepo.findByQueryString("select * from test where id = ?1", 1);
-        List<TestDomain> tests = testDomainRepo.selectByQueryString("select * from test where id = ?1", 1);
+        TestDomain test = testDomainRepo.findByQueryString("select * from test where id = ?1", testDomain.getId());
+        List<TestDomain> tests = testDomainRepo.selectByQueryString("select * from test where id = ?1", testDomain.getId());
         transactionManager.commit(status);
         Assertions.assertNotNull(test.getId());
         Assertions.assertFalse(tests.isEmpty());

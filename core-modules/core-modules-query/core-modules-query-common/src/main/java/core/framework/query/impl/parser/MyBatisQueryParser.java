@@ -1,5 +1,6 @@
 package core.framework.query.impl.parser;
 
+import core.framework.query.QueryParser;
 import core.framework.query.QueryType;
 import core.framework.shared.utils.ResourcePatternResolverUtil;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
@@ -10,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
-import core.framework.query.QueryParser;
 
 import java.io.IOException;
 import java.util.Collections;
