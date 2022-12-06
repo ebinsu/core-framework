@@ -18,6 +18,9 @@
     <properties>
         <revision>1.0.0${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
+
+        <version.mybatis>3.5.11</version.mybatis>
+
         <version.flatten-maven-plugin>1.2.2</version.flatten-maven-plugin>
         <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
         <version.maven-checkstyle-plugin>3.1.2</version.maven-checkstyle-plugin>
@@ -32,12 +35,12 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId> core-modules-json</artifactId>
+                <artifactId>core-modules-json</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId> core-modules-mysql</artifactId>
+                <artifactId>core-modules-mysql</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -49,6 +52,17 @@
                 <groupId>core-framework</groupId>
                 <artifactId>core-modules-shared</artifactId>
                 <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-query-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${version.mybatis}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

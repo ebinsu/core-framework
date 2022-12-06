@@ -19,6 +19,7 @@
         <module>core-modules-json</module>
         <module>core-modules-mysql</module>
         <module>core-modules-shared</module>
+        <module>core-modules-query</module>
     </modules>
 
     <build>

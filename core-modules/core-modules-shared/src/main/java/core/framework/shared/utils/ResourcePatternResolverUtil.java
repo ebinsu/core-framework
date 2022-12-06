@@ -19,16 +19,13 @@ public final class ResourcePatternResolverUtil {
 
     public static List<Resource> resolve(String locationPattern, Predicate<Resource>... predicate) throws IOException {
         ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
-        try {
-            Resource[] resources = resourceResolver.getResources(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + locationPattern);
-            Predicate<Resource> resourcePredicate;
-            if (predicate != null && predicate.length > 1) {
-                resourcePredicate = predicate[0];
-                return Arrays.stream(resources).filter(resourcePredicate).collect(Collectors.toList());
-            }
-            return Arrays.stream(resources).collect(Collectors.toList());
-        } catch (IOException e) {
-            throw e;
+        Resource[] resources = resourceResolver.getResources(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + locationPattern);
+        Predicate<Resource> resourcePredicate;
+        if (predicate != null && predicate.length > 1) {
+            resourcePredicate = predicate[0];
+            return Arrays.stream(resources).filter(resourcePredicate).collect(Collectors.toList());
         }
+        return Arrays.stream(resources).collect(Collectors.toList());
+
     }
 }
