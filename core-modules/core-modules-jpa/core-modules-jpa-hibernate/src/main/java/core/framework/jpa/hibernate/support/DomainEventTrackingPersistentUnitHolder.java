@@ -6,6 +6,7 @@ import core.framework.jpa.hibernate.AbstractDomainEvent;
 import core.framework.jpa.hibernate.DomainEventTracking;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.springframework.orm.jpa.SharedEntityManagerCreator;
 
 import java.util.Collection;
@@ -31,7 +32,7 @@ public final class DomainEventTrackingPersistentUnitHolder {
 
         entityManagerFactories.forEach(entityManagerFactory -> {
             EntityManager entityManager = SharedEntityManagerCreator.createSharedEntityManager(entityManagerFactory);
-            String persistenceUnitName = (String) entityManagerFactory.getProperties().get("hibernate.ejb.persistenceUnitName");
+            String persistenceUnitName = (String) entityManager.getEntityManagerFactory().unwrap(SessionFactoryImplementor.class).getProperties().get("hibernate.persistenceUnitName");
             this.entityManagers.put(persistenceUnitName, entityManager);
 
             entityManager.getMetamodel().getEntities().forEach(entityType -> {

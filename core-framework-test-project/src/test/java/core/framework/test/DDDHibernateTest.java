@@ -1,9 +1,13 @@
 package core.framework.test;
 
+import core.framework.jpa.hibernate.DomainEventTracking;
 import core.framework.test.hibernate.domain.TestDomain;
 import core.framework.test.hibernate.domain.TestDomainEvent;
 import core.framework.test.hibernate.domain.TestDomainPreEvent;
 import core.framework.test.hibernate.domain.TestDomainRepo;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * @author ebin
@@ -28,6 +33,8 @@ class DDDHibernateTest {
     TestDomainRepo testDomainRepo;
     @Autowired
     PlatformTransactionManager transactionManager;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Test
     @Transactional
@@ -56,7 +63,13 @@ class DDDHibernateTest {
         testDomain.registerEvent(testDomainEvent);
         testDomainRepo.persist(testDomain);
         transactionManager.commit(status);
+
+        status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        Query nativeQuery = entityManager.createNativeQuery("select * from domain_event_tracking", DomainEventTracking.class);
+        List<DomainEventTracking> tracking = nativeQuery.getResultList();
+        transactionManager.commit(status);
         Assertions.assertTrue(testDomainEvent.handled);
+        Assertions.assertFalse(tracking.isEmpty());
     }
 
     @Test
