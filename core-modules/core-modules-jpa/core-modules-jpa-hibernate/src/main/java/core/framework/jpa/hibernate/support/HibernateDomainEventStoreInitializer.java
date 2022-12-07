@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * @author ebin
  */
-public class DomainEventTrackingPersistentUnitHolderInitializer implements ApplicationListener<ContextRefreshedEvent> {
+public class HibernateDomainEventStoreInitializer implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         ApplicationContext applicationContext = event.getApplicationContext();
@@ -19,6 +19,6 @@ public class DomainEventTrackingPersistentUnitHolderInitializer implements Appli
 
     private void initializeDomainEventTrackingPersistentUnitHolder(ApplicationContext applicationContext) {
         Map<String, EntityManagerFactory> entityManagerFactories = applicationContext.getBeansOfType(EntityManagerFactory.class);
-        DomainEventTrackingPersistentUnitHolder.INSTANCE.setManagerFactories(entityManagerFactories.values());
+        HibernateDomainEventStore.INSTANCE.setManagerFactories(entityManagerFactories.values());
     }
 }

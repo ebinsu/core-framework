@@ -2,6 +2,7 @@ package core.framework.jpa.hibernate.support;
 
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
+import core.framework.ddd.DomainEventStore;
 import core.framework.jpa.hibernate.AbstractDomainEvent;
 import core.framework.jpa.hibernate.DomainEventTracking;
 import jakarta.persistence.EntityManager;
@@ -17,13 +18,13 @@ import java.util.Map;
 /**
  * @author ebin
  */
-public final class DomainEventTrackingPersistentUnitHolder {
-    public static final DomainEventTrackingPersistentUnitHolder INSTANCE = new DomainEventTrackingPersistentUnitHolder();
+public final class HibernateDomainEventStore implements DomainEventStore {
+    public static final HibernateDomainEventStore INSTANCE = new HibernateDomainEventStore();
 
     private Map<String, EntityManager> entityManagers;
     private Map<Class<?>, String> aggregateRootPersistenceType;
 
-    private DomainEventTrackingPersistentUnitHolder() {
+    private HibernateDomainEventStore() {
     }
 
     public void setManagerFactories(Collection<EntityManagerFactory> entityManagerFactories) {
@@ -44,6 +45,7 @@ public final class DomainEventTrackingPersistentUnitHolder {
         });
     }
 
+    @Override
     public void persist(AggregateRoot<?> aggregateRoot) {
         List<? extends DomainEvent<?>> domainEvents = aggregateRoot.getDomainEvents();
         if (domainEvents.isEmpty()) {
@@ -60,5 +62,4 @@ public final class DomainEventTrackingPersistentUnitHolder {
             }
         }
     }
-
 }

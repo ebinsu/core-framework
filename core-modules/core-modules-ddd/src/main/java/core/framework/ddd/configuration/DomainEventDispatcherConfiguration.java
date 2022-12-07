@@ -1,6 +1,6 @@
 package core.framework.ddd.configuration;
 
-import core.framework.ddd.support.DomainEventDispatcherInitialize;
+import core.framework.ddd.support.DomainEventBusInitialize;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -13,8 +13,8 @@ public class DomainEventDispatcherConfiguration {
     private static final int DOMAIN_EVENT_TASK_EXECUTOR_AWAIT_TERMINATION_SECONDS = 60 * 2;
 
     @Bean
-    public DomainEventDispatcherInitialize domainEventDispatcherInitialize() {
-        return new DomainEventDispatcherInitialize();
+    public DomainEventBusInitialize domainEventBusInitialize() {
+        return new DomainEventBusInitialize();
     }
 
     @Bean(name = DOMAIN_EVENT_TASK_EXECUTOR_NAME)

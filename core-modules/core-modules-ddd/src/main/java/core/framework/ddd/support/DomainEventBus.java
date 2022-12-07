@@ -19,14 +19,14 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author ebin
  */
-public final class DomainEventDispatcher {
-    public static final DomainEventDispatcher INSTANCE = new DomainEventDispatcher();
-    private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventDispatcher.class);
+public final class DomainEventBus {
+    public static final DomainEventBus INSTANCE = new DomainEventBus();
+    private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventBus.class);
     private static final Map<String, Set<DomainPreEventListener<?>>> PRE_EVENT_LISTENERS = new ConcurrentHashMap<>();
     private static final Map<String, Set<DomainPostEventListener<?>>> POST_EVENT_LISTENERS = new ConcurrentHashMap<>();
     private ThreadPoolTaskExecutor taskExecutor;
 
-    private DomainEventDispatcher() {
+    private DomainEventBus() {
     }
 
     void setTaskExecutor(ThreadPoolTaskExecutor taskExecutor) {

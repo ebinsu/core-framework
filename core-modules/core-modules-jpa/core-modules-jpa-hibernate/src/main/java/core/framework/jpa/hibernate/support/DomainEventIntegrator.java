@@ -20,13 +20,13 @@ public class DomainEventIntegrator implements Integrator {
         SessionFactoryServiceRegistry serviceRegistry = (SessionFactoryServiceRegistry) sessionFactory.getServiceRegistry();
         EventListenerRegistry eventListenerRegistry = serviceRegistry.getService(EventListenerRegistry.class);
 
-        eventListenerRegistry.appendListeners(EventType.POST_INSERT, HibernatePreCommitEventListener.class);
-        eventListenerRegistry.appendListeners(EventType.POST_UPDATE, HibernatePreCommitEventListener.class);
-        eventListenerRegistry.appendListeners(EventType.POST_DELETE, HibernatePreCommitEventListener.class);
+        eventListenerRegistry.appendListeners(EventType.POST_INSERT, HibernatePreCommitEventDispatcher.class);
+        eventListenerRegistry.appendListeners(EventType.POST_UPDATE, HibernatePreCommitEventDispatcher.class);
+        eventListenerRegistry.appendListeners(EventType.POST_DELETE, HibernatePreCommitEventDispatcher.class);
 
-        eventListenerRegistry.appendListeners(EventType.POST_COMMIT_INSERT, HibernatePostCommitEventListener.class);
-        eventListenerRegistry.appendListeners(EventType.POST_COMMIT_UPDATE, HibernatePostCommitEventListener.class);
-        eventListenerRegistry.appendListeners(EventType.POST_COMMIT_DELETE, HibernatePostCommitEventListener.class);
+        eventListenerRegistry.appendListeners(EventType.POST_COMMIT_INSERT, HibernatePostCommitEventDispatcher.class);
+        eventListenerRegistry.appendListeners(EventType.POST_COMMIT_UPDATE, HibernatePostCommitEventDispatcher.class);
+        eventListenerRegistry.appendListeners(EventType.POST_COMMIT_DELETE, HibernatePostCommitEventDispatcher.class);
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author ebin
  */
-public class DomainEventDispatcherInitialize implements ApplicationListener<ContextRefreshedEvent> {
+public class DomainEventBusInitialize implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         ApplicationContext applicationContext = event.getApplicationContext();
@@ -22,12 +22,12 @@ public class DomainEventDispatcherInitialize implements ApplicationListener<Cont
 
     private void initializeDomainEventDispatcher(ApplicationContext applicationContext) {
         ThreadPoolTaskExecutor taskExecutor = applicationContext.getBean(DomainEventDispatcherConfiguration.DOMAIN_EVENT_TASK_EXECUTOR_NAME, ThreadPoolTaskExecutor.class);
-        DomainEventDispatcher.INSTANCE.setTaskExecutor(taskExecutor);
+        DomainEventBus.INSTANCE.setTaskExecutor(taskExecutor);
     }
 
     @SuppressWarnings("rawtypes")
     private void registerEventListener(ApplicationContext applicationContext) {
         Map<String, DomainEventListener> listeners = applicationContext.getBeansOfType(DomainEventListener.class);
-        listeners.forEach((k, v) -> DomainEventDispatcher.INSTANCE.registerEventListener(v));
+        listeners.forEach((k, v) -> DomainEventBus.INSTANCE.registerEventListener(v));
     }
 }

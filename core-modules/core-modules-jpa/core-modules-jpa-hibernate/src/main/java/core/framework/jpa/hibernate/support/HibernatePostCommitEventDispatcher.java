@@ -2,7 +2,7 @@ package core.framework.jpa.hibernate.support;
 
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
-import core.framework.ddd.support.DomainEventDispatcher;
+import core.framework.ddd.support.DomainEventBus;
 import org.hibernate.event.spi.PostCommitDeleteEventListener;
 import org.hibernate.event.spi.PostCommitInsertEventListener;
 import org.hibernate.event.spi.PostCommitUpdateEventListener;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author ebin
  */
-public class HibernatePostCommitEventListener implements PostCommitInsertEventListener, PostCommitUpdateEventListener, PostCommitDeleteEventListener {
+public class HibernatePostCommitEventDispatcher implements PostCommitInsertEventListener, PostCommitUpdateEventListener, PostCommitDeleteEventListener {
     @Override
     public void onPostDeleteCommitFailed(PostDeleteEvent event) {
         cleanDomainEvent(event.getEntity());
@@ -56,18 +56,16 @@ public class HibernatePostCommitEventListener implements PostCommitInsertEventLi
     }
 
     private void riseDomainEvent(Object entity) {
-        if (entity instanceof AggregateRoot) {
-            AggregateRoot<?> aggregateRoot = (AggregateRoot<?>) entity;
+        if (entity instanceof AggregateRoot<?> aggregateRoot) {
             List<? extends DomainEvent<?>> domainEvents = aggregateRoot.getDomainEvents();
             for (DomainEvent<?> domainEvent : domainEvents) {
-                DomainEventDispatcher.INSTANCE.publishPostCommitEvent(domainEvent);
+                DomainEventBus.INSTANCE.publishPostCommitEvent(domainEvent);
             }
         }
     }
 
     private void cleanDomainEvent(Object entity) {
-        if (entity instanceof AggregateRoot) {
-            AggregateRoot<?> aggregateRoot = (AggregateRoot<?>) entity;
+        if (entity instanceof AggregateRoot<?> aggregateRoot) {
             aggregateRoot.clearDomainEvents();
         }
     }

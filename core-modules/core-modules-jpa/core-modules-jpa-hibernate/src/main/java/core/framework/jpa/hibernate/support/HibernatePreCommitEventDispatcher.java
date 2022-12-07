@@ -2,7 +2,7 @@ package core.framework.jpa.hibernate.support;
 
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
-import core.framework.ddd.support.DomainEventDispatcher;
+import core.framework.ddd.support.DomainEventBus;
 import org.hibernate.event.spi.PostDeleteEvent;
 import org.hibernate.event.spi.PostDeleteEventListener;
 import org.hibernate.event.spi.PostInsertEvent;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author ebin
  */
-public class HibernatePreCommitEventListener implements PostInsertEventListener, PostUpdateEventListener, PostDeleteEventListener {
+public class HibernatePreCommitEventDispatcher implements PostInsertEventListener, PostUpdateEventListener, PostDeleteEventListener {
 
     @Override
     public void onPostDelete(PostDeleteEvent event) {
@@ -39,9 +39,8 @@ public class HibernatePreCommitEventListener implements PostInsertEventListener,
     }
 
     private void handleEntity(Object entity) {
-        if (entity instanceof AggregateRoot) {
-            AggregateRoot<?> aggregateRoot = (AggregateRoot<?>) entity;
-            DomainEventTrackingPersistentUnitHolder.INSTANCE.persist(aggregateRoot);
+        if (entity instanceof AggregateRoot<?> aggregateRoot) {
+            HibernateDomainEventStore.INSTANCE.persist(aggregateRoot);
             riseDomainEvent(aggregateRoot);
         }
     }
@@ -49,7 +48,7 @@ public class HibernatePreCommitEventListener implements PostInsertEventListener,
     private void riseDomainEvent(AggregateRoot<?> aggregateRoot) {
         List<? extends DomainEvent<?>> domainEvents = aggregateRoot.getDomainEvents();
         for (DomainEvent<?> domainEvent : domainEvents) {
-            DomainEventDispatcher.INSTANCE.publishPreCommitEvent(domainEvent);
+            DomainEventBus.INSTANCE.publishPreCommitEvent(domainEvent);
         }
     }
 

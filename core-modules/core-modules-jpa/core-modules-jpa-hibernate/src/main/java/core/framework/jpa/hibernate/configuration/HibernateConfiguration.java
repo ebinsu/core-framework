@@ -1,6 +1,6 @@
 package core.framework.jpa.hibernate.configuration;
 
-import core.framework.jpa.hibernate.support.DomainEventTrackingPersistentUnitHolderInitializer;
+import core.framework.jpa.hibernate.support.HibernateDomainEventStoreInitializer;
 import jakarta.persistence.ValidationMode;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.EntityManagerFactoryBuilderCustomizer;
@@ -13,8 +13,8 @@ import java.sql.Connection;
 @Configuration
 public class HibernateConfiguration {
     @Bean
-    public DomainEventTrackingPersistentUnitHolderInitializer domainEventTrackingPersistentUnitHolderInitializer() {
-        return new DomainEventTrackingPersistentUnitHolderInitializer();
+    public HibernateDomainEventStoreInitializer hibernateDomainEventStoreInitializer() {
+        return new HibernateDomainEventStoreInitializer();
     }
 
     @Bean
