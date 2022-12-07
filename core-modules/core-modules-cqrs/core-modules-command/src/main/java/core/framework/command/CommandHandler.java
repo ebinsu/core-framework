@@ -1,0 +1,8 @@
+package core.framework.command;
+
+/**
+ * @author ebin
+ */
+public interface CommandHandler<C extends Command<R>, R> {
+    R handle(C command);
+}

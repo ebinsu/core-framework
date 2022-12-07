@@ -17,9 +17,6 @@ public class QueryBusInitialize implements ApplicationListener<ContextRefreshedE
         ApplicationContext applicationContext = event.getApplicationContext();
         QueryBus queryBus = applicationContext.getBean(QueryBus.class);
         Map<String, QueryHandler> handlers = applicationContext.getBeansOfType(QueryHandler.class);
-        handlers.values().forEach(handler -> {
-
-            queryBus.register(handler);
-        });
+        handlers.values().forEach(queryBus::register);
     }
 }
