@@ -1,0 +1,2 @@
+core.framework.kafka.configuration.KafkaConfiguration
+core.framework.kafka.configuration.DispatcherKafkaListenerConfiguration

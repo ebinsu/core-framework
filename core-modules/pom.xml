@@ -20,6 +20,7 @@
         <module>core-modules-mysql</module>
         <module>core-modules-shared</module>
         <module>core-modules-cqrs</module>
+        <module>core-modules-kafka</module>
     </modules>
 
     <build>
