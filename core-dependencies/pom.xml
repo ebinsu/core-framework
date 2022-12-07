@@ -56,7 +56,7 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-query-common</artifactId>
+                <artifactId>core-modules-query</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
