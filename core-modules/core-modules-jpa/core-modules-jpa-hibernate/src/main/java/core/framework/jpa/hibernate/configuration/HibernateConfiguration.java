@@ -23,6 +23,7 @@ public class HibernateConfiguration {
             prop.putIfAbsent(AvailableSettings.JAKARTA_VALIDATION_MODE, ValidationMode.AUTO);
             prop.putIfAbsent(AvailableSettings.ISOLATION, Connection.TRANSACTION_READ_COMMITTED);
             prop.putIfAbsent(AvailableSettings.STATEMENT_FETCH_SIZE, 64);
+            prop.putIfAbsent(AvailableSettings.SHOW_SQL, true);
         };
     }
 
