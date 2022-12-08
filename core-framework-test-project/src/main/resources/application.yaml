@@ -3,3 +3,9 @@ spring:
     banner-mode: "off"
   application:
     name: test
+  kafka:
+    dispatcher:
+      enable: true
+      topics: # Topic to subscribe to
+        - tp1
+      concurrency: 1  # How many consumers to enable

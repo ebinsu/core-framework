@@ -98,8 +98,16 @@ public class ExtendKafkaListenerAnnotationBeanPostProcessor
         if (bean instanceof MessageHandler) {
             KafkaMessageHandler ann = AnnotatedElementUtils.findMergedAnnotation(targetClass, KafkaMessageHandler.class);
             if (ann != null) {
-                Arrays.stream(bean.getClass().getGenericInterfaces())
-                        .filter(f -> ((ParameterizedType) bean.getClass().getGenericInterfaces()[0]).getRawType() == MessageHandler.class)
+                Type genericSuperclass = bean.getClass().getGenericSuperclass();
+                Type[] interfaces;
+                if (genericSuperclass instanceof Class<?>
+                        && MessageHandler.class.isAssignableFrom((Class<?>) genericSuperclass)) {
+                    interfaces = ((Class<?>) genericSuperclass).getGenericInterfaces();
+                } else {
+                    interfaces = bean.getClass().getGenericInterfaces();
+                }
+                Arrays.stream(interfaces)
+                        .filter(type -> MessageHandler.class == ((ParameterizedType) type).getRawType())
                         .findFirst()
                         .ifPresent(m -> {
                             Type actualTypeArgument = ((ParameterizedType) m).getActualTypeArguments()[0];

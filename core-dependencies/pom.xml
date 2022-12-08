@@ -69,6 +69,12 @@
                 <artifactId>core-modules-command</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-kafka</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.mybatis</groupId>
