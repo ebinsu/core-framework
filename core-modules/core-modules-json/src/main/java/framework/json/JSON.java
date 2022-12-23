@@ -33,6 +33,14 @@ public final class JSON {
         }
     }
 
+    public static <T> T fromJSON(Class<T> instanceClass, byte[] json) {
+        try {
+            return OBJECT_MAPPER.readValue(json, instanceClass);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
     public static String toJSON(Object instance) {
         try {
             return OBJECT_MAPPER.writeValueAsString(instance);
