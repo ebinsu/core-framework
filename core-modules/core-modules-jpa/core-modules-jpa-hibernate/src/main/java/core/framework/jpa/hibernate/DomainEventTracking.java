@@ -1,6 +1,6 @@
 package core.framework.jpa.hibernate;
 
-import framework.json.JSON;
+import core.framework.json.JSON;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

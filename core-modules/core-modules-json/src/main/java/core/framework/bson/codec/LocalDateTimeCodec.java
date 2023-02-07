@@ -1,4 +1,4 @@
-package framework.bson.codec;
+package core.framework.bson.codec;
 
 import org.bson.BsonReader;
 import org.bson.BsonType;
@@ -10,27 +10,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 /**
  * @author ebin
  */
-public class ZonedDateTimeCodec implements Codec<ZonedDateTime> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZonedDateTimeCodec.class);
+public class LocalDateTimeCodec implements Codec<LocalDateTime> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocalDateTimeCodec.class);
 
-    static void write(BsonWriter writer, ZonedDateTime value) {
+    static void write(BsonWriter writer, LocalDateTime value) {
         if (value == null) writer.writeNull();
-        else writer.writeDateTime(value.toInstant().toEpochMilli());
+        else writer.writeDateTime(value.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
     }
 
-    static ZonedDateTime read(BsonReader reader, String field) {
+    static LocalDateTime read(BsonReader reader, String field) {
         BsonType currentType = reader.getCurrentBsonType();
         if (currentType == BsonType.NULL) {
             reader.readNull();
             return null;
         } else if (currentType == BsonType.DATE_TIME) {
-            return ZonedDateTime.ofInstant(Instant.ofEpochMilli(reader.readDateTime()), ZoneId.systemDefault());
+            return LocalDateTime.ofInstant(Instant.ofEpochMilli(reader.readDateTime()), ZoneId.systemDefault());
         } else {
             LOGGER.warn("unexpected field type, field={}, type={}", field, currentType);
             reader.skipValue();
@@ -39,17 +39,17 @@ public class ZonedDateTimeCodec implements Codec<ZonedDateTime> {
     }
 
     @Override
-    public void encode(BsonWriter writer, ZonedDateTime value, EncoderContext context) {
+    public void encode(BsonWriter writer, LocalDateTime value, EncoderContext context) {
         write(writer, value);
     }
 
     @Override
-    public ZonedDateTime decode(BsonReader reader, DecoderContext context) {
+    public LocalDateTime decode(BsonReader reader, DecoderContext context) {
         return read(reader, reader.getCurrentName());
     }
 
     @Override
-    public Class<ZonedDateTime> getEncoderClass() {
-        return ZonedDateTime.class;
+    public Class<LocalDateTime> getEncoderClass() {
+        return LocalDateTime.class;
     }
 }

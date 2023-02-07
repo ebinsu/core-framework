@@ -6,7 +6,7 @@ import core.framework.web.exception.support.BindExceptionHandler;
 import core.framework.web.exception.support.ConstraintViolationExceptionHandler;
 import core.framework.web.exception.support.ExceptionHandlerCustomizer;
 import core.framework.web.mvc.RequestResponseBodyValidProcessorAdapter;
-import framework.json.JSONMapper;
+import core.framework.json.JSONMapper;
 import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;

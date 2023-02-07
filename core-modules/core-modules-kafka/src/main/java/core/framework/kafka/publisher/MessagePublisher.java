@@ -1,6 +1,6 @@
 package core.framework.kafka.publisher;
 
-import framework.json.JSON;
+import core.framework.json.JSON;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;

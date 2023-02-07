@@ -1,6 +1,6 @@
 package core.framework.test.undertow;
 
-import framework.json.JSON;
+import core.framework.json.JSON;
 import io.undertow.connector.PooledByteBuffer;
 import io.undertow.security.api.AuthenticationMechanism;
 import io.undertow.security.api.AuthenticationMechanismFactory;
@@ -68,7 +68,6 @@ public class AJAXAuthenticationMechanism implements AuthenticationMechanism {
                     return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
                 } else {
                     securityContext.authenticationComplete(account, AJAXAuthenticationMechanism.NAME, true);
-                    exchange.endExchange();
                     return AuthenticationMechanismOutcome.AUTHENTICATED;
                 }
             } catch (Throwable e) {

@@ -1,6 +1,6 @@
 package core.framework.query.hibernate;
 
-import framework.json.JSON;
+import core.framework.json.JSON;
 import org.hibernate.internal.util.collections.CollectionHelper;
 import org.hibernate.query.TupleTransformer;
 

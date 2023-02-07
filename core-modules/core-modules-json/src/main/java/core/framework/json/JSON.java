@@ -1,12 +1,10 @@
-package framework.json;
+package core.framework.json;
 
 import com.fasterxml.jackson.databind.JavaType;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.lang.reflect.Type;
-
-import static framework.json.JSONMapper.OBJECT_MAPPER;
 
 
 /**
@@ -18,8 +16,8 @@ public final class JSON {
 
     public static <T> T fromJSON(Type instanceType, String json) {
         try {
-            JavaType javaType = OBJECT_MAPPER.getTypeFactory().constructType(instanceType);
-            return OBJECT_MAPPER.readValue(json, javaType);
+            JavaType javaType = JSONMapper.OBJECT_MAPPER.getTypeFactory().constructType(instanceType);
+            return JSONMapper.OBJECT_MAPPER.readValue(json, javaType);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -27,7 +25,7 @@ public final class JSON {
 
     public static <T> T fromJSON(Class<T> instanceClass, String json) {
         try {
-            return OBJECT_MAPPER.readValue(json, instanceClass);
+            return JSONMapper.OBJECT_MAPPER.readValue(json, instanceClass);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -35,7 +33,7 @@ public final class JSON {
 
     public static <T> T fromJSON(Class<T> instanceClass, byte[] json) {
         try {
-            return OBJECT_MAPPER.readValue(json, instanceClass);
+            return JSONMapper.OBJECT_MAPPER.readValue(json, instanceClass);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -43,7 +41,7 @@ public final class JSON {
 
     public static String toJSON(Object instance) {
         try {
-            return OBJECT_MAPPER.writeValueAsString(instance);
+            return JSONMapper.OBJECT_MAPPER.writeValueAsString(instance);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

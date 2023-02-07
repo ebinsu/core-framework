@@ -1,7 +1,7 @@
-package framework.json;
+package core.framework.json;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import framework.json.serializer.ObjectIdJsonSerializer;
+import core.framework.json.serializer.ObjectIdJsonSerializer;
 import org.bson.types.ObjectId;
 
 /**

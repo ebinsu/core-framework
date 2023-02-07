@@ -1,4 +1,4 @@
-package framework.json.serializer;
+package core.framework.json.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

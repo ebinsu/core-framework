@@ -1,6 +1,6 @@
 package core.framework.kafka.consumer;
 
-import framework.json.JSONMapper;
+import core.framework.json.JSONMapper;
 import jakarta.validation.Validator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

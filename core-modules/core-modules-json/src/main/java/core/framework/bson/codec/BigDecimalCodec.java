@@ -1,4 +1,4 @@
-package framework.bson.codec;
+package core.framework.bson.codec;
 
 import org.bson.BsonReader;
 import org.bson.BsonType;

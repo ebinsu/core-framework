@@ -1,4 +1,4 @@
-package framework.json;
+package core.framework.json;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 import static java.time.format.DateTimeFormatter.ISO_INSTANT;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static java.time.temporal.ChronoField.HOUR_OF_DAY;
@@ -39,7 +40,7 @@ public final class JSONMapper {
         return JsonMapper.builder()
                 .addModule(timeModule())
                 .addModule(new ExtendModule())
-                .visibility(new VisibilityChecker.Std(ANY, ANY, ANY, ANY, ANY))
+                .visibility(new VisibilityChecker.Std(NONE, NONE, NONE, NONE, ANY))
                 .enable(MapperFeature.PROPAGATE_TRANSIENT_MARKER)
                 .propertyNamingStrategy(new PropertyNamingStrategies.SnakeCaseStrategy())
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)

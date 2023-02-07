@@ -32,6 +32,7 @@ public class AJAXAuthenticationHttpHandler implements HttpHandler {
                 HttpServletRequestImpl originalRequest = servletRequestContext.getOriginalRequest();
                 HttpServletResponseImpl originalResponse = servletRequestContext.getOriginalResponse();
                 originalRequest.authenticate(originalResponse);
+                exchange.endExchange();
                 return;
             }
         }
