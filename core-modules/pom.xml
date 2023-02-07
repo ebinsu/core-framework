@@ -22,6 +22,7 @@
         <module>core-modules-cqrs</module>
         <module>core-modules-kafka</module>
         <module>core-modules-web</module>
+        <module>core-modules-security</module>
     </modules>
 
     <build>

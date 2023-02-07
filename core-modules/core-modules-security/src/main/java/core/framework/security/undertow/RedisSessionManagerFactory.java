@@ -1,4 +1,4 @@
-package core.framework.test.undertow;
+package core.framework.security.undertow;
 
 import io.undertow.server.session.SessionManager;
 import io.undertow.servlet.api.Deployment;

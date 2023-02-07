@@ -1,4 +1,4 @@
-package core.framework.test.undertow;
+package core.framework.security.undertow;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import core.framework.json.JSON;
@@ -27,7 +27,7 @@ import java.util.Set;
  * @author ebin
  */
 public class RedisSessionManager implements SessionManager {
-    private final AttachmentKey<RedisSessionManager.SessionImpl> NEW_SESSION = AttachmentKey.create(RedisSessionManager.SessionImpl.class);
+    private final AttachmentKey<SessionImpl> NEW_SESSION = AttachmentKey.create(SessionImpl.class);
 
     private final String deploymentName;
     private final SessionIdGenerator sessionIdGenerator;
@@ -252,7 +252,7 @@ public class RedisSessionManager implements SessionManager {
 
         @Override
         public String changeSessionId(HttpServerExchange exchange, SessionConfig config) {
-            synchronized (RedisSessionManager.SessionImpl.this) {
+            synchronized (SessionImpl.this) {
                 final String oldId = sessionId;
                 if (exchange != null) {
                     config.clearSession(exchange, oldId);
