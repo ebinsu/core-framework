@@ -16,7 +16,7 @@ import java.io.OutputStream;
 /**
  * @author ebin
  */
-@Mojo(name = "ddd-checkstyle-file", defaultPhase = LifecyclePhase.VALIDATE, threadSafe = true)
+@Mojo(name = "core-checkstyle-file", defaultPhase = LifecyclePhase.VALIDATE, threadSafe = true)
 public class CheckStyleMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", readonly = true, required = true)
     private MavenProject project;

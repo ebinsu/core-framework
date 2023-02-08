@@ -9,6 +9,7 @@
     <artifactId>tools</artifactId>
 
     <modules>
-        <module>ddd-checkstyle-plugin</module>
+        <module>core-checkstyle-plugin</module>
+        <module>extending-checkstyle</module>
     </modules>
 </project>
