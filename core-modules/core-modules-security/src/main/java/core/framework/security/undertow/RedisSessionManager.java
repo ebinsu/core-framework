@@ -3,6 +3,7 @@ package core.framework.security.undertow;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import core.framework.json.JSON;
 import io.undertow.UndertowLogger;
+import io.undertow.security.api.AuthenticatedSessionManager;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.session.SecureRandomSessionIdGenerator;
 import io.undertow.server.session.Session;
@@ -12,6 +13,7 @@ import io.undertow.server.session.SessionListener;
 import io.undertow.server.session.SessionListeners;
 import io.undertow.server.session.SessionManager;
 import io.undertow.server.session.SessionManagerStatistics;
+import io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler;
 import io.undertow.util.AttachmentKey;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -94,6 +96,14 @@ public class RedisSessionManager implements SessionManager {
             return null;
         }
         SessionImpl session = JSON.fromJSON(SessionImpl.class, sessionJSON);
+        Object authenticatedSession = session.attributes.get(CachedAuthenticatedSessionHandler.ATTRIBUTE_NAME);
+        if (authenticatedSession instanceof Map<?, ?> mapSession) {
+            Map<String, Object> account = (Map<String, Object>) mapSession.get("account");
+            String mechanism = (String) mapSession.get("mechanism");
+            String name = (String) account.get("name");
+            Set<String> role = (Set<String>) account.get("role");
+            session.attributes.put(CachedAuthenticatedSessionHandler.ATTRIBUTE_NAME, new AuthenticatedSessionManager.AuthenticatedSession(new DefaultAccount(name, role), mechanism));
+        }
         session.redisSessionManager = this;
         session.sessionCookieConfig = sessionConfig;
         return session;

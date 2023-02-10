@@ -1,6 +1,6 @@
 package core.framework.security.configuration;
 
-import core.framework.security.authorization.AuthorizationContextInitializer;
+import core.framework.security.authorization.SecurityContextInitializer;
 import core.framework.security.filter.AJAXAuthenticationFilterChain;
 import core.framework.security.filter.FilterChainProxy;
 import core.framework.security.filter.LogoutFilterChain;
@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
  * @author ebin
  */
 @Configuration
-public class AuthorizationConfiguration {
+public class SecurityConfiguration {
     @Bean
-    public AuthorizationContextInitializer authorizationContextInitializer() {
-        return new AuthorizationContextInitializer();
+    public SecurityContextInitializer securityContextInitializer() {
+        return new SecurityContextInitializer();
     }
 
     @Bean
