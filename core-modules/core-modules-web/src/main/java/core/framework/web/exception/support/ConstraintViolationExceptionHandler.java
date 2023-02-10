@@ -3,7 +3,6 @@ package core.framework.web.exception.support;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolationException;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
  */
 public class ConstraintViolationExceptionHandler implements ExceptionHandler {
     @Override
-    public Map<String, Object> handleHeaderAndMessage(HttpServletResponse response, Exception ex) {
+    public ExceptionResponse handleHeaderAndMessage(HttpServletResponse response, Exception ex) {
         String errorMsg = ((ConstraintViolationException) ex).getConstraintViolations().stream().map(constraintViolation -> {
             return constraintViolation.getPropertyPath().toString() + constraintViolation.getMessage();
         }).collect(Collectors.joining(","));

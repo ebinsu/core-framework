@@ -32,6 +32,11 @@
         <dependencies>
             <dependency>
                 <groupId>core-framework</groupId>
+                <artifactId>core-modules-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
                 <artifactId>core-modules-ddd</artifactId>
                 <version>${revision}</version>
             </dependency>

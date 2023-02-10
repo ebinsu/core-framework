@@ -4,19 +4,16 @@ import io.undertow.server.session.SessionManager;
 import io.undertow.servlet.api.Deployment;
 import io.undertow.servlet.api.SessionManagerFactory;
 import io.undertow.servlet.spec.SessionCookieConfigImpl;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  * @author ebin
  */
 public class RedisSessionManagerFactory implements SessionManagerFactory {
-    private final String redisHost;
-    private final int redisPort;
-    private final int redisDB;
+    private final StringRedisTemplate redisTemplate;
 
-    public RedisSessionManagerFactory(String redisHost, int redisPort, int redisDB) {
-        this.redisHost = redisHost;
-        this.redisPort = redisPort;
-        this.redisDB = redisDB;
+    public RedisSessionManagerFactory(StringRedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -24,8 +21,6 @@ public class RedisSessionManagerFactory implements SessionManagerFactory {
         return new RedisSessionManager(
                 deployment.getDeploymentInfo().getDeploymentName(),
                 new SessionCookieConfigImpl(deployment.getServletContext()),
-                redisHost,
-                redisPort,
-                redisDB);
+                redisTemplate);
     }
 }

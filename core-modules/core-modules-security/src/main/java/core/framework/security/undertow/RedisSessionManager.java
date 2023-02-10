@@ -2,10 +2,6 @@ package core.framework.security.undertow;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import core.framework.json.JSON;
-import io.lettuce.core.RedisClient;
-import io.lettuce.core.RedisURI;
-import io.lettuce.core.api.StatefulRedisConnection;
-import io.lettuce.core.api.sync.RedisCommands;
 import io.undertow.UndertowLogger;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.session.SecureRandomSessionIdGenerator;
@@ -17,11 +13,13 @@ import io.undertow.server.session.SessionListeners;
 import io.undertow.server.session.SessionManager;
 import io.undertow.server.session.SessionManagerStatistics;
 import io.undertow.util.AttachmentKey;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ebin
@@ -35,19 +33,13 @@ public class RedisSessionManager implements SessionManager {
 
     private int defaultSessionTimeout = 30 * 60;
     private final SessionListeners sessionListeners = new SessionListeners();
-    private RedisURI redisURI;
-    private RedisClient redisClient;
-    private StatefulRedisConnection<String, String> connection;
+    private final StringRedisTemplate redisTemplate;
 
-    public RedisSessionManager(String deploymentName, SessionConfig sessionCookieConfig, String redisHost, int redisPort, int redisDB) {
-        this(deploymentName, new SecureRandomSessionIdGenerator(), sessionCookieConfig);
-        redisURI = RedisURI.Builder.redis(redisHost, redisPort).withDatabase(redisDB).build();
-    }
-
-    private RedisSessionManager(String deploymentName, SessionIdGenerator sessionIdGenerator, SessionConfig sessionConfig) {
+    public RedisSessionManager(String deploymentName, SessionConfig sessionCookieConfig, StringRedisTemplate redisTemplate) {
         this.deploymentName = deploymentName;
-        this.sessionIdGenerator = sessionIdGenerator;
-        this.sessionConfig = sessionConfig;
+        this.sessionIdGenerator = new SecureRandomSessionIdGenerator();
+        this.sessionConfig = sessionCookieConfig;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -57,15 +49,10 @@ public class RedisSessionManager implements SessionManager {
 
     @Override
     public void start() {
-        // If you don't use any transactions/blocking commands, then there is almost no reason for connection pooling.
-        redisClient = RedisClient.create(redisURI);
-        connection = redisClient.connect();
     }
 
     @Override
     public void stop() {
-        connection.close();
-        redisClient.shutdown();
     }
 
     @Override
@@ -102,8 +89,7 @@ public class RedisSessionManager implements SessionManager {
         if (sessionId == null) {
             return null;
         }
-        RedisCommands<String, String> syncCommands = connection.sync();
-        String sessionJSON = syncCommands.get(sessionId);
+        String sessionJSON = redisTemplate.opsForValue().get(sessionId);
         if (sessionJSON == null) {
             return null;
         }
@@ -154,13 +140,16 @@ public class RedisSessionManager implements SessionManager {
     protected static class SessionImpl implements Session {
         private String sessionId;
         private final Map<String, Object> attributes = new HashMap<>();
-        private final long creationTime;
+        private long creationTime;
         private volatile int maxInactiveInterval;
 
         @JsonIgnore
         private RedisSessionManager redisSessionManager;
         @JsonIgnore
         private SessionConfig sessionCookieConfig;
+
+        public SessionImpl() {
+        }
 
         public SessionImpl(String sessionId, int maxInactiveInterval, RedisSessionManager redisSessionManager, SessionConfig sessionCookieConfig) {
             this.sessionId = sessionId;
@@ -169,8 +158,7 @@ public class RedisSessionManager implements SessionManager {
             this.sessionCookieConfig = sessionCookieConfig;
             this.creationTime = ZonedDateTime.now().toEpochSecond();
 
-            RedisCommands<String, String> syncCommands = this.redisSessionManager.connection.sync();
-            syncCommands.set(sessionId, JSON.toJSON(this));
+            this.redisSessionManager.redisTemplate.opsForValue().set(sessionId, JSON.toJSON(this));
             this.bumpTimeout();
         }
 
@@ -197,9 +185,7 @@ public class RedisSessionManager implements SessionManager {
         @Override
         public void setMaxInactiveInterval(int interval) {
             this.maxInactiveInterval = interval;
-            RedisCommands<String, String> syncCommands = this.redisSessionManager.connection.sync();
-            syncCommands.set(sessionId, JSON.toJSON(this));
-            this.bumpTimeout();
+            this.redisSessionManager.redisTemplate.opsForValue().set(sessionId, JSON.toJSON(this), maxInactiveInterval, TimeUnit.SECONDS);
         }
 
         @Override
@@ -220,8 +206,7 @@ public class RedisSessionManager implements SessionManager {
         @Override
         public Object setAttribute(String name, Object value) {
             Object put = attributes.put(name, value);
-            RedisCommands<String, String> syncCommands = this.redisSessionManager.connection.sync();
-            syncCommands.set(sessionId, JSON.toJSON(this));
+            this.redisSessionManager.redisTemplate.opsForValue().set(sessionId, JSON.toJSON(this), maxInactiveInterval, TimeUnit.SECONDS);
             this.redisSessionManager.sessionListeners.attributeAdded(this, name, value);
             return put;
         }
@@ -229,16 +214,14 @@ public class RedisSessionManager implements SessionManager {
         @Override
         public Object removeAttribute(String name) {
             Object oldValue = attributes.remove(name);
-            RedisCommands<String, String> syncCommands = this.redisSessionManager.connection.sync();
-            syncCommands.set(sessionId, JSON.toJSON(this));
+            this.redisSessionManager.redisTemplate.opsForValue().set(sessionId, JSON.toJSON(this), maxInactiveInterval, TimeUnit.SECONDS);
             this.redisSessionManager.sessionListeners.attributeRemoved(this, name, oldValue);
             return oldValue;
         }
 
         @Override
         public void invalidate(HttpServerExchange exchange) {
-            RedisCommands<String, String> syncCommands = this.redisSessionManager.connection.sync();
-            syncCommands.del(sessionId);
+            this.redisSessionManager.redisTemplate.delete(sessionId);
             if (exchange != null) {
                 sessionCookieConfig.clearSession(exchange, this.getId());
             }
@@ -262,8 +245,7 @@ public class RedisSessionManager implements SessionManager {
                 String newId = redisSessionManager.sessionIdGenerator.createSessionId();
                 this.sessionId = newId;
 
-                RedisCommands<String, String> syncCommands = redisSessionManager.connection.sync();
-                syncCommands.rename(oldId, newId);
+                this.redisSessionManager.redisTemplate.rename(oldId, newId);
 
                 redisSessionManager.sessionListeners.sessionIdChanged(this, oldId);
                 UndertowLogger.SESSION_LOGGER.debugf("Changing session id %s to %s", oldId, newId);
@@ -272,8 +254,7 @@ public class RedisSessionManager implements SessionManager {
         }
 
         private void bumpTimeout() {
-            RedisCommands<String, String> syncCommands = redisSessionManager.connection.sync();
-            syncCommands.expire(this.getId(), maxInactiveInterval);
+            this.redisSessionManager.redisTemplate.opsForValue().getAndExpire(this.getId(), maxInactiveInterval, TimeUnit.SECONDS);
         }
     }
 }

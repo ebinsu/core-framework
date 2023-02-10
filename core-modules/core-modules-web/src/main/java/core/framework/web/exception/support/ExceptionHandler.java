@@ -2,24 +2,18 @@ package core.framework.web.exception.support;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * @author ebin
  */
 public interface ExceptionHandler {
-    String ERROR_CODE = "error_code";
-    String MESSAGE = "message";
-
-    Map<String, Object> handleHeaderAndMessage(HttpServletResponse response, Exception ex);
+    ExceptionResponse handleHeaderAndMessage(HttpServletResponse response, Exception ex);
 
     boolean support(Exception ex);
 
-    default Map<String, Object> responseMessage(String message, String errorCode) {
-        Map<String, Object> responseMessage = new HashMap<>(2);
-        responseMessage.put(MESSAGE, message);
-        responseMessage.put(ERROR_CODE, errorCode);
-        return responseMessage;
+    default ExceptionResponse responseMessage(String message, String errorCode) {
+        return new ExceptionResponse(errorCode, message);
     }
 }

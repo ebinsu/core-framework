@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public class BindExceptionHandler implements ExceptionHandler {
     @Override
-    public Map<String, Object> handleHeaderAndMessage(HttpServletResponse response, Exception ex) {
+    public ExceptionResponse handleHeaderAndMessage(HttpServletResponse response, Exception ex) {
         StringBuilder errorMsg = new StringBuilder();
         Map<String, List<FieldError>> errorMap = ((BindException) ex).getFieldErrors().stream().collect(Collectors.groupingBy(k -> k.getField()));
         errorMap.forEach((filed, errors) -> errorMsg

@@ -3,14 +3,12 @@ package core.framework.web.exception.support;
 import core.framework.web.exception.BaseRuntimeException;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.Map;
-
 /**
  * @author ebin
  */
 public class BaseRuntimeExceptionHandler implements ExceptionHandler {
     @Override
-    public Map<String, Object> handleHeaderAndMessage(HttpServletResponse response, Exception ex) {
+    public ExceptionResponse handleHeaderAndMessage(HttpServletResponse response, Exception ex) {
         BaseRuntimeException exception = (BaseRuntimeException) ex;
         response.setHeader("error_code", exception.errorCode());
         return responseMessage(ex.getMessage(), exception.errorCode());
