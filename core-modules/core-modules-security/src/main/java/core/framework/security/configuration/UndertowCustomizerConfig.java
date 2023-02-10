@@ -1,5 +1,6 @@
 package core.framework.security.configuration;
 
+import core.framework.security.undertow.SessionRedisTemplateSupplier;
 import core.framework.security.undertow.UndertowAJAXAuthenticationCustomizer;
 import core.framework.security.undertow.UndertowIdentityManagerCustomizer;
 import core.framework.security.undertow.UndertowRedisSessionManagerCustomizer;
@@ -16,8 +17,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UndertowCustomizerConfig {
     @Bean
-    public UndertowDeploymentInfoCustomizer undertowRedisSessionManagerCustomizer() {
-        return new UndertowRedisSessionManagerCustomizer();
+    @ConditionalOnBean(SessionRedisTemplateSupplier.class)
+    public UndertowDeploymentInfoCustomizer undertowRedisSessionManagerCustomizer(SessionRedisTemplateSupplier sessionRedisTemplateSupplier) {
+        return new UndertowRedisSessionManagerCustomizer(sessionRedisTemplateSupplier.get());
     }
 
     @Bean

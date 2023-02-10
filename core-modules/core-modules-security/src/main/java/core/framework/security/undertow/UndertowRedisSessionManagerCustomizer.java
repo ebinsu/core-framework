@@ -1,7 +1,6 @@
 package core.framework.security.undertow;
 
 import io.undertow.servlet.api.DeploymentInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -9,8 +8,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  * @author ebin
  */
 public class UndertowRedisSessionManagerCustomizer implements UndertowDeploymentInfoCustomizer {
-    @Autowired
-    private StringRedisTemplate redisTemplate;
+    private final StringRedisTemplate redisTemplate;
+
+    public UndertowRedisSessionManagerCustomizer(StringRedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     @Override
     public void customize(DeploymentInfo deploymentInfo) {
