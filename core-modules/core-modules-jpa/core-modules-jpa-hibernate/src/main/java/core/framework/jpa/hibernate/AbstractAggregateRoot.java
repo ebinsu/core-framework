@@ -17,7 +17,7 @@ import java.util.Objects;
  * @author ebin
  */
 @MappedSuperclass
-public abstract class AbstractAggregateRoot<A extends AggregateRoot<A>> implements AggregateRoot<A> {
+public abstract class AbstractAggregateRoot<A extends AggregateRoot<A, ID>, ID> implements AggregateRoot<A, ID> {
     @Transient
     private final transient List<DomainEvent<A>> domainEvents = new ArrayList<>();
 

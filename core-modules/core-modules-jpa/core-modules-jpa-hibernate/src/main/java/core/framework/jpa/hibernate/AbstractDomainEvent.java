@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 /**
  * @author ebin
  */
-public abstract class AbstractDomainEvent<T extends AggregateRoot<T>> implements DomainEvent<T> {
+public abstract class AbstractDomainEvent<T extends AggregateRoot<T, ?>> implements DomainEvent<T> {
     private final T source;
     private final ZonedDateTime createdTime;
     private Object payload;

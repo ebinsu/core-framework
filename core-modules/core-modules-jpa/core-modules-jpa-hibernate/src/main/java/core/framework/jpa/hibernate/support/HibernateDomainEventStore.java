@@ -46,7 +46,7 @@ public final class HibernateDomainEventStore implements DomainEventStore {
     }
 
     @Override
-    public void persist(AggregateRoot<?> aggregateRoot) {
+    public void persist(AggregateRoot<?, ?> aggregateRoot) {
         List<? extends DomainEvent<?>> domainEvents = aggregateRoot.getDomainEvents();
         if (domainEvents.isEmpty()) {
             return;

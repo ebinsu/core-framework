@@ -27,6 +27,7 @@ public class CheckStyleMojo extends AbstractMojo {
         createFile(workingDirectory.getPath(), "checkstyle-application-import-control.xml");
         createFile(workingDirectory.getPath(), "checkstyle-domain-import-control.xml");
         createFile(workingDirectory.getPath(), "checkstyle-interface-import-control.xml");
+        createFile(workingDirectory.getPath(), "checkstyle-infrastructure-import-control.xml");
     }
 
     private void createFile(String workingDirectoryPath, String filename) {

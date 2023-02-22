@@ -5,6 +5,7 @@ import core.framework.test.hibernate.domain.TestDomain;
 import core.framework.test.hibernate.domain.TestDomainEvent;
 import core.framework.test.hibernate.domain.TestDomainPreEvent;
 import core.framework.test.hibernate.domain.TestDomainRepo;
+import core.framework.test.hibernate.domain.TestEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -38,6 +39,10 @@ class HibernateDDDTest {
     @Transactional
     public void testPersist() {
         TestDomain testDomain = new TestDomain("test");
+        TestEntity testEntity = new TestEntity("test");
+//        TestValueObject object = new TestValueObject("test");
+        testDomain.setEntity(testEntity);
+//        testDomain.setValueObject(object);
         testDomainRepo.persist(testDomain);
         Assertions.assertNotNull(testDomain.getId());
     }

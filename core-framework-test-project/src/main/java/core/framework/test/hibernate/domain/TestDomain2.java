@@ -2,7 +2,6 @@ package core.framework.test.hibernate.domain;
 
 import core.framework.ddd.annotation.AggregateRoot;
 import core.framework.jpa.hibernate.AbstractAggregateRoot;
-import core.framework.test.demo.domain.Demo;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -16,8 +15,8 @@ import jakarta.persistence.Table;
  * @author ebin
  */
 @AggregateRoot
-@Table(name = "test")
-public class TestDomain extends AbstractAggregateRoot<TestDomain, Long> {
+@Table(name = "test_2")
+public class TestDomain2 extends AbstractAggregateRoot<TestDomain2, Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -31,13 +30,10 @@ public class TestDomain extends AbstractAggregateRoot<TestDomain, Long> {
     @Embedded
     private TestValueObject valueObject;
 
-    @OneToOne
-    private Demo demo;
-
-    public TestDomain() {
+    public TestDomain2() {
     }
 
-    public TestDomain(String name) {
+    public TestDomain2(String name) {
         this.name = name;
     }
 

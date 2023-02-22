@@ -5,14 +5,14 @@ import java.util.List;
 /**
  * @author ebin
  */
-public interface Repository<T extends AggregateRoot<T>> {
+public interface Repository<T extends AggregateRoot<T, ID>, ID> {
     void persist(T entity);
 
     T merge(T entity);
 
     void remove(T entity);
 
-    T find(Object id);
+    T find(ID id);
 
     List<T> selectByQueryString(String queryString, Object... params);
 

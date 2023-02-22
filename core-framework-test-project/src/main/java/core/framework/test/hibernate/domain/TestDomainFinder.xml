@@ -11,7 +11,8 @@
         </query>
     </named-query>
 
-    <named-native-query name="TestDomainFinder.selectById" result-class="core.framework.test.hibernate.domain.TestDomain">
+    <named-native-query name="TestDomainFinder.selectById"
+                        result-class="core.framework.test.hibernate.domain.TestDomain">
         <query>
             select * from test where id = ?1
         </query>

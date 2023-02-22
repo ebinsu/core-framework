@@ -39,13 +39,13 @@ public class HibernatePreCommitEventDispatcher implements PostInsertEventListene
     }
 
     private void handleEntity(Object entity) {
-        if (entity instanceof AggregateRoot<?> aggregateRoot) {
+        if (entity instanceof AggregateRoot<?, ?> aggregateRoot) {
             HibernateDomainEventStore.INSTANCE.persist(aggregateRoot);
             riseDomainEvent(aggregateRoot);
         }
     }
 
-    private void riseDomainEvent(AggregateRoot<?> aggregateRoot) {
+    private void riseDomainEvent(AggregateRoot<?, ?> aggregateRoot) {
         List<? extends DomainEvent<?>> domainEvents = aggregateRoot.getDomainEvents();
         for (DomainEvent<?> domainEvent : domainEvents) {
             DomainEventBus.INSTANCE.publishPreCommitEvent(domainEvent);

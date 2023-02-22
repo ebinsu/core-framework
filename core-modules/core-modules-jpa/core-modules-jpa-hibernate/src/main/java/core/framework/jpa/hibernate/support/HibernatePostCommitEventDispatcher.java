@@ -56,7 +56,7 @@ public class HibernatePostCommitEventDispatcher implements PostCommitInsertEvent
     }
 
     private void riseDomainEvent(Object entity) {
-        if (entity instanceof AggregateRoot<?> aggregateRoot) {
+        if (entity instanceof AggregateRoot<?, ?> aggregateRoot) {
             List<? extends DomainEvent<?>> domainEvents = aggregateRoot.getDomainEvents();
             for (DomainEvent<?> domainEvent : domainEvents) {
                 DomainEventBus.INSTANCE.publishPostCommitEvent(domainEvent);
@@ -65,7 +65,7 @@ public class HibernatePostCommitEventDispatcher implements PostCommitInsertEvent
     }
 
     private void cleanDomainEvent(Object entity) {
-        if (entity instanceof AggregateRoot<?> aggregateRoot) {
+        if (entity instanceof AggregateRoot<?, ?> aggregateRoot) {
             aggregateRoot.clearDomainEvents();
         }
     }

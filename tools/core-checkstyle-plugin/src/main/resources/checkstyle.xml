@@ -22,6 +22,7 @@
             <property name="path" value=".*Controller.*"/>
             <property name="disallowClasses" value="java.util.Map"/>
         </module>
+        <module name="core.framework.extending.checks.DomainLayerCheck"/>
         <!--Class Design-->
         <module name="FinalClass"/>
         <module name="HideUtilityClassConstructor"/>
@@ -81,7 +82,7 @@
         <module name="AvoidStarImport"/>
         <module name="RedundantImport"/>
         <module name="UnusedImports"/>
-        <!-- infrastructure -> interface <-> application -> domain -->
+        <!-- infrastructure | interface -> application -> domain -->
         <module name="ImportControl">
             <property name="file" value="${config_loc}/checkstyle-domain-import-control.xml"/>
             <property name="path" value="^.*[\\/]src[\\/]main[\\/].*[\\/]domain\.?"/>
@@ -92,13 +93,19 @@
             <property name="file" value="${config_loc}/checkstyle-application-import-control.xml"/>
             <property name="path" value="^.*[\\/]src[\\/]main[\\/].*[\\/]application\.?"/>
             <message key="import.control.disallowed"
-                     value="不允许的导入：{0}。应用层（application）不可依赖基础设施层（infrastructure）。"/>
+                     value="不允许的导入：{0}。应用层（application）不可依赖基础设施层（infrastructure）、用户接口层（interfaces）。"/>
         </module>
         <module name="ImportControl">
             <property name="file" value="${config_loc}/checkstyle-interface-import-control.xml"/>
             <property name="path" value="^.*[\\/]src[\\/]main[\\/].*[\\/]interfaces\.?"/>
             <message key="import.control.disallowed"
-                     value="不允许的导入：{0}。用户接口层（domain）不可依赖基础设施层（infrastructure）。"/>
+                     value="不允许的导入：{0}。用户接口层（interfaces）不可依赖基础设施层（infrastructure）。"/>
+        </module>
+        <module name="ImportControl">
+            <property name="file" value="${config_loc}/checkstyle-infrastructure-import-control.xml"/>
+            <property name="path" value="^.*[\\/]src[\\/]main[\\/].*[\\/]interfaces\.?"/>
+            <message key="import.control.disallowed"
+                     value="不允许的导入：{0}。基础设施层（infrastructure）不可依赖用户接口层（interfaces）。"/>
         </module>
 
         <!--Javadoc-->

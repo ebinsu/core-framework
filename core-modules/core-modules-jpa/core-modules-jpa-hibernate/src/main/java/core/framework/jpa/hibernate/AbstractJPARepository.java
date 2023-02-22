@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 /**
  * @author ebin
  */
-public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T>> implements Repository<T> {
+public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, ID>, ID> implements Repository<T, ID> {
     private static final int START_INDEX = 0;
     private static final int HINT_FETCH_SIZE = 1;
 
@@ -64,7 +64,7 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T>> 
     }
 
     @Override
-    public T find(Object id) {
+    public T find(ID id) {
         return (id != null) ? getEntityManager().find(getEntityClass(), id) : null;
     }
 
