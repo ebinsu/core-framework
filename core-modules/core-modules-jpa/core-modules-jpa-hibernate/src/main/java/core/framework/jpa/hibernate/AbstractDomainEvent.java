@@ -13,6 +13,7 @@ public abstract class AbstractDomainEvent<T extends AggregateRoot<T, ?>> impleme
     private final ZonedDateTime createdTime;
     private Object payload;
 
+    //TODO source can be change
     public AbstractDomainEvent(T source) {
         this.source = source;
         this.createdTime = ZonedDateTime.now();

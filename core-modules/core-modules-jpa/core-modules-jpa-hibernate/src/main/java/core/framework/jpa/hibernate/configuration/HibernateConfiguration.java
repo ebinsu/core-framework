@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.boot.autoconfigure.domain.EntityScanPackages;
 import org.springframework.boot.autoconfigure.orm.jpa.EntityManagerFactoryBuilderCustomizer;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
@@ -21,12 +20,6 @@ import java.util.List;
 
 @Configuration
 public class HibernateConfiguration {
-    private final JpaProperties properties;
-
-    public HibernateConfiguration(JpaProperties properties) {
-        this.properties = properties;
-    }
-
     @Bean
     public HibernateDomainEventStoreInitializer hibernateDomainEventStoreInitializer() {
         return new HibernateDomainEventStoreInitializer();

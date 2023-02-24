@@ -2,8 +2,6 @@ package core.framework.web.exception.support;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.Map;
-
 
 /**
  * @author ebin

@@ -37,6 +37,7 @@ public class ExtendJPAXMLOverrideMetadataProvider extends JPAXMLOverriddenMetada
         return reader;
     }
 
+    @Override
     public void reset() {
         this.cache = null;
     }

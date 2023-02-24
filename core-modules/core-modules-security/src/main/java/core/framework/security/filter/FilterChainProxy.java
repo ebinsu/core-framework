@@ -26,7 +26,7 @@ public class FilterChainProxy extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         List<Filter> filters = getFilters(request);
-        if (filters == null || filters.size() == 0) {
+        if (filters == null || filters.isEmpty()) {
             this.filterChainDecorator.decorate(chain).doFilter(request, response);
             return;
         }

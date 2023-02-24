@@ -12,7 +12,7 @@ public final class MessageHandlerAdapterHolder {
     private MessageHandlerAdapterHolder() {
     }
 
-    public static synchronized void addMessageHandler(String topic, MessageHandlerAdapter<?> messageHandlerAdapter) {
+    public static void addMessageHandler(String topic, MessageHandlerAdapter<?> messageHandlerAdapter) {
         MESSAGE_HANDLERS.put(topic, messageHandlerAdapter);
     }
 

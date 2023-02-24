@@ -5,7 +5,6 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.header.Headers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 
@@ -34,12 +33,8 @@ public class MessagePublisher {
         byte[] keyBytes = key == null ? null : key.getBytes(UTF_8);
         byte[] message = JSON.toJSON(value).getBytes(UTF_8);
         var producerRecord = new ProducerRecord<>(topic, null, System.currentTimeMillis(), keyBytes, message, null);
-        linkContext(producerRecord.headers());
+//        linkContext(producerRecord.headers());
         producer.send(producerRecord);
-    }
-
-    private void linkContext(Headers headers) {
-        //TODO
     }
 
 }

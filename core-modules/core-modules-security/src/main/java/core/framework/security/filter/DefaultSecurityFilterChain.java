@@ -2,8 +2,6 @@ package core.framework.security.filter;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,8 +11,6 @@ import java.util.List;
  * @author ebin
  */
 public class DefaultSecurityFilterChain implements SecurityFilterChain {
-    private static final Log logger = LogFactory.getLog(DefaultSecurityFilterChain.class);
-
     private final RequestMatcher requestMatcher;
     private final List<Filter> filters;
 

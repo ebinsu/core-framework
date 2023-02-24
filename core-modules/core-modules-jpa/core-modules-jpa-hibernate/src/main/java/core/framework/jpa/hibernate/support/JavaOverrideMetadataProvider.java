@@ -11,10 +11,12 @@ import java.util.Map;
  * @author ebin
  */
 public class JavaOverrideMetadataProvider implements MetadataProvider {
+    @Override
     public Map<Object, Object> getDefaults() {
         return Collections.emptyMap();
     }
 
+    @Override
     public AnnotationReader getAnnotationReader(AnnotatedElement annotatedElement) {
         return new JavaOverrideAnnotationReader(annotatedElement);
     }

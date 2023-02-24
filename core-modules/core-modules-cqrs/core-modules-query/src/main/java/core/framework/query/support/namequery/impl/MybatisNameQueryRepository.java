@@ -36,7 +36,7 @@ public class MybatisNameQueryRepository implements NameQueryRepository {
             xmlMapperBuilder.parse();
             logger.info("Add query file. Filename = " + resource.getFilename());
         } catch (Exception e) {
-            throw new Error("Failed to parse mapping resource: '" + resource + "'");
+            throw new Error("Failed to parse mapping resource: '" + resource + "'", e);
         }
     }
 

@@ -4,6 +4,7 @@ import core.framework.json.JSON;
 import org.hibernate.internal.util.collections.CollectionHelper;
 import org.hibernate.query.TupleTransformer;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -22,7 +23,7 @@ public class AliasToJSONBeanTransformer implements TupleTransformer<Object> {
         for (int i = 0; i < tuple.length; i++) {
             String alias = aliases[i];
             if (alias != null) {
-                result.put(alias.toLowerCase(), tuple[i]);
+                result.put(alias.toLowerCase(Locale.getDefault()), tuple[i]);
             }
         }
         return JSON.fromJSON(resultClass, JSON.toJSON(result));

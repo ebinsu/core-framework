@@ -9,10 +9,10 @@ import java.lang.reflect.Type;
  * @author ebin
  */
 public class MessageHandlerAdapter<T> {
-    private String topic;
-    private boolean batch;
-    private MessageHandler<T> messageHandler;
-    private Type messageType;
+    private final String topic;
+    private final boolean batch;
+    private final MessageHandler<T> messageHandler;
+    private final Type messageType;
 
     public MessageHandlerAdapter(KafkaMessageHandler ann, MessageHandler<T> messageHandler, Type messageType) {
         this.topic = ann.topic();

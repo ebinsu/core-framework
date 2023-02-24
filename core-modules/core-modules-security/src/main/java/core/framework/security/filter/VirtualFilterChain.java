@@ -16,7 +16,7 @@ import java.util.List;
  * @author ebin
  */
 public class VirtualFilterChain implements FilterChain {
-    private static final Log logger = LogFactory.getLog(FilterChainProxy.class);
+    private static final Log LOGGER = LogFactory.getLog(FilterChainProxy.class);
 
     private final FilterChain originalChain;
 
@@ -24,7 +24,7 @@ public class VirtualFilterChain implements FilterChain {
 
     private final int size;
 
-    private int currentPosition = 0;
+    private int currentPosition;
 
     public VirtualFilterChain(FilterChain chain, List<Filter> additionalFilters) {
         this.originalChain = chain;
@@ -40,9 +40,9 @@ public class VirtualFilterChain implements FilterChain {
         }
         this.currentPosition++;
         Filter nextFilter = this.additionalFilters.get(this.currentPosition - 1);
-        if (logger.isTraceEnabled()) {
+        if (LOGGER.isTraceEnabled()) {
             String name = nextFilter.getClass().getSimpleName();
-            logger.trace(LogMessage.format("Invoking %s (%d/%d)", name, this.currentPosition, this.size));
+            LOGGER.trace(LogMessage.format("Invoking %s (%d/%d)", name, this.currentPosition, this.size));
         }
         nextFilter.doFilter(request, response, this);
     }

@@ -32,6 +32,7 @@ public class MultiLevelFilter extends AbstractMatcherFilter<ILoggingEvent> {
         this.levels = Arrays.stream(levels.split(",")).map(Level::toLevel).collect(Collectors.toSet());
     }
 
+    @Override
     public void start() {
         if (this.levels != null) {
             super.start();

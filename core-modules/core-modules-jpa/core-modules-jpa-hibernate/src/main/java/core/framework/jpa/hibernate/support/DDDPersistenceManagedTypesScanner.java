@@ -40,16 +40,16 @@ public class DDDPersistenceManagedTypesScanner {
 
     private static final String PACKAGE_INFO_SUFFIX = ".package-info";
 
-    private static final Set<AnnotationTypeFilter> entityTypeFilters = new LinkedHashSet<>(4);
+    private static final Set<AnnotationTypeFilter> ENTITY_TYPE_FILTERS = new LinkedHashSet<>(4);
 
     static {
-        entityTypeFilters.add(new AnnotationTypeFilter(Entity.class, false));
-        entityTypeFilters.add(new AnnotationTypeFilter(Embeddable.class, false));
-        entityTypeFilters.add(new AnnotationTypeFilter(MappedSuperclass.class, false));
-        entityTypeFilters.add(new AnnotationTypeFilter(Converter.class, false));
-        entityTypeFilters.add(new AnnotationTypeFilter(AggregateRoot.class, false));
-        entityTypeFilters.add(new AnnotationTypeFilter(core.framework.ddd.annotation.Entity.class, false));
-        entityTypeFilters.add(new AnnotationTypeFilter(ValueObject.class, false));
+        ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(Entity.class, false));
+        ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(Embeddable.class, false));
+        ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(MappedSuperclass.class, false));
+        ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(Converter.class, false));
+        ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(AggregateRoot.class, false));
+        ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(core.framework.ddd.annotation.Entity.class, false));
+        ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(ValueObject.class, false));
     }
 
     private final ResourcePatternResolver resourcePatternResolver;
@@ -81,7 +81,7 @@ public class DDDPersistenceManagedTypesScanner {
     private void scanPackage(String pkg, ScanResult scanResult) {
         if (this.componentsIndex != null) {
             Set<String> candidates = new HashSet<>();
-            for (AnnotationTypeFilter filter : entityTypeFilters) {
+            for (AnnotationTypeFilter filter : ENTITY_TYPE_FILTERS) {
                 candidates.addAll(this.componentsIndex.getCandidateTypes(pkg, filter.getAnnotationType().getName()));
             }
             scanResult.managedClassNames.addAll(candidates);
@@ -90,8 +90,8 @@ public class DDDPersistenceManagedTypesScanner {
         }
 
         try {
-            String pattern = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
-                    ClassUtils.convertClassNameToResourcePath(pkg) + CLASS_RESOURCE_PATTERN;
+            String pattern = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
+                    + ClassUtils.convertClassNameToResourcePath(pkg) + CLASS_RESOURCE_PATTERN;
             Resource[] resources = this.resourcePatternResolver.getResources(pattern);
             MetadataReaderFactory readerFactory = new CachingMetadataReaderFactory(this.resourcePatternResolver);
             for (Resource resource : resources) {
@@ -112,6 +112,7 @@ public class DDDPersistenceManagedTypesScanner {
                     }
                 } catch (FileNotFoundException ex) {
                     // Ignore non-readable resource
+                    throw new Error("Failed to scan classpath for unlisted entity classes", ex);
                 }
             }
         } catch (IOException ex) {
@@ -124,7 +125,7 @@ public class DDDPersistenceManagedTypesScanner {
      * the current class descriptor contained in the metadata reader.
      */
     private boolean matchesFilter(MetadataReader reader, MetadataReaderFactory readerFactory) throws IOException {
-        for (TypeFilter filter : entityTypeFilters) {
+        for (TypeFilter filter : ENTITY_TYPE_FILTERS) {
             if (filter.match(reader, readerFactory)) {
                 return true;
             }

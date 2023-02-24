@@ -52,14 +52,12 @@ public class AJAXAuthenticationMechanism implements AuthenticationMechanism {
                     bytesRead = channel.read(buffer);
                     if (bytesRead <= 0) break;
                     buffer.flip();
-                    ensureCapacity(contentLength, body, position, bytesRead);
+                    body = ensureCapacity(contentLength, body, position, bytesRead);
                     buffer.get(body, position, bytesRead);
                     position += bytesRead;
                 }
-                if (bytesRead == -1) {
-                    if (position < body.length) {
-                        throw new Error(String.format("body ends prematurely, expected=%s, actual=%s", contentLength, position));
-                    }
+                if (bytesRead == -1 && position < body.length) {
+                    throw new Error(String.format("body ends prematurely, expected=%s, actual=%s", contentLength, position));
                 }
                 AuthenticationRequest request = JSON.fromJSON(AuthenticationRequest.class, body);
                 Account account = identityManager.verify(request.username, new PasswordCredential(request.password.toCharArray()));
@@ -87,31 +85,25 @@ public class AJAXAuthenticationMechanism implements AuthenticationMechanism {
         return Methods.POST.equals(method) || Methods.PUT.equals(method) || Methods.PATCH.equals(method);
     }
 
-    private void ensureCapacity(int contentLength, byte[] body, int position, int bytesRead) {
+    private byte[] ensureCapacity(int contentLength, byte[] body, int position, int bytesRead) {
+        byte[] ensureBody = body;
         if (contentLength >= 0) {
             if (bytesRead + position > contentLength)
                 throw new Error("body exceeds expected content length, expected=" + contentLength);
         } else {
             if (body == null) { // undertow buffer is 16k, if there is no content length, in most of cases, it's best just to create exact buffer as first read thru
-                body = new byte[bytesRead];
+                ensureBody = new byte[bytesRead];
             } else {
                 int newLength = position + bytesRead;   // without content length, position will always be current length,
                 byte[] bytes = new byte[newLength];     // just expend to exact read size, which is simplest way for best scenario
                 System.arraycopy(body, 0, bytes, 0, position);
-                body = bytes;
+                ensureBody = bytes;
             }
         }
+        return ensureBody;
     }
 
     public static final class Factory implements AuthenticationMechanismFactory {
-
-        @Deprecated
-        public Factory(IdentityManager identityManager) {
-        }
-
-        public Factory() {
-        }
-
         @Override
         public AuthenticationMechanism create(String mechanismName, IdentityManager identityManager, FormParserFactory formParserFactory, Map<String, String> properties) {
             return new AJAXAuthenticationMechanism(identityManager);

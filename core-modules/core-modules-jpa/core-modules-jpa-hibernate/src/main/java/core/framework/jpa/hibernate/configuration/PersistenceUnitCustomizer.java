@@ -52,7 +52,7 @@ public class PersistenceUnitCustomizer implements PersistenceUnitPostProcessor {
                     pui.addMappingFileName(url);
                 }
             } catch (IOException e) {
-                throw new Error("Failed to scan classpath for unlisted entity class mapping resources");
+                throw new Error("Failed to scan classpath for unlisted entity class mapping resources", e);
             }
         }
     }

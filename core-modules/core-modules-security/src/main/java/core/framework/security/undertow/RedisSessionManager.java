@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @author ebin
  */
 public class RedisSessionManager implements SessionManager {
-    private final AttachmentKey<SessionImpl> NEW_SESSION = AttachmentKey.create(SessionImpl.class);
+    private final AttachmentKey<SessionImpl> newSession = AttachmentKey.create(SessionImpl.class);
 
     private final String deploymentName;
     private final SessionIdGenerator sessionIdGenerator;
@@ -68,14 +68,14 @@ public class RedisSessionManager implements SessionManager {
         sessionConfig.setSessionId(serverExchange, session.getId());
 
         sessionListeners.sessionCreated(session, serverExchange);
-        serverExchange.putAttachment(NEW_SESSION, session);
+        serverExchange.putAttachment(newSession, session);
         return session;
     }
 
     @Override
     public Session getSession(HttpServerExchange serverExchange, SessionConfig sessionCookieConfig) {
         if (serverExchange != null) {
-            SessionImpl newSession = serverExchange.getAttachment(NEW_SESSION);
+            SessionImpl newSession = serverExchange.getAttachment(this.newSession);
             if (newSession != null) {
                 return newSession;
             }
@@ -245,7 +245,7 @@ public class RedisSessionManager implements SessionManager {
 
         @Override
         public String changeSessionId(HttpServerExchange exchange, SessionConfig config) {
-            synchronized (SessionImpl.this) {
+            synchronized (this) {
                 final String oldId = sessionId;
                 if (exchange != null) {
                     config.clearSession(exchange, oldId);
@@ -264,7 +264,7 @@ public class RedisSessionManager implements SessionManager {
         }
 
         private void bumpTimeout() {
-            this.redisSessionManager.redisTemplate.opsForValue().getAndExpire(this.getId(), maxInactiveInterval, TimeUnit.SECONDS);
+            this.redisSessionManager.redisTemplate.opsForValue().getAndExpire(this.sessionId, maxInactiveInterval, TimeUnit.SECONDS);
         }
     }
 }

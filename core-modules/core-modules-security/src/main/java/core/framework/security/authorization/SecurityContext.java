@@ -9,15 +9,15 @@ import java.util.Set;
  * @author ebin
  */
 public class SecurityContext {
-    private static final Set<String> anonymous = new HashSet<>();
-    private static final Map<String, String> permissionMapping = new HashMap<>();
+    private static final Set<String> ANONYMOUS = new HashSet<>();
+    private static final Map<String, String> PERMISSION_MAPPING = new HashMap<>();
 
     public boolean isAnonymous(String endpoint) {
-        return anonymous.contains(endpoint);
+        return ANONYMOUS.contains(endpoint);
     }
 
     public boolean hasPermission(String endpoint, Set<String> permissions) {
-        String necessaryPermission = permissionMapping.get(endpoint);
+        String necessaryPermission = PERMISSION_MAPPING.get(endpoint);
         if (necessaryPermission != null) {
             return permissions.contains(necessaryPermission);
         }
@@ -25,10 +25,10 @@ public class SecurityContext {
     }
 
     protected static void addAnonymous(String anonymousEndpoint) {
-        anonymous.add(anonymousEndpoint);
+        ANONYMOUS.add(anonymousEndpoint);
     }
 
     protected static void addPermission(String endpoint, String permission) {
-        permissionMapping.put(endpoint, permission);
+        PERMISSION_MAPPING.put(endpoint, permission);
     }
 }

@@ -6,15 +6,22 @@ import org.hibernate.annotations.common.annotationfactory.AnnotationDescriptor;
 import org.hibernate.annotations.common.annotationfactory.AnnotationFactory;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author ebin
  */
 public final class AnnotationOverrideUtils {
-    public static void override(Class<?> annotationClass, List<Annotation> annotationList) {
+    private AnnotationOverrideUtils() {
+    }
+
+    public static void override(Annotation[] physicalAnnotations, Class<?> annotationClass, List<Annotation> annotationList) {
         if (annotationClass == Entity.class) {
-            annotationList.add(getEntity());
+            boolean hasEntity = Arrays.stream(physicalAnnotations).anyMatch(an -> an.annotationType() == Entity.class);
+            if (!hasEntity) {
+                annotationList.add(getEntity());
+            }
         } else if (annotationClass == Embeddable.class) {
             annotationList.add(getEmbeddable());
         }

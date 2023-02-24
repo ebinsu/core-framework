@@ -27,9 +27,10 @@ public class DispatcherMessagingMessageListenerAdapter
         extends BatchMessagingMessageListenerAdapter<byte[], byte[]>
         implements BatchAcknowledgingConsumerAwareMessageListener<byte[], byte[]> {
     private static final Log LOGGER = LogFactory.getLog(DispatcherMessagingMessageListenerAdapter.class);
+    private static final Object MOCK_BEAN = new Object();
 
     public DispatcherMessagingMessageListenerAdapter(Validator validator) {
-        super(null, null);
+        super(MOCK_BEAN, MOCK_BEAN.getClass().getEnclosingMethod());
         setMessageConverter(new ValidatedByteArrayJsonMessageConverter(JSONMapper.OBJECT_MAPPER, validator));
         setBatchMessageConverter(new BatchMessagingMessageConverter(getMessageConverter()));
     }
@@ -37,6 +38,9 @@ public class DispatcherMessagingMessageListenerAdapter
 
     @Override
     public void onMessage(List<ConsumerRecord<byte[], byte[]>> kafkaRecords, Acknowledgment acknowledgment, Consumer<?, ?> consumer) {
+        if (acknowledgment == null) {
+            return;
+        }
         try {
             Map<String, List<ConsumerRecord<?, ?>>> messages = new HashMap<>();     // record in one topic maintains order
             for (ConsumerRecord<?, ?> kafkaRecord : kafkaRecords) {

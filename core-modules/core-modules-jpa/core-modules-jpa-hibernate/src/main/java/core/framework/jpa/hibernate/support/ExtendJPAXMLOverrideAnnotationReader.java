@@ -58,12 +58,12 @@ public class ExtendJPAXMLOverrideAnnotationReader extends JPAXMLOverriddenAnnota
             for (Annotation annotation : annotations) {
                 if (JavaOverrideAnnotationReader.ANNOTATION_OVERRIDDEN.containsKey(annotation.annotationType())) {
                     Class<?> aClass = JavaOverrideAnnotationReader.ANNOTATION_OVERRIDDEN.get(annotation.annotationType());
-                    AnnotationOverrideUtils.override(aClass, annotationList);
+                    AnnotationOverrideUtils.override(annotations, aClass, annotationList);
                 } else {
                     annotationList.add(annotation);
                 }
             }
-            this.annotations = annotationList.toArray(new Annotation[annotationList.size()]);
+            this.annotations = annotationList.toArray(new Annotation[0]);
             for (Annotation ann : this.annotations) {
                 annotationsMap.put(ann.annotationType(), ann);
             }

@@ -4,7 +4,6 @@ import core.framework.kafka.annotation.KafkaMessageHandler;
 import core.framework.kafka.configuration.DispatcherKafkaListenerProperties;
 import jakarta.validation.Validator;
 import org.springframework.aop.support.AopUtils;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.SmartInitializingSingleton;
@@ -38,7 +37,6 @@ public class ExtendKafkaListenerAnnotationBeanPostProcessor
     private static final String GENERATED_ID_PREFIX = DispatcherKafkaListenerEndpoint.class.getName() + "Container#";
     private final AtomicInteger counter = new AtomicInteger();
     private final KafkaListenerEndpointRegistrar registrar = new KafkaListenerEndpointRegistrar();
-    private ApplicationContext applicationContext;
     private BeanFactory beanFactory;
     private KafkaListenerEndpointRegistry endpointRegistry;
 
@@ -73,8 +71,7 @@ public class ExtendKafkaListenerAnnotationBeanPostProcessor
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+    public void setApplicationContext(ApplicationContext applicationContext) {
         if (applicationContext instanceof ConfigurableApplicationContext) {
             setBeanFactory(((ConfigurableApplicationContext) applicationContext).getBeanFactory());
         } else {
@@ -88,12 +85,12 @@ public class ExtendKafkaListenerAnnotationBeanPostProcessor
     }
 
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(Object bean, String beanName) {
         return bean;
     }
 
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName) {
         Class<?> targetClass = AopUtils.getTargetClass(bean);
         if (bean instanceof MessageHandler) {
             KafkaMessageHandler ann = AnnotatedElementUtils.findMergedAnnotation(targetClass, KafkaMessageHandler.class);

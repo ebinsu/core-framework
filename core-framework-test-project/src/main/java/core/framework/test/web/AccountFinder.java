@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class AccountFinder implements core.framework.security.undertow.UsernamePasswordAccountFinder {
     @Override
-    public Account find(String username, char[] password) {
+    public Account find(String username, String password) {
         return new DefaultAccount(username, Set.of());
     }
 }

@@ -4,8 +4,7 @@ import core.framework.ddd.annotation.AggregateRoot;
 import core.framework.ddd.annotation.ValueObject;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
-import org.hibernate.annotations.common.annotationfactory.AnnotationDescriptor;
-import org.hibernate.annotations.common.annotationfactory.AnnotationFactory;
+import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.annotations.common.reflection.AnnotationReader;
 
 import java.lang.annotation.Annotation;
@@ -33,19 +32,22 @@ public class JavaOverrideAnnotationReader implements AnnotationReader {
         this.element = el;
     }
 
+    @Override
     public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
         initAnnotations();
         return (T) annotationsMap.get(annotationType);
     }
 
+    @Override
     public <T extends Annotation> boolean isAnnotationPresent(Class<T> annotationType) {
         initAnnotations();
         return annotationsMap.containsKey(annotationType);
     }
 
+    @Override
     public Annotation[] getAnnotations() {
         initAnnotations();
-        return annotations;
+        return ArrayUtils.clone(annotations);
     }
 
     private Annotation[] getPhysicalAnnotations() {
@@ -60,12 +62,12 @@ public class JavaOverrideAnnotationReader implements AnnotationReader {
             for (Annotation annotation : annotations) {
                 if (ANNOTATION_OVERRIDDEN.containsKey(annotation.annotationType())) {
                     Class<?> aClass = ANNOTATION_OVERRIDDEN.get(annotation.annotationType());
-                    AnnotationOverrideUtils.override(aClass, annotationList);
+                    AnnotationOverrideUtils.override(annotations, aClass, annotationList);
                 } else {
                     annotationList.add(annotation);
                 }
             }
-            this.annotations = annotationList.toArray(new Annotation[annotationList.size()]);
+            this.annotations = annotationList.toArray(new Annotation[0]);
             for (Annotation ann : this.annotations) {
                 annotationsMap.put(ann.annotationType(), ann);
             }

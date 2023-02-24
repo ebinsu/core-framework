@@ -23,11 +23,34 @@ public abstract class AbstractAggregateRoot<A extends AggregateRoot<A, ID>, ID> 
 
     @NotNull
     @Column(name = "created_time")
-    private ZonedDateTime createdTime = ZonedDateTime.now();
+    private ZonedDateTime createdTime;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @NotNull
+    @Column(name = "updated_time")
+    private ZonedDateTime updatedTime;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
 
     @Override
     public ZonedDateTime getCreatedTime() {
         return createdTime;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    @Override
+    public ZonedDateTime getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
     @Override
@@ -47,5 +70,21 @@ public abstract class AbstractAggregateRoot<A extends AggregateRoot<A, ID>, ID> 
     @Override
     public void clearDomainEvents() {
         this.domainEvents.clear();
+    }
+
+    protected void setCreatedTime(ZonedDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    protected void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    protected void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    protected void setUpdatedTime(ZonedDateTime updatedTime) {
+        this.updatedTime = updatedTime;
     }
 }

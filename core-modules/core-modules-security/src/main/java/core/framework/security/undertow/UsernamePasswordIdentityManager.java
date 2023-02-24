@@ -22,7 +22,7 @@ public class UsernamePasswordIdentityManager implements IdentityManager {
     public Account verify(String id, Credential credential) {
         if (credential instanceof PasswordCredential) {
             char[] password = ((PasswordCredential) credential).getPassword();
-            return usernamePasswordAccountFinder.find(id, password);
+            return usernamePasswordAccountFinder.find(id, new String(password));
         }
         return null;
     }

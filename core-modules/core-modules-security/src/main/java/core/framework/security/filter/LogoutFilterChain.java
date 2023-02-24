@@ -8,7 +8,7 @@ import org.springframework.http.HttpMethod;
 public class LogoutFilterChain extends DefaultSecurityFilterChain {
     public LogoutFilterChain() {
         super(
-                (req) -> req.getMethod().equals(HttpMethod.PUT.name()) && req.getRequestURI().equals("/logout"),
+                req -> req.getMethod().equals(HttpMethod.PUT.name()) && req.getRequestURI().equals("/logout"),
                 new LogoutFilter()
         );
     }

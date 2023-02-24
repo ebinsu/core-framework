@@ -8,7 +8,7 @@ import org.springframework.http.HttpMethod;
 public class AJAXAuthenticationFilterChain extends DefaultSecurityFilterChain {
     public AJAXAuthenticationFilterChain() {
         super(
-                (req) -> req.getMethod().equals(HttpMethod.PUT.name()) && req.getRequestURI().equals("/login"),
+                req -> req.getMethod().equals(HttpMethod.PUT.name()) && req.getRequestURI().equals("/login"),
                 new AJAXAuthenticationFilter()
         );
     }
