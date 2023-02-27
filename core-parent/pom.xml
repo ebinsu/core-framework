@@ -19,14 +19,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>ebinsu-ebin-core-core-framework</id>
-            <name>core-framework</name>
-            <url>https://ebinsu-maven.pkg.coding.net/repository/ebin-core/core-framework/</url>
-        </repository>
-    </distributionManagement>
-
     <build>
         <resources>
             <resource>
