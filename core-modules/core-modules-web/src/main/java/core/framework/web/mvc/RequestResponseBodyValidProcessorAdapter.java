@@ -23,7 +23,11 @@ public class RequestResponseBodyValidProcessorAdapter extends RequestMappingHand
     public void afterPropertiesSet() {
         super.afterPropertiesSet();
 
-        List<HandlerMethodReturnValueHandler> handlerMethodReturnValueHandlers = new ArrayList<>(this.getReturnValueHandlers());
+        List<HandlerMethodReturnValueHandler> handlerMethodReturnValueHandlers = new ArrayList<>(
+                this.getReturnValueHandlers() == null
+                        ? new ArrayList<>()
+                        : this.getReturnValueHandlers()
+        );
         int index = IntStream.range(0, handlerMethodReturnValueHandlers.size())
                 .filter(f -> handlerMethodReturnValueHandlers.get(f) instanceof RequestResponseBodyMethodProcessor)
                 .findFirst().orElse(-1);
