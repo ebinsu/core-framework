@@ -40,12 +40,14 @@ public class MySQLQueryInterceptor implements QueryInterceptor {
 
     @Override
     public <T extends Resultset> T postProcess(Supplier<String> sql, Query interceptedQuery, T originalResultSet, ServerSession serverSession) {
-        boolean noIndexUsed = serverSession.noIndexUsed();
-        boolean badIndexUsed = serverSession.noGoodIndexUsed();
-        if (noIndexUsed || badIndexUsed) {
-            String message = noIndexUsed ? "no index used" : "bad index used";
-            String sqlValue = sql.get();
-            LOGGER.warn("{}, sql={}", message, sqlValue);
+        if (!Mysql.SUPPRESS_SLOW_SQL.get()) {
+            boolean noIndexUsed = serverSession.noIndexUsed();
+            boolean badIndexUsed = serverSession.noGoodIndexUsed();
+            if (noIndexUsed || badIndexUsed) {
+                String message = noIndexUsed ? "no index used" : "bad index used";
+                String sqlValue = sql.get();
+                LOGGER.warn("{}, sql={}", message, sqlValue);
+            }
         }
         return null;
     }
