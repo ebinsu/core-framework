@@ -24,11 +24,11 @@ public class RequestResponseBodyValidProcessorAdapter extends RequestMappingHand
         super.afterPropertiesSet();
 
         List<HandlerMethodReturnValueHandler> returnValueHandlers = this.getReturnValueHandlers();
-        List<HandlerMethodReturnValueHandler> handlers = returnValueHandlers == null
+        returnValueHandlers = returnValueHandlers == null
                 ? new ArrayList<>()
                 : returnValueHandlers;
 
-        List<HandlerMethodReturnValueHandler> handlerMethodReturnValueHandlers = new ArrayList<>(handlers);
+        List<HandlerMethodReturnValueHandler> handlerMethodReturnValueHandlers = new ArrayList<>(returnValueHandlers);
         int index = IntStream.range(0, handlerMethodReturnValueHandlers.size())
                 .filter(f -> handlerMethodReturnValueHandlers.get(f) instanceof RequestResponseBodyMethodProcessor)
                 .findFirst().orElse(-1);
