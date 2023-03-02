@@ -24,7 +24,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.0.0${changelist}</revision>
+        <revision>1.0.1${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.mybatis>3.5.11</version.mybatis>
