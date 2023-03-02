@@ -41,6 +41,7 @@ public abstract class AbstractAggregateRoot<A extends AggregateRoot<A, ID>, ID> 
 
     protected AbstractAggregateRoot(String createdBy) {
         this.setCreatedInfo(createdBy);
+        this.setUpdatedInfo(createdBy);
     }
 
     @Override

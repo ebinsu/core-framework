@@ -17,4 +17,6 @@ public interface Repository<T extends AggregateRoot<T, ID>, ID> {
     List<T> selectByQueryString(String queryString, Object... params);
 
     T findByQueryString(String queryString, Object... params);
+
+    <R> R aggregateByQueryString(String queryString, Class<R> resultClass, Object... params);
 }

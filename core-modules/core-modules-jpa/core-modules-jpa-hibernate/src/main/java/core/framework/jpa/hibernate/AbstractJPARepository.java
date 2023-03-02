@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.hibernate.jpa.QueryHints;
+import org.hibernate.jpa.HibernateHints;
 import org.hibernate.query.named.NamedObjectRepository;
 import org.hibernate.query.sql.spi.NamedNativeQueryMemento;
 import org.hibernate.query.sqm.spi.NamedSqmQueryMemento;
@@ -27,6 +27,23 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
     public AbstractJPARepository() {
         Type actualTypeArgument = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.entityClass = (Class<T>) actualTypeArgument;
+    }
+
+    @Override
+    public <R> R aggregateByQueryString(String queryString, Class<R> resultClass, Object... params) {
+        NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
+        final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
+        if (namedSqmQueryMemento != null) {
+            // name query
+            return aggregateByNamedQuery(queryString, resultClass, params);
+        }
+        final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
+        if (namedNativeDescriptor != null) {
+            // native query result class only support entity.
+            return aggregateByNativeQuery(namedNativeDescriptor.getSqlString(), resultClass, params);
+        }
+        // sql
+        return aggregateByNativeQuery(queryString, resultClass, params);
     }
 
     @Override
@@ -104,7 +121,7 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
         if (params != null) {
             IntStream.range(START_INDEX, params.length).forEach(index -> namedQuery.setParameter(index + 1, params[index]));
         }
-        namedQuery.setHint(QueryHints.HINT_FETCH_SIZE, HINT_FETCH_SIZE);
+        namedQuery.setHint(HibernateHints.HINT_FETCH_SIZE, HINT_FETCH_SIZE);
         List<T> resultList = namedQuery.getResultList();
         return resultList.stream().findFirst().orElse(null);
     }
@@ -114,7 +131,7 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
         if (params != null) {
             IntStream.range(START_INDEX, params.length).forEach(index -> nativeQuery.setParameter(index + 1, params[index]));
         }
-        nativeQuery.setHint(QueryHints.HINT_FETCH_SIZE, HINT_FETCH_SIZE);
+        nativeQuery.setHint(HibernateHints.HINT_FETCH_SIZE, HINT_FETCH_SIZE);
         List<T> resultList = nativeQuery.getResultList();
         return resultList.stream().findFirst().orElse(null);
     }
@@ -139,5 +156,23 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
         if (resultList == null)
             return List.of();
         return resultList;
+    }
+
+    private <R> R aggregateByNamedQuery(String queryName, Class<R> resultClass, Object... params) {
+        TypedQuery<R> namedQuery = getEntityManager().createNamedQuery(queryName, resultClass);
+        if (params != null) {
+            IntStream.range(START_INDEX, params.length).forEach(index -> namedQuery.setParameter(index + 1, params[index]));
+        }
+        namedQuery.setHint(HibernateHints.HINT_FETCH_SIZE, HINT_FETCH_SIZE);
+        return namedQuery.getSingleResult();
+    }
+
+    private <R> R aggregateByNativeQuery(String sql, Class<R> resultClass, Object... params) {
+        Query nativeQuery = getEntityManager().createNativeQuery(sql, resultClass);
+        if (params != null) {
+            IntStream.range(START_INDEX, params.length).forEach(index -> nativeQuery.setParameter(index + 1, params[index]));
+        }
+        nativeQuery.setHint(HibernateHints.HINT_FETCH_SIZE, HINT_FETCH_SIZE);
+        return (R) nativeQuery.getSingleResult();
     }
 }

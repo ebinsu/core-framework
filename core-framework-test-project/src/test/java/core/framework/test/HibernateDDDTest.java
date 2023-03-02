@@ -119,4 +119,34 @@ class HibernateDDDTest {
         Assertions.assertNotNull(test.getId());
         Assertions.assertFalse(tests.isEmpty());
     }
+
+    @Test
+    public void testAggregateByNativeQuery() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        TestDomain testDomain = new TestDomain("test");
+        testDomainRepo.persist(testDomain);
+        transactionManager.commit(status);
+        Integer count = testDomainRepo.aggregateByQueryString("select count(*) from test", Integer.class);
+        Assertions.assertEquals(count, 1);
+    }
+
+    @Test
+    public void testAggregateByNameQuery() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        TestDomain testDomain = new TestDomain("test");
+        testDomainRepo.persist(testDomain);
+        transactionManager.commit(status);
+        Long count = testDomainRepo.aggregateByQueryString("TestDomainFinder.count1", Long.class);
+        Assertions.assertEquals(count, 1);
+    }
+
+    @Test
+    public void testAggregateByNativeNameQuery() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        TestDomain testDomain = new TestDomain("test");
+        testDomainRepo.persist(testDomain);
+        transactionManager.commit(status);
+        Long count = testDomainRepo.aggregateByQueryString("TestDomainFinder.count2", Long.class);
+        Assertions.assertEquals(count, 1);
+    }
 }

@@ -11,10 +11,22 @@
         </query>
     </named-query>
 
+    <named-query name="TestDomainFinder.count1">
+        <query>
+            SELECT COUNT(e) FROM TestDomain e
+        </query>
+    </named-query>
+
     <named-native-query name="TestDomainFinder.selectById"
                         result-class="core.framework.test.hibernate.domain.TestDomain">
         <query>
             select * from test where id = ?1
+        </query>
+    </named-native-query>
+
+    <named-native-query name="TestDomainFinder.count2">
+        <query>
+            select count(*) from test
         </query>
     </named-native-query>
 

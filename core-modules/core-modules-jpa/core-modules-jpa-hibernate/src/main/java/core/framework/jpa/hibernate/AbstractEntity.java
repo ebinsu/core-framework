@@ -33,6 +33,7 @@ public abstract class AbstractEntity<A extends AggregateRoot<A, ?>, ID> implemen
 
     protected AbstractEntity(String createdBy) {
         this.setCreatedInfo(createdBy);
+        this.setUpdatedInfo(createdBy);
     }
 
     @Override
