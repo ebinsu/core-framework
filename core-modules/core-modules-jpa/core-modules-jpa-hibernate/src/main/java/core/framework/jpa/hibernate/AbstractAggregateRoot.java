@@ -35,8 +35,12 @@ public abstract class AbstractAggregateRoot<A extends AggregateRoot<A, ID>, ID> 
     @Column(name = "updated_by")
     private String updatedBy;
 
+    protected AbstractAggregateRoot() {
+        this(null);
+    }
+
     protected AbstractAggregateRoot(String createdBy) {
-        this.setCreatedBy(createdBy);
+        this.setCreatedInfo(createdBy);
     }
 
     @Override
@@ -76,12 +80,12 @@ public abstract class AbstractAggregateRoot<A extends AggregateRoot<A, ID>, ID> 
         this.domainEvents.clear();
     }
 
-    protected final void setCreatedBy(String createdBy) {
+    protected final void setCreatedInfo(String createdBy) {
         this.createdBy = createdBy;
         this.createdTime = ZonedDateTime.now();
     }
 
-    protected final void setUpdatedBy(String updatedBy) {
+    protected final void setUpdatedInfo(String updatedBy) {
         this.updatedBy = updatedBy;
         this.updatedTime = ZonedDateTime.now();
     }
