@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>core-modules-exception</module>
         <module>core-modules-ddd</module>
         <module>core-modules-jpa</module>
         <module>core-modules-json</module>
@@ -23,7 +24,6 @@
         <module>core-modules-kafka</module>
         <module>core-modules-web</module>
         <module>core-modules-security</module>
-        <module>core-modules-exception</module>
     </modules>
 
     <build>
