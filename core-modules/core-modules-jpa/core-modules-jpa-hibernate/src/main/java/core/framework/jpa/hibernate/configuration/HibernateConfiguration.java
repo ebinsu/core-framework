@@ -3,6 +3,7 @@ package core.framework.jpa.hibernate.configuration;
 import core.framework.jpa.hibernate.support.DDDPersistenceManagedTypesScanner;
 import core.framework.jpa.hibernate.support.HibernateDomainEventStoreInitializer;
 import jakarta.persistence.ValidationMode;
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
@@ -32,6 +33,7 @@ public class HibernateConfiguration {
             prop.putIfAbsent(AvailableSettings.ISOLATION, Connection.TRANSACTION_READ_COMMITTED);
             prop.putIfAbsent(AvailableSettings.STATEMENT_FETCH_SIZE, 64);
             prop.putIfAbsent(AvailableSettings.SHOW_SQL, true);
+            prop.putIfAbsent(AvailableSettings.PHYSICAL_NAMING_STRATEGY, CamelCaseToUnderscoresNamingStrategy.class.getName());
         };
     }
 
