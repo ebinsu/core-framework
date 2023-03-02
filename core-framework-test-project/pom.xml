@@ -63,6 +63,12 @@
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-ant</artifactId>
+            <version>6.1.4.Final</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

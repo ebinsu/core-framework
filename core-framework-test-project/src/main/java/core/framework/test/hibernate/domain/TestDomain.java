@@ -26,6 +26,8 @@ public class TestDomain extends AbstractAggregateRoot<TestDomain, Long> {
 
     private String name;
 
+    private String testName;
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private TestEntity entity;
 
@@ -36,9 +38,11 @@ public class TestDomain extends AbstractAggregateRoot<TestDomain, Long> {
     private Demo demo;
 
     public TestDomain() {
+        super("");
     }
 
     public TestDomain(String name) {
+        super("");
         this.name = name;
     }
 

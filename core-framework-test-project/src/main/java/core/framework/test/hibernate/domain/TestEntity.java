@@ -22,6 +22,7 @@ public class TestEntity extends AbstractEntity<TestDomain, String> {
     private String name;
 
     public TestEntity(String name) {
+        super("");
         this.name = name;
     }
 

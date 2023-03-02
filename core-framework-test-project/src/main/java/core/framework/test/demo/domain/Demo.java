@@ -33,9 +33,11 @@ public class Demo extends AbstractAggregateRoot<Demo, Long> {
     private TestValueObject valueObject;
 
     public Demo() {
+        super("");
     }
 
     public Demo(String name) {
+        super("");
         this.name = name;
     }
 

@@ -27,6 +27,10 @@ public abstract class AbstractEntity<A extends AggregateRoot<A, ?>, ID> implemen
     @Column(name = "updated_by")
     private String updatedBy;
 
+    public AbstractEntity(String createdBy) {
+        this.setCreatedBy(createdBy);
+    }
+
     @Override
     public ZonedDateTime getCreatedTime() {
         return createdTime;
@@ -45,19 +49,13 @@ public abstract class AbstractEntity<A extends AggregateRoot<A, ?>, ID> implemen
         return updatedBy;
     }
 
-    protected void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    protected void setUpdatedTime(ZonedDateTime updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    protected void setCreatedBy(String createdBy) {
+    protected final void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+        this.createdTime = ZonedDateTime.now();
     }
 
-    protected void setCreatedTime(ZonedDateTime createdTime) {
-        this.createdTime = createdTime;
+    protected final void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+        this.updatedTime = ZonedDateTime.now();
     }
 }

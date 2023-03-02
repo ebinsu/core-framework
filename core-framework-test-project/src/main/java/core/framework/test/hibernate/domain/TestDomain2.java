@@ -31,9 +31,11 @@ public class TestDomain2 extends AbstractAggregateRoot<TestDomain2, Long> {
     private TestValueObject valueObject;
 
     public TestDomain2() {
+        super("");
     }
 
     public TestDomain2(String name) {
+        super("");
         this.name = name;
     }
 
