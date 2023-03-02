@@ -1,7 +1,7 @@
 package core.framework.web.configuration;
 
-import core.framework.web.exception.support.DefaultHandlerExceptionResolver;
-import core.framework.web.exception.support.ExceptionHandlerCustomizer;
+import core.framework.web.exception.DefaultHandlerExceptionResolver;
+import core.framework.web.exception.ExceptionHandlerCustomizer;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerExceptionResolver;

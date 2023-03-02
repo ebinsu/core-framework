@@ -1,4 +1,4 @@
-package core.framework.web.exception;
+package core.framework.exception;
 
 /**
  * @author ebin

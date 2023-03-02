@@ -1,6 +1,6 @@
-package core.framework.web.exception.support;
+package core.framework.web.exception;
 
-import core.framework.web.exception.BaseRuntimeException;
+import core.framework.exception.BaseRuntimeException;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**

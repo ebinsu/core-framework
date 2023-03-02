@@ -44,6 +44,11 @@
         <dependencies>
             <dependency>
                 <groupId>core-framework</groupId>
+                <artifactId>core-modules-exception</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
                 <artifactId>core-modules-security</artifactId>
                 <version>${revision}</version>
             </dependency>

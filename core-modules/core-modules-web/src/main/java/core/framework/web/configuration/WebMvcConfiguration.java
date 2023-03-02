@@ -1,10 +1,10 @@
 package core.framework.web.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.framework.web.exception.support.BaseRuntimeExceptionHandler;
-import core.framework.web.exception.support.BindExceptionHandler;
-import core.framework.web.exception.support.ConstraintViolationExceptionHandler;
-import core.framework.web.exception.support.ExceptionHandlerCustomizer;
+import core.framework.web.exception.BaseRuntimeExceptionHandler;
+import core.framework.web.exception.BindExceptionHandler;
+import core.framework.web.exception.ConstraintViolationExceptionHandler;
+import core.framework.web.exception.ExceptionHandlerCustomizer;
 import core.framework.web.mvc.RequestResponseBodyValidProcessorAdapter;
 import core.framework.json.JSONMapper;
 import jakarta.validation.Validator;

@@ -1,4 +1,4 @@
-package core.framework.web.exception.support;
+package core.framework.web.exception;
 
 import java.util.List;
 

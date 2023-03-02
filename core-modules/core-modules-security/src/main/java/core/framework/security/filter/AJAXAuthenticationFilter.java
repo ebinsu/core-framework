@@ -1,7 +1,7 @@
 package core.framework.security.filter;
 
 import core.framework.json.JSON;
-import core.framework.web.exception.support.ExceptionResponse;
+import core.framework.web.exception.ExceptionResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

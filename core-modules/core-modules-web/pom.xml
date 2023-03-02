@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>core-framework</groupId>
+            <artifactId>core-modules-exception</artifactId>
+        </dependency>
+        <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
