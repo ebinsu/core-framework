@@ -9,41 +9,11 @@
         <groupId>core-framework</groupId>
         <version>${revision}</version>
     </parent>
-
+    <packaging>pom</packaging>
     <artifactId>core-modules-security</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>core-framework</groupId>
-            <artifactId>core-modules-json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>core-framework</groupId>
-            <artifactId>core-modules-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
+    <modules>
+        <module>core-modules-security-common</module>
+        <module>core-modules-security-undertow</module>
+    </modules>
 </project>

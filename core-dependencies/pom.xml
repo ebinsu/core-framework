@@ -24,7 +24,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.0.2${changelist}</revision>
+        <revision>1.0.3${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.mybatis>3.5.11</version.mybatis>
@@ -42,6 +42,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-security-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-security-undertow</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
                 <artifactId>core-modules-exception</artifactId>
