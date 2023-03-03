@@ -26,15 +26,13 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (!SecurityContext.isAnonymous(request.getMethod(), request.getRequestURI())) {
             HttpSession session = request.getSession(false);
-            if (session != null && hasPermissions(request, session)) {
-                filterChain.doFilter(request, response);
-            } else {
-                response.setStatus(HttpStatus.FORBIDDEN.value());
-                PrintWriter out = response.getWriter();
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                out.print(JSON.toJSON(new ExceptionResponse(ERROR_CODE, "Authorization failed.")));
-                out.flush();
+            if (session == null) {
+                responseError(response, HttpStatus.UNAUTHORIZED);
+                return;
+            }
+            if (!hasPermissions(request, session)) {
+                responseError(response, HttpStatus.FORBIDDEN);
+                return;
             }
         }
         filterChain.doFilter(request, response);
@@ -43,5 +41,16 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private boolean hasPermissions(HttpServletRequest request, HttpSession session) {
         Set<String> permissions = Optional.of(session.getAttribute("permissions")).map(m -> (Set<String>) m).orElse(Set.of());
         return SecurityContext.hasPermission(request.getMethod(), request.getRequestURI(), permissions);
+    }
+
+    private void responseError(HttpServletResponse response, HttpStatus httpStatus) throws IOException {
+        String errorCode = httpStatus.name();
+        String errorMessage = httpStatus.name();
+        response.setStatus(httpStatus.value());
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print(JSON.toJSON(new ExceptionResponse(errorCode, errorMessage)));
+        out.flush();
     }
 }

@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 /**
  * @author ebin
  */
-public class AJAXAuthenticationFilter extends OncePerRequestFilter {
+public class AuthenticationFilter extends OncePerRequestFilter {
     public static final String ERROR_CODE = "AUTHENTICATE_FAILED";
 
     @Override
