@@ -29,8 +29,10 @@ public class UsernamePasswordAuthMechanism extends AbstractAJAXAuthMechanism {
 
     @Override
     protected AuthenticationMechanismOutcome doAuthenticate(HttpServerExchange exchange, SecurityContext securityContext, byte[] requestBody) {
-        //TODO valid request
         AuthenticationRequest request = JSON.fromJSON(AuthenticationRequest.class, requestBody);
+        if (request.username == null || request.password == null) {
+            throw new Error();
+        }
         Account account = identityManager.verify(request.username, new PasswordCredential(request.password.toCharArray()));
         if (account == null) {
             securityContext.authenticationFailed(MESSAGES.authenticationFailed(request.username), UsernamePasswordAuthMechanism.NAME);

@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
 import org.springframework.core.env.Environment;
 
-import java.util.Objects;
-
 /**
  * @author ebin
  */
@@ -24,8 +22,9 @@ public class AJAXAuthCustomizer implements UndertowDeploymentInfoCustomizer {
     @Override
     public void customize(DeploymentInfo deploymentInfo) {
         LoginConfig loginConfig = Servlets.loginConfig(environment.getProperty("spring.application.name"));
+        deploymentInfo.setLoginConfig(loginConfig);
         AuthType authType = securityAuthProperties.getAuthType();
-        if (Objects.requireNonNull(authType) == AuthType.EMAIL_CODE) {
+        if (AuthType.EMAIL_CODE == authType) {
             loginConfig.addFirstAuthMethod(EmailCodeAuthMechanism.NAME);
             deploymentInfo.addAuthenticationMechanism(EmailCodeAuthMechanism.NAME, EmailCodeAuthMechanism.FACTORY);
         } else {

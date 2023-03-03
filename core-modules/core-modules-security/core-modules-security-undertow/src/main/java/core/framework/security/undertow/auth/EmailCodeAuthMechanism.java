@@ -9,6 +9,8 @@ import io.undertow.security.idm.Account;
 import io.undertow.security.idm.IdentityManager;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.form.FormParserFactory;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -28,14 +30,16 @@ public class EmailCodeAuthMechanism extends AbstractAJAXAuthMechanism {
 
     @Override
     protected AuthenticationMechanismOutcome doAuthenticate(HttpServerExchange exchange, SecurityContext securityContext, byte[] requestBody) {
-        //TODO valid request
         EmailCodeAuthRequest request = JSON.fromJSON(EmailCodeAuthRequest.class, requestBody);
+        if (!EmailValidator.getInstance().isValid(request.email) || StringUtils.hasLength(request.code) || request.code.length() == 6) {
+            throw new Error();
+        }
         Account account = identityManager.verify(request.email, new CodeCredential(request.code));
         if (account == null) {
-            securityContext.authenticationFailed(MESSAGES.authenticationFailed(request.email), UsernamePasswordAuthMechanism.NAME);
+            securityContext.authenticationFailed(MESSAGES.authenticationFailed(request.email), EmailCodeAuthMechanism.NAME);
             return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
         } else {
-            securityContext.authenticationComplete(account, UsernamePasswordAuthMechanism.NAME, true);
+            securityContext.authenticationComplete(account, EmailCodeAuthMechanism.NAME, true);
             return AuthenticationMechanismOutcome.AUTHENTICATED;
         }
     }

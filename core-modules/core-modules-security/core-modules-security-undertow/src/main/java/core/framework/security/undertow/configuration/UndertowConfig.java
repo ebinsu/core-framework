@@ -9,14 +9,14 @@ import org.springframework.context.annotation.Configuration;
  * @author ebin
  */
 @Configuration
-public class UndertowCustomizerConfig {
+public class UndertowConfig {
     @Bean
-    public AJAXAuthCustomizer undertowAJAXAuthenticationCustomizer() {
+    public AJAXAuthCustomizer ajaxAuthCustomizer() {
         return new AJAXAuthCustomizer();
     }
 
     @Bean
-    public IdentityManagerCustomizer undertowIdentityManagerCustomizer() {
+    public IdentityManagerCustomizer identityManagerCustomizer() {
         return new IdentityManagerCustomizer();
     }
 }

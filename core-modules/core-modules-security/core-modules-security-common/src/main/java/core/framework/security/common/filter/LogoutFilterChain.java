@@ -1,14 +1,12 @@
 package core.framework.security.common.filter;
 
-import org.springframework.http.HttpMethod;
-
 /**
  * @author ebin
  */
 public class LogoutFilterChain extends DefaultSecurityFilterChain {
-    public LogoutFilterChain() {
+    public LogoutFilterChain(String httpMethod, String uri) {
         super(
-                req -> req.getMethod().equals(HttpMethod.PUT.name()) && req.getRequestURI().equals("/logout"),
+                req -> req.getMethod().equals(httpMethod) && req.getRequestURI().equals(uri),
                 new LogoutFilter()
         );
     }

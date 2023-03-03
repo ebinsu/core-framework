@@ -13,6 +13,12 @@
     <artifactId>core-modules-security-undertow</artifactId>
     <dependencies>
         <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.7</version>
+        </dependency>
+
+        <dependency>
             <groupId>core-framework</groupId>
             <artifactId>core-modules-security-common</artifactId>
         </dependency>

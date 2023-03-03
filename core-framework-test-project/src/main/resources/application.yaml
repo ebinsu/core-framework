@@ -1,4 +1,7 @@
 spring:
+  security:
+    auth:
+      auth-type: "EMAIL_CODE"
   mail:
     username: 601054510@qq.com
     password: qfbmwzpiefskbcig

@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId>core-modules-security</artifactId>
+            <artifactId>core-modules-security-undertow</artifactId>
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
@@ -41,10 +41,10 @@
             <groupId>core-framework</groupId>
             <artifactId>core-modules-web</artifactId>
         </dependency>
-        <dependency>
+      <!--  <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

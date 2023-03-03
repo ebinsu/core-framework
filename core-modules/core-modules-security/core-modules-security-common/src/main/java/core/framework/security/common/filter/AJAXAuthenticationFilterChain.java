@@ -1,14 +1,12 @@
 package core.framework.security.common.filter;
 
-import org.springframework.http.HttpMethod;
-
 /**
  * @author ebin
  */
 public class AJAXAuthenticationFilterChain extends DefaultSecurityFilterChain {
-    public AJAXAuthenticationFilterChain() {
+    public AJAXAuthenticationFilterChain(String httpMethod, String uri) {
         super(
-                req -> req.getMethod().equals(HttpMethod.PUT.name()) && req.getRequestURI().equals("/login"),
+                req -> req.getMethod().equals(httpMethod) && req.getRequestURI().equals(uri),
                 new AJAXAuthenticationFilter()
         );
     }
