@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author ebin
  */
-@ConfigurationProperties(prefix = "spring.security.auth")
+@ConfigurationProperties(prefix = "spring.security")
 public class SecurityAuthProperties {
     private List<String> authorizationPatterns = List.of();
     private AuthenticationType authenticationType;

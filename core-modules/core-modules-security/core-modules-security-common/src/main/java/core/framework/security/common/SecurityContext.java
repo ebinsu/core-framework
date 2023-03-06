@@ -24,7 +24,7 @@ public final class SecurityContext {
         if (necessaryPermission != null) {
             return permissions.contains(necessaryPermission);
         }
-        return false;
+        return true;
     }
 
     static void addAnonymous(String anonymousEndpoint) {

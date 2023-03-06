@@ -37,7 +37,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     }
 
     private boolean hasPermissions(HttpServletRequest request, HttpSession session) {
-        Set<String> permissions = Optional.of(session.getAttribute("permissions")).map(m -> (Set<String>) m).orElse(Set.of());
+        Set<String> permissions = Optional.ofNullable(session.getAttribute("permissions")).map(m -> (Set<String>) m).orElse(Set.of());
         return SecurityContext.hasPermission(request.getMethod(), request.getRequestURI(), permissions);
     }
 

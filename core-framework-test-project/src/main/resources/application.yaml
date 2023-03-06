@@ -1,7 +1,8 @@
 spring:
   security:
-    auth:
-      auth-type: "EMAIL_CODE"
+    authentication-type: "EMAIL_CODE"
+    authorization-patterns:
+      - /test
   mail:
     username: 601054510@qq.com
     password: qfbmwzpiefskbcig
