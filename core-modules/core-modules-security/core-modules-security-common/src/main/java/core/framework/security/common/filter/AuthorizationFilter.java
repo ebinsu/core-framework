@@ -20,8 +20,6 @@ import java.util.Set;
  * @author ebin
  */
 public class AuthorizationFilter extends OncePerRequestFilter {
-    public static final String ERROR_CODE = "AUTHORIZATION_FAILED";
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (!SecurityContext.isAnonymous(request.getMethod(), request.getRequestURI())) {

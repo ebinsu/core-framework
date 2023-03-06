@@ -31,8 +31,8 @@ public class EmailCodeAuthMechanism extends AbstractAJAXAuthMechanism {
     @Override
     protected AuthenticationMechanismOutcome doAuthenticate(HttpServerExchange exchange, SecurityContext securityContext, byte[] requestBody) {
         EmailCodeAuthRequest request = JSON.fromJSON(EmailCodeAuthRequest.class, requestBody);
-        if (!EmailValidator.getInstance().isValid(request.email) || StringUtils.hasLength(request.code) || request.code.length() == 6) {
-            throw new Error();
+        if (!(EmailValidator.getInstance().isValid(request.email) && StringUtils.hasLength(request.code) && request.code.length() == 6)) {
+            throw new RequestValidFailedException();
         }
         Account account = identityManager.verify(request.email, new CodeCredential(request.code));
         if (account == null) {

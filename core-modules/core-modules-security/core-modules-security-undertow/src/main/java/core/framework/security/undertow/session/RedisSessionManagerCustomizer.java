@@ -7,10 +7,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 /**
  * @author ebin
  */
-public class UndertowRedisSessionManagerCustomizer implements UndertowDeploymentInfoCustomizer {
+public class RedisSessionManagerCustomizer implements UndertowDeploymentInfoCustomizer {
     private final StringRedisTemplate redisTemplate;
 
-    public UndertowRedisSessionManagerCustomizer(StringRedisTemplate redisTemplate) {
+    public RedisSessionManagerCustomizer(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

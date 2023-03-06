@@ -8,6 +8,8 @@ import io.undertow.util.Headers;
 import io.undertow.util.HttpString;
 import io.undertow.util.Methods;
 import io.undertow.util.StatusCodes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.xnio.IoUtils;
 import org.xnio.channels.StreamSourceChannel;
@@ -18,6 +20,7 @@ import java.nio.ByteBuffer;
  * @author ebin
  */
 public abstract class AbstractAJAXAuthMechanism implements AuthenticationMechanism {
+    private final Logger logger = LoggerFactory.getLogger(AbstractAJAXAuthMechanism.class);
 
     @Override
     public AuthenticationMechanismOutcome authenticate(HttpServerExchange exchange, SecurityContext securityContext) {
@@ -26,6 +29,9 @@ public abstract class AbstractAJAXAuthMechanism implements AuthenticationMechani
         MediaType contentType = contentTypeStr == null ? null : MediaType.valueOf(contentTypeStr);
         if (hasBody(contentLength, exchange.getRequestMethod()) && MediaType.APPLICATION_JSON.equals(contentType)) {
             StreamSourceChannel channel = exchange.getRequestChannel();
+            if (channel == null) {
+                return AuthenticationMechanismOutcome.NOT_ATTEMPTED;
+            }
             byte[] body = new byte[contentLength];
             try (PooledByteBuffer poolItem = exchange.getConnection().getByteBufferPool().allocate()) {
                 ByteBuffer buffer = poolItem.getBuffer();
@@ -46,6 +52,7 @@ public abstract class AbstractAJAXAuthMechanism implements AuthenticationMechani
                 return doAuthenticate(exchange, securityContext, body);
             } catch (Throwable e) {
                 IoUtils.safeClose(channel);
+                logger.error(e.getMessage(), e);
             }
         }
         return AuthenticationMechanismOutcome.NOT_ATTEMPTED;
