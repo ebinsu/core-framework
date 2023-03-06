@@ -1,41 +1,44 @@
 package core.framework.security.common.configuration;
 
-import core.framework.security.common.AuthType;
+import core.framework.security.common.AuthenticationType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.List;
 
 /**
  * @author ebin
  */
 @ConfigurationProperties(prefix = "spring.security.auth")
 public class SecurityAuthProperties {
-    private AuthType authType;
-    private String authMethod = "PUT";
-    private String authUrl = "/login";
+    private List<String> authorizationPatterns = List.of();
+    private AuthenticationType authenticationType;
+    private String authenticationMethod = "PUT";
+    private String authenticationUrl = "/login";
     private String logoutMethod = "PUT";
     private String logoutUrl = "/logout";
 
-    public AuthType getAuthType() {
-        return authType;
+    public AuthenticationType getAuthenticationType() {
+        return authenticationType;
     }
 
-    public void setAuthType(AuthType authType) {
-        this.authType = authType;
+    public void setAuthenticationType(AuthenticationType authenticationType) {
+        this.authenticationType = authenticationType;
     }
 
-    public String getAuthUrl() {
-        return authUrl;
+    public String getAuthenticationUrl() {
+        return authenticationUrl;
     }
 
-    public void setAuthUrl(String authUrl) {
-        this.authUrl = authUrl;
+    public void setAuthenticationUrl(String authenticationUrl) {
+        this.authenticationUrl = authenticationUrl;
     }
 
-    public String getAuthMethod() {
-        return authMethod;
+    public String getAuthenticationMethod() {
+        return authenticationMethod;
     }
 
-    public void setAuthMethod(String authMethod) {
-        this.authMethod = authMethod;
+    public void setAuthenticationMethod(String authenticationMethod) {
+        this.authenticationMethod = authenticationMethod;
     }
 
     public String getLogoutMethod() {
@@ -52,5 +55,13 @@ public class SecurityAuthProperties {
 
     public void setLogoutUrl(String logoutUrl) {
         this.logoutUrl = logoutUrl;
+    }
+
+    public List<String> getAuthorizationPatterns() {
+        return authorizationPatterns;
+    }
+
+    public void setAuthorizationPatterns(List<String> authorizationPatterns) {
+        this.authorizationPatterns = authorizationPatterns;
     }
 }

@@ -1,7 +1,7 @@
 package core.framework.security.undertow.auth;
 
 import core.framework.json.JSON;
-import core.framework.security.common.AuthType;
+import core.framework.security.common.AuthenticationType;
 import io.undertow.security.api.AuthenticationMechanism;
 import io.undertow.security.api.AuthenticationMechanismFactory;
 import io.undertow.security.api.SecurityContext;
@@ -19,7 +19,7 @@ import static io.undertow.UndertowMessages.MESSAGES;
  * @author ebin
  */
 public class UsernamePasswordAuthMechanism extends AbstractAJAXAuthMechanism {
-    public static final String NAME = AuthType.USERNAME_PASSWORD.name();
+    public static final String NAME = AuthenticationType.USERNAME_PASSWORD.name();
     public static final AuthenticationMechanismFactory FACTORY = new Factory();
     private final IdentityManager identityManager;
 

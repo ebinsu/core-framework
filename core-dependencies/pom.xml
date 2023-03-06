@@ -27,6 +27,9 @@
         <revision>1.0.3${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
+        <version.commons-validator>1.7</version.commons-validator>
+        <version.commons-io>2.11.0</version.commons-io>
+        <version.commons-lang3>3.12.0</version.commons-lang3>
         <version.mybatis>3.5.11</version.mybatis>
         <version.bson>4.7.1</version.bson>
         <version.logstash-logback-encoder>7.0.1</version.logstash-logback-encoder>
@@ -113,6 +116,21 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>${version.commons-validator}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${version.commons-io}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${version.commons-lang3}</version>
+            </dependency>
             <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>

@@ -1,6 +1,6 @@
 package core.framework.security.undertow.auth;
 
-import core.framework.security.common.AuthType;
+import core.framework.security.common.AuthenticationType;
 import core.framework.security.common.configuration.SecurityAuthProperties;
 import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.DeploymentInfo;
@@ -23,8 +23,8 @@ public class AJAXAuthCustomizer implements UndertowDeploymentInfoCustomizer {
     public void customize(DeploymentInfo deploymentInfo) {
         LoginConfig loginConfig = Servlets.loginConfig(environment.getProperty("spring.application.name"));
         deploymentInfo.setLoginConfig(loginConfig);
-        AuthType authType = securityAuthProperties.getAuthType();
-        if (AuthType.EMAIL_CODE == authType) {
+        AuthenticationType authType = securityAuthProperties.getAuthenticationType();
+        if (AuthenticationType.EMAIL_CODE == authType) {
             loginConfig.addFirstAuthMethod(EmailCodeAuthMechanism.NAME);
             deploymentInfo.addAuthenticationMechanism(EmailCodeAuthMechanism.NAME, EmailCodeAuthMechanism.FACTORY);
         } else {

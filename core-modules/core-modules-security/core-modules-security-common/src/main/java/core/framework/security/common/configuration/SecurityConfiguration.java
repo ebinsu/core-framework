@@ -28,9 +28,9 @@ public class SecurityConfiguration {
     @Bean
     public FilterChainProxy securityFilter() {
         FilterChainProxy filterChainProxy = new FilterChainProxy();
-        filterChainProxy.addSecurityFilterChain(new AuthenticationFilterChain(securityAuthProperties.getAuthMethod(), securityAuthProperties.getAuthUrl()));
+        filterChainProxy.addSecurityFilterChain(new AuthenticationFilterChain(securityAuthProperties.getAuthenticationMethod(), securityAuthProperties.getAuthenticationUrl()));
         filterChainProxy.addSecurityFilterChain(new LogoutFilterChain(securityAuthProperties.getLogoutMethod(), securityAuthProperties.getLogoutUrl()));
-        filterChainProxy.addSecurityFilterChain(new AuthorizationFilterChain());
+        filterChainProxy.addSecurityFilterChain(new AuthorizationFilterChain(securityAuthProperties.getAuthorizationPatterns()));
         return filterChainProxy;
     }
 }
