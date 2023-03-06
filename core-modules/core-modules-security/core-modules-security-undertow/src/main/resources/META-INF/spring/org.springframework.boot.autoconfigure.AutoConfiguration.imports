@@ -1,0 +1,2 @@
+core.framework.security.undertow.configuration.UndertowConfig
+core.framework.security.undertow.configuration.RedisSessionManagerConfiguration

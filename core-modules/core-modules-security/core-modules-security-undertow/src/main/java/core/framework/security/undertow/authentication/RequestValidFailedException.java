@@ -1,4 +1,4 @@
-package core.framework.security.undertow.auth;
+package core.framework.security.undertow.authentication;
 
 import core.framework.exception.AbstractApplicationException;
 

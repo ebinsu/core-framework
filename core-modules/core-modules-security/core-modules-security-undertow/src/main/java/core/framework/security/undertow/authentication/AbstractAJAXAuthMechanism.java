@@ -1,4 +1,4 @@
-package core.framework.security.undertow.auth;
+package core.framework.security.undertow.authentication;
 
 import io.undertow.connector.PooledByteBuffer;
 import io.undertow.security.api.AuthenticationMechanism;
@@ -22,8 +22,19 @@ import java.nio.ByteBuffer;
 public abstract class AbstractAJAXAuthMechanism implements AuthenticationMechanism {
     private final Logger logger = LoggerFactory.getLogger(AbstractAJAXAuthMechanism.class);
 
+    private final String method;
+    private final String uri;
+
+    public AbstractAJAXAuthMechanism(String method, String uri) {
+        this.method = method;
+        this.uri = uri;
+    }
+
     @Override
     public AuthenticationMechanismOutcome authenticate(HttpServerExchange exchange, SecurityContext securityContext) {
+        if (!(exchange.getRequestMethod().equalToString(method) && exchange.getRequestPath().equals(uri))) {
+            return AuthenticationMechanismOutcome.NOT_ATTEMPTED;
+        }
         int contentLength = (int) exchange.getRequestContentLength();
         String contentTypeStr = exchange.getRequestHeaders().getFirst(Headers.CONTENT_TYPE);
         MediaType contentType = contentTypeStr == null ? null : MediaType.valueOf(contentTypeStr);

@@ -1,18 +1,24 @@
-package core.framework.security.undertow.auth;
+package core.framework.security.undertow.authentication;
 
 import core.framework.security.common.AuthenticationType;
 import core.framework.security.common.configuration.SecurityAuthProperties;
 import io.undertow.servlet.Servlets;
+import io.undertow.servlet.api.AuthMethodConfig;
 import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.LoginConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
 import org.springframework.core.env.Environment;
 
+import java.util.Map;
+
 /**
  * @author ebin
  */
-public class AJAXAuthCustomizer implements UndertowDeploymentInfoCustomizer {
+public class AuthenticationCustomizer implements UndertowDeploymentInfoCustomizer {
+    public static final String AUTHENTICATION_METHOD = "AUTHENTICATION_METHOD";
+    public static final String AUTHENTICATION_URL = "AUTHENTICATION_URL";
+
     @Autowired
     private Environment environment;
 
@@ -24,11 +30,15 @@ public class AJAXAuthCustomizer implements UndertowDeploymentInfoCustomizer {
         LoginConfig loginConfig = Servlets.loginConfig(environment.getProperty("spring.application.name"));
         deploymentInfo.setLoginConfig(loginConfig);
         AuthenticationType authType = securityAuthProperties.getAuthenticationType();
+        Map<String, String> authProperties = Map.of(
+                AUTHENTICATION_METHOD, securityAuthProperties.getAuthenticationMethod(),
+                AUTHENTICATION_URL, securityAuthProperties.getAuthenticationUrl()
+        );
         if (AuthenticationType.EMAIL_CODE == authType) {
-            loginConfig.addFirstAuthMethod(EmailCodeAuthMechanism.NAME);
+            loginConfig.addFirstAuthMethod(new AuthMethodConfig(EmailCodeAuthMechanism.NAME, authProperties));
             deploymentInfo.addAuthenticationMechanism(EmailCodeAuthMechanism.NAME, EmailCodeAuthMechanism.FACTORY);
         } else {
-            loginConfig.addFirstAuthMethod(UsernamePasswordAuthMechanism.NAME);
+            loginConfig.addFirstAuthMethod(new AuthMethodConfig(UsernamePasswordAuthMechanism.NAME, authProperties));
             deploymentInfo.addAuthenticationMechanism(UsernamePasswordAuthMechanism.NAME, UsernamePasswordAuthMechanism.FACTORY);
         }
     }

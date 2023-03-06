@@ -1,6 +1,6 @@
 package core.framework.security.undertow.configuration;
 
-import core.framework.security.undertow.auth.AJAXAuthCustomizer;
+import core.framework.security.undertow.authentication.AuthenticationCustomizer;
 import core.framework.security.undertow.identity.IdentityManagerCustomizer;
 import core.framework.security.undertow.session.SessionConfigCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UndertowConfig {
     @Bean
-    public AJAXAuthCustomizer ajaxAuthCustomizer() {
-        return new AJAXAuthCustomizer();
+    public AuthenticationCustomizer ajaxAuthCustomizer() {
+        return new AuthenticationCustomizer();
     }
 
     @Bean

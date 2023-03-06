@@ -1,4 +1,4 @@
-package core.framework.security.undertow.auth;
+package core.framework.security.undertow.authentication;
 
 import core.framework.json.JSON;
 import core.framework.security.common.AuthenticationType;
@@ -7,10 +7,9 @@ import io.undertow.security.api.AuthenticationMechanismFactory;
 import io.undertow.security.api.SecurityContext;
 import io.undertow.security.idm.Account;
 import io.undertow.security.idm.IdentityManager;
+import io.undertow.security.idm.PasswordCredential;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.form.FormParserFactory;
-import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -19,40 +18,41 @@ import static io.undertow.UndertowMessages.MESSAGES;
 /**
  * @author ebin
  */
-public class EmailCodeAuthMechanism extends AbstractAJAXAuthMechanism {
-    public static final String NAME = AuthenticationType.EMAIL_CODE.name();
+public class UsernamePasswordAuthMechanism extends AbstractAJAXAuthMechanism {
+    public static final String NAME = AuthenticationType.USERNAME_PASSWORD.name();
     public static final AuthenticationMechanismFactory FACTORY = new Factory();
     private final IdentityManager identityManager;
 
-    public EmailCodeAuthMechanism(IdentityManager identityManager) {
+    public UsernamePasswordAuthMechanism(IdentityManager identityManager, String method, String uri) {
+        super(method, uri);
         this.identityManager = identityManager;
     }
 
     @Override
     protected AuthenticationMechanismOutcome doAuthenticate(HttpServerExchange exchange, SecurityContext securityContext, byte[] requestBody) {
-        EmailCodeAuthRequest request = JSON.fromJSON(EmailCodeAuthRequest.class, requestBody);
-        if (!(EmailValidator.getInstance().isValid(request.email) && StringUtils.hasLength(request.code) && request.code.length() == 6)) {
+        AuthenticationRequest request = JSON.fromJSON(AuthenticationRequest.class, requestBody);
+        if (request.username == null || request.password == null) {
             throw new RequestValidFailedException();
         }
-        Account account = identityManager.verify(request.email, new CodeCredential(request.code));
+        Account account = identityManager.verify(request.username, new PasswordCredential(request.password.toCharArray()));
         if (account == null) {
-            securityContext.authenticationFailed(MESSAGES.authenticationFailed(request.email), EmailCodeAuthMechanism.NAME);
+            securityContext.authenticationFailed(MESSAGES.authenticationFailed(request.username), UsernamePasswordAuthMechanism.NAME);
             return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
         } else {
-            securityContext.authenticationComplete(account, EmailCodeAuthMechanism.NAME, true);
+            securityContext.authenticationComplete(account, UsernamePasswordAuthMechanism.NAME, true);
             return AuthenticationMechanismOutcome.AUTHENTICATED;
         }
-    }
-
-    public static class EmailCodeAuthRequest {
-        public String email;
-        public String code;
     }
 
     public static final class Factory implements AuthenticationMechanismFactory {
         @Override
         public AuthenticationMechanism create(String mechanismName, IdentityManager identityManager, FormParserFactory formParserFactory, Map<String, String> properties) {
-            return new EmailCodeAuthMechanism(identityManager);
+            return new UsernamePasswordAuthMechanism(identityManager, properties.get(AuthenticationCustomizer.AUTHENTICATION_METHOD), properties.get(AuthenticationCustomizer.AUTHENTICATION_URL));
         }
+    }
+
+    public static final class AuthenticationRequest {
+        public String username;
+        public String password;
     }
 }
