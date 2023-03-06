@@ -8,9 +8,12 @@ import java.util.Set;
 /**
  * @author ebin
  */
-public class SecurityContext {
+public final class SecurityContext {
     private static final Set<String> ANONYMOUS = new HashSet<>();
     private static final Map<String, String> PERMISSION_MAPPING = new HashMap<>();
+
+    private SecurityContext() {
+    }
 
     public static boolean isAnonymous(String httpMethod, String path) {
         return ANONYMOUS.contains(httpMethod + "-" + path);
@@ -24,11 +27,11 @@ public class SecurityContext {
         return false;
     }
 
-    protected static void addAnonymous(String anonymousEndpoint) {
+    static void addAnonymous(String anonymousEndpoint) {
         ANONYMOUS.add(anonymousEndpoint);
     }
 
-    protected static void addPermission(String endpoint, String permission) {
+    static void addPermission(String endpoint, String permission) {
         PERMISSION_MAPPING.put(endpoint, permission);
     }
 }
