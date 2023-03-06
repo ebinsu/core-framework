@@ -8,10 +8,10 @@ import io.undertow.server.session.SessionCookieConfig;
 /**
  * @author ebin
  */
-public class MySessionConfig implements SessionConfig {
+public class HttpHeaderSessionConfig implements SessionConfig {
     private final SessionConfig delegate;
 
-    public MySessionConfig(SessionConfig delegate) {
+    public HttpHeaderSessionConfig(SessionConfig delegate) {
         this.delegate = delegate;
     }
 

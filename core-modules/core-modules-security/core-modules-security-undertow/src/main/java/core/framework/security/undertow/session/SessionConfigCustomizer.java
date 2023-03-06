@@ -10,6 +10,6 @@ public class SessionConfigCustomizer implements UndertowDeploymentInfoCustomizer
 
     @Override
     public void customize(DeploymentInfo deploymentInfo) {
-        deploymentInfo.setSessionConfigWrapper(new MySessionConfigWrapper());
+        deploymentInfo.setSessionConfigWrapper(new HttpHeaderSessionConfigWrapper());
     }
 }

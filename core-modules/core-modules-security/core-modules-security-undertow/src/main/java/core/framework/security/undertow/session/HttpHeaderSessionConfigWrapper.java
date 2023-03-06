@@ -7,9 +7,9 @@ import io.undertow.servlet.api.SessionConfigWrapper;
 /**
  * @author ebin
  */
-public class MySessionConfigWrapper implements SessionConfigWrapper {
+public class HttpHeaderSessionConfigWrapper implements SessionConfigWrapper {
     @Override
     public SessionConfig wrap(SessionConfig sessionConfig, Deployment deployment) {
-        return new MySessionConfig(sessionConfig);
+        return new HttpHeaderSessionConfig(sessionConfig);
     }
 }
