@@ -2,10 +2,12 @@ package core.framework.security.undertow.authentication;
 
 import core.framework.security.common.AuthenticationType;
 import core.framework.security.common.configuration.SecurityAuthProperties;
+import core.framework.security.common.configuration.SecuritySessionProperties;
 import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.AuthMethodConfig;
 import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.LoginConfig;
+import io.undertow.servlet.api.ServletSessionConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
 import org.springframework.core.env.Environment;
@@ -40,6 +42,19 @@ public class AuthenticationCustomizer implements UndertowDeploymentInfoCustomize
         } else {
             loginConfig.addFirstAuthMethod(new AuthMethodConfig(UsernamePasswordAuthMechanism.NAME, authProperties));
             deploymentInfo.addAuthenticationMechanism(UsernamePasswordAuthMechanism.NAME, UsernamePasswordAuthMechanism.FACTORY);
+        }
+
+        SecuritySessionProperties sessionProperties = securityAuthProperties.getSession();
+        if (sessionProperties != null) {
+            ServletSessionConfig servletSessionConfig = new ServletSessionConfig();
+            servletSessionConfig.setName(sessionProperties.getName());
+            servletSessionConfig.setPath(sessionProperties.getPath());
+            servletSessionConfig.setDomain(sessionProperties.getDomain());
+            servletSessionConfig.setSecure(sessionProperties.isSecure());
+            servletSessionConfig.setHttpOnly(sessionProperties.isHttpOnly());
+            servletSessionConfig.setMaxAge(sessionProperties.getMaxAge());
+
+            deploymentInfo.setServletSessionConfig(servletSessionConfig);
         }
     }
 }

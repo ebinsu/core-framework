@@ -16,7 +16,7 @@ import java.util.List;
  * @author ebin
  */
 public class VirtualFilterChain implements FilterChain {
-    private static final Log LOGGER = LogFactory.getLog(FilterChainProxy.class);
+    private static final Log LOGGER = LogFactory.getLog(VirtualFilterChain.class);
 
     private final FilterChain originalChain;
 

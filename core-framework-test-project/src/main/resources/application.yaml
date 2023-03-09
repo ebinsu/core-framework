@@ -3,6 +3,8 @@ spring:
     authentication-type: "EMAIL_CODE"
     authorization-patterns:
       - /test
+    session:
+      domain: "test"
   mail:
     username: 601054510@qq.com
     password: 123

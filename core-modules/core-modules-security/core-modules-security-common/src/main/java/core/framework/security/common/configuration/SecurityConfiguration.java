@@ -7,9 +7,12 @@ import core.framework.security.common.filter.AuthorizationFilterChain;
 import core.framework.security.common.filter.FilterChainProxy;
 import core.framework.security.common.filter.LogoutFilterChain;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * @author ebin
@@ -23,6 +26,12 @@ public class SecurityConfiguration {
     @Bean
     public SecurityContextInitializer securityContextInitializer() {
         return new SecurityContextInitializer();
+    }
+
+    @Bean
+    @ConditionalOnBean(CorsConfigurationSource.class)
+    public CorsFilter corsFilter(CorsConfigurationSource configSource) {
+        return new CorsFilter(configSource);
     }
 
     @Bean

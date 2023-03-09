@@ -17,6 +17,8 @@ public class SecurityAuthProperties {
     private String logoutMethod = "PUT";
     private String logoutUrl = "/logout";
 
+    private SecuritySessionProperties session;
+
     public AuthenticationType getAuthenticationType() {
         return authenticationType;
     }
@@ -63,5 +65,13 @@ public class SecurityAuthProperties {
 
     public void setAuthorizationPatterns(List<String> authorizationPatterns) {
         this.authorizationPatterns = authorizationPatterns;
+    }
+
+    public SecuritySessionProperties getSession() {
+        return session;
+    }
+
+    public void setSession(SecuritySessionProperties session) {
+        this.session = session;
     }
 }
