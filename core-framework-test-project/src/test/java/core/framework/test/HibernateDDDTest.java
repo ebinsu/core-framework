@@ -1,6 +1,9 @@
 package core.framework.test;
 
 import core.framework.jpa.hibernate.DomainEventTracking;
+import core.framework.test.hibernate.domain.AssignIdDomain;
+import core.framework.test.hibernate.domain.AssignIdDomainEvent;
+import core.framework.test.hibernate.domain.AssignIdEntity;
 import core.framework.test.hibernate.domain.TestDomain;
 import core.framework.test.hibernate.domain.TestDomainEvent;
 import core.framework.test.hibernate.domain.TestDomainPreEvent;
@@ -36,6 +39,27 @@ class HibernateDDDTest {
     EntityManager entityManager;
 
     @Test
+    public void testPersist1() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        AssignIdDomain assignIdDomain = new AssignIdDomain();
+        assignIdDomain.abc = 1L;
+        AssignIdEntity assignIdEntity = new AssignIdEntity();
+        entityManager.persist(assignIdDomain);
+        entityManager.persist(assignIdEntity);
+        transactionManager.commit(status);
+    }
+
+    @Test
+    public void testPersist2() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        AssignIdDomain assignIdDomain = new AssignIdDomain();
+        assignIdDomain.abc = 1L;
+        assignIdDomain.registerEvent(new AssignIdDomainEvent(assignIdDomain));
+        entityManager.persist(assignIdDomain);
+        transactionManager.commit(status);
+    }
+
+    @Test
     @Transactional
     public void testPersist() {
         TestDomain testDomain = new TestDomain("test");
@@ -63,6 +87,8 @@ class HibernateDDDTest {
         TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
         TestDomain testDomain = new TestDomain("test");
         TestDomainEvent testDomainEvent = new TestDomainEvent(testDomain);
+        TestEntity testEntity = new TestEntity("test");
+        testDomain.setEntity(testEntity);
         testDomain.registerEvent(testDomainEvent);
         testDomainRepo.persist(testDomain);
         transactionManager.commit(status);
