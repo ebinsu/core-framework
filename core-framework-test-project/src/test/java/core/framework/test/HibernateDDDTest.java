@@ -45,6 +45,7 @@ class HibernateDDDTest {
         assignIdDomain.abc = 1L;
         AssignIdEntity assignIdEntity = new AssignIdEntity();
         entityManager.persist(assignIdDomain);
+        entityManager.flush();
         entityManager.persist(assignIdEntity);
         transactionManager.commit(status);
     }
@@ -56,6 +57,38 @@ class HibernateDDDTest {
         assignIdDomain.abc = 1L;
         assignIdDomain.registerEvent(new AssignIdDomainEvent(assignIdDomain));
         entityManager.persist(assignIdDomain);
+        transactionManager.commit(status);
+    }
+
+    @Test
+    public void testPersist3() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        AssignIdDomain assignIdDomain = new AssignIdDomain();
+        assignIdDomain.abc = 1L;
+        assignIdDomain.registerEvent(new AssignIdDomainEvent(assignIdDomain));
+        entityManager.persist(assignIdDomain);
+        transactionManager.commit(status);
+
+        status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        AssignIdDomain assignIdDomain1 = entityManager.find(AssignIdDomain.class, 1L);
+        assignIdDomain1.name = "1";
+        assignIdDomain1.registerEvent(new AssignIdDomainEvent(assignIdDomain));
+        entityManager.merge(assignIdDomain1);
+        transactionManager.commit(status);
+    }
+
+    @Test
+    public void testPersist4() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        AssignIdDomain assignIdDomain = new AssignIdDomain();
+        assignIdDomain.abc = 1L;
+        entityManager.persist(assignIdDomain);
+        transactionManager.commit(status);
+
+        status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        AssignIdDomain assignIdDomain1 = entityManager.find(AssignIdDomain.class, 1L);
+        assignIdDomain1.registerEvent(new AssignIdDomainEvent(assignIdDomain));
+        entityManager.remove(assignIdDomain1);
         transactionManager.commit(status);
     }
 

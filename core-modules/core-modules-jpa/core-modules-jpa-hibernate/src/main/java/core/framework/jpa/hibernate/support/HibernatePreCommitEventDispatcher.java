@@ -3,43 +3,19 @@ package core.framework.jpa.hibernate.support;
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
 import core.framework.ddd.support.DomainEventBus;
-import org.hibernate.event.spi.PostDeleteEvent;
-import org.hibernate.event.spi.PostDeleteEventListener;
-import org.hibernate.event.spi.PostInsertEvent;
-import org.hibernate.event.spi.PostInsertEventListener;
-import org.hibernate.event.spi.PostUpdateEvent;
-import org.hibernate.event.spi.PostUpdateEventListener;
-import org.hibernate.persister.entity.EntityPersister;
+import org.hibernate.HibernateException;
+import org.hibernate.event.spi.FlushEntityEvent;
+import org.hibernate.event.spi.FlushEntityEventListener;
 
 import java.util.List;
 
 /**
  * @author ebin
  */
-public class HibernatePreCommitEventDispatcher implements PostInsertEventListener, PostUpdateEventListener, PostDeleteEventListener {
-
+public class HibernatePreCommitEventDispatcher implements FlushEntityEventListener {
     @Override
-    public void onPostDelete(PostDeleteEvent event) {
-        handleEntity(event.getEntity());
-    }
-
-    @Override
-    public void onPostInsert(PostInsertEvent event) {
-        handleEntity(event.getEntity());
-    }
-
-    @Override
-    public void onPostUpdate(PostUpdateEvent event) {
-        handleEntity(event.getEntity());
-    }
-
-    @Override
-    public boolean requiresPostCommitHandling(EntityPersister persister) {
-        return true;
-    }
-
-    private void handleEntity(Object entity) {
-        if (entity instanceof AggregateRoot<?, ?> aggregateRoot) {
+    public void onFlushEntity(FlushEntityEvent event) throws HibernateException {
+        if (event.getEntity() instanceof AggregateRoot<?, ?> aggregateRoot) {
             HibernateDomainEventStore.INSTANCE.persist(aggregateRoot);
             riseDomainEvent(aggregateRoot);
         }
@@ -51,5 +27,4 @@ public class HibernatePreCommitEventDispatcher implements PostInsertEventListene
             DomainEventBus.INSTANCE.publishPreCommitEvent(domainEvent);
         }
     }
-
 }

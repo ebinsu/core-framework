@@ -15,6 +15,8 @@ public class AssignIdDomain extends AbstractAggregateRoot<AssignIdDomain, Long> 
     @Id
     public Long abc;
 
+    public String name;
+
     @Override
     public Long getId() {
         return abc;
