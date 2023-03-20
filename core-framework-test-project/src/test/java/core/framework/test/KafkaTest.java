@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 
+import java.util.Optional;
+
 /**
  * @author ebin
  */
@@ -30,7 +32,7 @@ public class KafkaTest {
         demoMessage.id = "1";
         messagePublisher.publish("tp1", null, demoMessage);
         Thread.sleep(10000L);
-        TestDomain test = testDomainRepo.findByQueryString("TestDomainFinder.selectByName", "DemoMessage");
-        Assertions.assertNotNull(test);
+        Optional<TestDomain> test = testDomainRepo.findByQueryString("TestDomainFinder.selectByName", "DemoMessage");
+        Assertions.assertTrue(test.isPresent());
     }
 }

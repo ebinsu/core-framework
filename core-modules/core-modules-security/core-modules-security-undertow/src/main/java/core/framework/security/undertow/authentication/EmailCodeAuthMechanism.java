@@ -9,6 +9,7 @@ import io.undertow.security.idm.Account;
 import io.undertow.security.idm.IdentityManager;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.form.FormParserFactory;
+import io.undertow.servlet.handlers.ServletRequestContext;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.util.StringUtils;
 
@@ -41,6 +42,7 @@ public class EmailCodeAuthMechanism extends AbstractAJAXAuthMechanism {
             return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
         } else {
             securityContext.authenticationComplete(account, EmailCodeAuthMechanism.NAME, true);
+            exchange.getAttachment(ServletRequestContext.ATTACHMENT_KEY).getSession().setAttribute(SESSION_ACCOUNT_NAME, account);
             return AuthenticationMechanismOutcome.AUTHENTICATED;
         }
     }

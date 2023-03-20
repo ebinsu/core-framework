@@ -1,5 +1,6 @@
 package core.framework.test.web;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +19,7 @@ public class TestController {
     }
 
     @GetMapping("/test1")
-    public @ResponseBody String test1(@RequestBody Map<String, Object> map) {
+    public @ResponseBody String test1(@RequestBody Map<String, Object> map, HttpSession session) {
         return "Hello, World";
     }
 }

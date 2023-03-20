@@ -13,6 +13,7 @@ import org.hibernate.query.sqm.spi.NamedSqmQueryMemento;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
@@ -47,20 +48,20 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
     }
 
     @Override
-    public T findByQueryString(String queryString, Object... params) {
+    public Optional<T> findByQueryString(String queryString, Object... params) {
         NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
         final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
         if (namedSqmQueryMemento != null) {
             // name query
-            return findByNamedQuery(queryString, params);
+            return Optional.ofNullable(findByNamedQuery(queryString, params));
         }
         final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
         if (namedNativeDescriptor != null) {
             // native query
-            return findByNamedQuery(queryString, params);
+            return Optional.ofNullable(findByNamedQuery(queryString, params));
         }
         // sql
-        return findByNativeQuery(queryString, params);
+        return Optional.ofNullable(findByNativeQuery(queryString, params));
     }
 
     @Override
@@ -81,8 +82,8 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
     }
 
     @Override
-    public T find(ID id) {
-        return (id != null) ? getEntityManager().find(getEntityClass(), id) : null;
+    public Optional<T> find(ID id) {
+        return (id != null) ? Optional.ofNullable(getEntityManager().find(getEntityClass(), id)) : Optional.empty();
     }
 
     @Override

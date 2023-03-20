@@ -10,6 +10,7 @@ import io.undertow.security.idm.IdentityManager;
 import io.undertow.security.idm.PasswordCredential;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.form.FormParserFactory;
+import io.undertow.servlet.handlers.ServletRequestContext;
 
 import java.util.Map;
 
@@ -40,6 +41,7 @@ public class UsernamePasswordAuthMechanism extends AbstractAJAXAuthMechanism {
             return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
         } else {
             securityContext.authenticationComplete(account, UsernamePasswordAuthMechanism.NAME, true);
+            exchange.getAttachment(ServletRequestContext.ATTACHMENT_KEY).getSession().setAttribute(SESSION_ACCOUNT_NAME, account);
             return AuthenticationMechanismOutcome.AUTHENTICATED;
         }
     }
