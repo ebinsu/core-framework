@@ -20,7 +20,7 @@ import java.nio.ByteBuffer;
  * @author ebin
  */
 public abstract class AbstractAJAXAuthMechanism implements AuthenticationMechanism {
-    public final static String SESSION_ACCOUNT_NAME = "account";
+    public static final String SESSION_ACCOUNT_NAME = "account";
     private final Logger logger = LoggerFactory.getLogger(AbstractAJAXAuthMechanism.class);
 
     private final String method;
