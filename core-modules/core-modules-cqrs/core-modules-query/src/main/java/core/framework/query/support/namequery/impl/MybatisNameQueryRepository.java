@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @author ebin
  */
 public class MybatisNameQueryRepository implements NameQueryRepository {
-    private static final Pattern SELECT_SQL_PATTERN = Pattern.compile(".*(select|SELECT).*(from|FROM)\\s+.*(where|WHERE)?.*");
+    private static final Pattern SELECT_SQL_PATTERN = Pattern.compile(".*(select|SELECT)[\\s\\S]*(from|FROM)");
     private final Logger logger = LoggerFactory.getLogger(MybatisNameQueryRepository.class);
     private final Configuration configuration = new Configuration();
     private Map<String, QueryType> queryTypes;
@@ -42,7 +42,7 @@ public class MybatisNameQueryRepository implements NameQueryRepository {
 
     public void initQueryTypes() {
         Map<String, QueryType> queryTypes = new HashMap<>();
-        List<String> queryNames = this.configuration.getMappedStatementNames().stream().filter(f -> f.contains(".")).collect(Collectors.toList());
+        List<String> queryNames = this.configuration.getMappedStatementNames().stream().filter(f -> f.contains(".")).toList();
         queryNames.forEach(queryName -> {
             MappedStatement statement = this.configuration.getMappedStatement(queryName);
             BoundSql boundSql = statement.getBoundSql(Collections.emptyMap());
