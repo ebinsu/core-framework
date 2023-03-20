@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * @author ebin
  */
 public class MybatisNameQueryRepository implements NameQueryRepository {
-    private static final Pattern SELECT_SQL_PATTERN = Pattern.compile(".*(select|SELECT)[\\s\\S]*(from|FROM)");
+    public static final Pattern SELECT_SQL_PATTERN = Pattern.compile(".*(select|SELECT)[\\s\\S]*(from|FROM)");
     private final Logger logger = LoggerFactory.getLogger(MybatisNameQueryRepository.class);
     private final Configuration configuration = new Configuration();
     private Map<String, QueryType> queryTypes;
@@ -43,12 +43,10 @@ public class MybatisNameQueryRepository implements NameQueryRepository {
         Map<String, QueryType> queryTypes = new HashMap<>();
         List<String> queryNames = this.configuration.getMappedStatementNames().stream().filter(f -> f.contains(".")).toList();
         queryNames.forEach(queryName -> {
-            MappedStatement statement = this.configuration.getMappedStatement(queryName);
-            BoundSql boundSql = statement.getBoundSql(Collections.emptyMap());
-            queryTypes.put(queryName,
-                    SELECT_SQL_PATTERN.matcher(boundSql.getSql()).matches()
-                            ? QueryType.SQL
-                            : QueryType.NOSQL);
+//            MappedStatement statement = this.configuration.getMappedStatement(queryName);
+//            BoundSql boundSql = statement.getBoundSql(Collections.emptyMap());
+            // TODO SQL_PATTERN
+            queryTypes.put(queryName, QueryType.SQL);
         });
 
         this.queryTypes = Collections.unmodifiableMap(queryTypes);
