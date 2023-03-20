@@ -15,7 +15,7 @@ import java.util.Optional;
  * @author ebin
  */
 public class NameQueryService implements QueryService {
-    private static final String TOTAL_QUERY_NAME_SUFFIX = ".total";
+    private static final String TOTAL_QUERY_NAME_SUFFIX = "_total";
     private static final Logger LOGGER = LoggerFactory.getLogger(NameQueryService.class);
     protected final NameQueryRepository nameQueryRepository;
     protected final Map<QueryType, NameQueryExecutor> queryExecutors = new HashMap<>();
