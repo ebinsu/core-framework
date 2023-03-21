@@ -3,6 +3,8 @@ spring:
     show-sql: true
   security:
     authentication-type: "EMAIL_CODE"
+    authentication-url: "/security/login"
+    authentication-logout: "/security/logout"
   mail:
     username: 601054510@qq.com
     password: 123

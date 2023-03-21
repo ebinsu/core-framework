@@ -4,9 +4,11 @@ import io.undertow.connector.PooledByteBuffer;
 import io.undertow.security.api.AuthenticationMechanism;
 import io.undertow.security.api.SecurityContext;
 import io.undertow.server.HttpServerExchange;
+import io.undertow.util.AttachmentKey;
 import io.undertow.util.Headers;
 import io.undertow.util.HttpString;
 import io.undertow.util.Methods;
+import io.undertow.util.PathTemplateMatch;
 import io.undertow.util.StatusCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,8 @@ public abstract class AbstractAJAXAuthMechanism implements AuthenticationMechani
     public static final String SESSION_ACCOUNT_NAME = "account";
     private final Logger logger = LoggerFactory.getLogger(AbstractAJAXAuthMechanism.class);
 
+    public static final AttachmentKey<PathTemplateMatch> ATTACHMENT_KEY = AttachmentKey.create(PathTemplateMatch.class);
+
     private final String method;
     private final String uri;
 
@@ -33,6 +37,9 @@ public abstract class AbstractAJAXAuthMechanism implements AuthenticationMechani
 
     @Override
     public AuthenticationMechanismOutcome authenticate(HttpServerExchange exchange, SecurityContext securityContext) {
+        if (exchange.getAttachment(SkipSecurityContext.ATTACHMENT_KEY) != null) {
+            return AuthenticationMechanismOutcome.NOT_ATTEMPTED;
+        }
         if (!(exchange.getRequestMethod().equalToString(method) && exchange.getRequestPath().equals(uri))) {
             return AuthenticationMechanismOutcome.NOT_ATTEMPTED;
         }

@@ -18,7 +18,8 @@ public class EmailCodeIdentityManager implements IdentityManager {
 
     @Override
     public Account verify(String id, Credential credential) {
-        return new DefaultAccount("test", Set.of());
+        return null;
+//        return new DefaultAccount("test", Set.of());
     }
 
     @Override

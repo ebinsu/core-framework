@@ -56,5 +56,7 @@ public class AuthenticationCustomizer implements UndertowDeploymentInfoCustomize
 
             deploymentInfo.setServletSessionConfig(servletSessionConfig);
         }
+        deploymentInfo.addOuterHandlerChainWrapper(new SkipSecurityContextHandlerWrapper());
+        deploymentInfo.addInnerHandlerChainWrapper(new ResetSkipSecurityContextHandlerWrapper());
     }
 }
