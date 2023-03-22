@@ -4,10 +4,13 @@ package core.framework.security.common.configuration;
 import core.framework.security.common.SecurityContextInitializer;
 import core.framework.security.common.filter.AuthenticationFilterChain;
 import core.framework.security.common.filter.AuthorizationFilterChain;
+import core.framework.security.common.filter.AuthorizationPermissionSupplier;
+import core.framework.security.common.filter.EmptyAuthorizationPermissionSupplier;
 import core.framework.security.common.filter.FilterChainProxy;
 import core.framework.security.common.filter.LogoutFilterChain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,11 +38,17 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public FilterChainProxy securityFilter() {
+    @ConditionalOnMissingBean
+    public AuthorizationPermissionSupplier emptyAuthorizationPermissionSupplier() {
+        return new EmptyAuthorizationPermissionSupplier();
+    }
+
+    @Bean
+    public FilterChainProxy securityFilter(AuthorizationPermissionSupplier authorizationPermissionSupplier) {
         FilterChainProxy filterChainProxy = new FilterChainProxy();
         filterChainProxy.addSecurityFilterChain(new AuthenticationFilterChain(securityAuthProperties.getAuthenticationMethod(), securityAuthProperties.getAuthenticationUrl()));
         filterChainProxy.addSecurityFilterChain(new LogoutFilterChain(securityAuthProperties.getLogoutMethod(), securityAuthProperties.getLogoutUrl()));
-        filterChainProxy.addSecurityFilterChain(new AuthorizationFilterChain(securityAuthProperties.getAuthorizationPatterns()));
+        filterChainProxy.addSecurityFilterChain(new AuthorizationFilterChain(securityAuthProperties.getAuthorizationPatterns(), authorizationPermissionSupplier));
         return filterChainProxy;
     }
 }

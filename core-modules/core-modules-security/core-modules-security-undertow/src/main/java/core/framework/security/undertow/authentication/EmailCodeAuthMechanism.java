@@ -2,6 +2,7 @@ package core.framework.security.undertow.authentication;
 
 import core.framework.json.JSON;
 import core.framework.security.common.AuthenticationType;
+import core.framework.security.undertow.UndertowSessionConst;
 import io.undertow.security.api.AuthenticationMechanism;
 import io.undertow.security.api.AuthenticationMechanismFactory;
 import io.undertow.security.api.SecurityContext;
@@ -42,7 +43,7 @@ public class EmailCodeAuthMechanism extends AbstractAJAXAuthMechanism {
             return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
         } else {
             securityContext.authenticationComplete(account, EmailCodeAuthMechanism.NAME, true);
-            exchange.getAttachment(ServletRequestContext.ATTACHMENT_KEY).getSession().setAttribute(SESSION_ACCOUNT_NAME, account);
+            exchange.getAttachment(ServletRequestContext.ATTACHMENT_KEY).getSession().setAttribute(UndertowSessionConst.ACCOUNT, account);
             return AuthenticationMechanismOutcome.AUTHENTICATED;
         }
     }

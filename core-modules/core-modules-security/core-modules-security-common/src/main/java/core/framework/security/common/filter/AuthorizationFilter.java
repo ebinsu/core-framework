@@ -20,6 +20,12 @@ import java.util.Set;
  * @author ebin
  */
 public class AuthorizationFilter extends OncePerRequestFilter {
+    private final AuthorizationPermissionSupplier permissionSupplier;
+
+    public AuthorizationFilter(AuthorizationPermissionSupplier permissionSupplier) {
+        this.permissionSupplier = permissionSupplier;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (!SecurityContext.isAnonymous(request.getMethod(), request.getRequestURI())) {
