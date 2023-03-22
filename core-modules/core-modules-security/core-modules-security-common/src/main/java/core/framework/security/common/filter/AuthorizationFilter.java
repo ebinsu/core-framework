@@ -13,7 +13,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -43,7 +42,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     }
 
     private boolean hasPermissions(HttpServletRequest request, HttpSession session) {
-        Set<String> permissions = Optional.ofNullable(session.getAttribute("permissions")).map(m -> (Set<String>) m).orElse(Set.of());
+        Set<String> permissions = permissionSupplier.getPermissions(session);
         return SecurityContext.hasPermission(request.getMethod(), request.getRequestURI(), permissions);
     }
 
