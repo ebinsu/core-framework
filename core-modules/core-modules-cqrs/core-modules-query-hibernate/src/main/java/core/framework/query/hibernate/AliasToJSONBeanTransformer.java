@@ -36,6 +36,7 @@ public class AliasToJSONBeanTransformer implements TupleTransformer<Object> {
             if (alias != null) {
                 try {
                     Field declaredField = resultClass.getDeclaredField(camelCase(alias));
+                    declaredField.setAccessible(true);
                     declaredField.set(result, tuple[i]);
                 } catch (NoSuchFieldException
                          | IllegalAccessException e) {
