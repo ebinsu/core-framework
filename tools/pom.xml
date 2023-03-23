@@ -9,7 +9,8 @@
     <artifactId>tools</artifactId>
 
     <modules>
-        <module>core-checkstyle-plugin</module>
-        <module>extending-checkstyle</module>
+        <!--        <module>core-checkstyle-plugin</module>-->
+        <!--        <module>extending-checkstyle</module>-->
+        <module>spring-docker-package-maven-plugin</module>
     </modules>
 </project>

@@ -24,7 +24,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.0.19${changelist}</revision>
+        <revision>1.0.20${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.commons-validator>1.7</version.commons-validator>
