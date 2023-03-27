@@ -5,6 +5,8 @@ spring:
     authentication-type: "EMAIL_CODE"
     authentication-url: "/security/login"
     authentication-logout: "/security/logout"
+    authorization-patterns:
+      - /**
   mail:
     username: 601054510@qq.com
     password: 123

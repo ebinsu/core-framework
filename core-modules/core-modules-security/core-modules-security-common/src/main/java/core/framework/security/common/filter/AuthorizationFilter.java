@@ -1,7 +1,7 @@
 package core.framework.security.common.filter;
 
 import core.framework.json.JSON;
-import core.framework.security.common.SecurityContext;
+import core.framework.security.common.SecurityContextV2;
 import core.framework.web.exception.ExceptionResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,14 +20,16 @@ import java.util.Set;
  */
 public class AuthorizationFilter extends OncePerRequestFilter {
     private final AuthorizationPermissionSupplier permissionSupplier;
+    private final SecurityContextV2 securityContext;
 
-    public AuthorizationFilter(AuthorizationPermissionSupplier permissionSupplier) {
+    public AuthorizationFilter(AuthorizationPermissionSupplier permissionSupplier, SecurityContextV2 securityContext) {
         this.permissionSupplier = permissionSupplier;
+        this.securityContext = securityContext;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (!SecurityContext.isAnonymous(request.getMethod(), request.getRequestURI())) {
+        if (!securityContext.isAnonymous(request)) {
             HttpSession session = request.getSession(false);
             if (session == null) {
                 responseError(response, HttpStatus.UNAUTHORIZED);
@@ -43,7 +45,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     private boolean hasPermissions(HttpServletRequest request, HttpSession session) {
         Set<String> permissions = permissionSupplier.getPermissions(session);
-        return SecurityContext.hasPermission(request.getMethod(), request.getRequestURI(), permissions);
+        return securityContext.hasPermission(request, permissions);
     }
 
     private void responseError(HttpServletResponse response, HttpStatus httpStatus) throws IOException {

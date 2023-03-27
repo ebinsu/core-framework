@@ -22,8 +22,8 @@
         <module>core-modules-shared</module>
         <module>core-modules-cqrs</module>
         <module>core-modules-kafka</module>
-        <module>core-modules-web</module>
         <module>core-modules-security</module>
+        <module>core-modules-web</module>
     </modules>
 
     <build>

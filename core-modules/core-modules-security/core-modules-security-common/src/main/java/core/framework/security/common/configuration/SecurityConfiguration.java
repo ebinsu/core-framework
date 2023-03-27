@@ -1,7 +1,7 @@
 package core.framework.security.common.configuration;
 
 
-import core.framework.security.common.SecurityContextInitializer;
+import core.framework.security.common.SecurityContextV2;
 import core.framework.security.common.filter.AuthenticationFilterChain;
 import core.framework.security.common.filter.AuthorizationFilterChain;
 import core.framework.security.common.filter.AuthorizationPermissionSupplier;
@@ -27,11 +27,6 @@ public class SecurityConfiguration {
     private SecurityAuthProperties securityAuthProperties;
 
     @Bean
-    public SecurityContextInitializer securityContextInitializer() {
-        return new SecurityContextInitializer();
-    }
-
-    @Bean
     @ConditionalOnBean(CorsConfigurationSource.class)
     public CorsFilter corsFilter(CorsConfigurationSource configSource) {
         return new CorsFilter(configSource);
@@ -44,11 +39,16 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public FilterChainProxy securityFilter(AuthorizationPermissionSupplier authorizationPermissionSupplier) {
+    public SecurityContextV2 securityContext() {
+        return new SecurityContextV2();
+    }
+
+    @Bean
+    public FilterChainProxy securityFilter(AuthorizationPermissionSupplier authorizationPermissionSupplier, SecurityContextV2 securityContext) {
         FilterChainProxy filterChainProxy = new FilterChainProxy();
         filterChainProxy.addSecurityFilterChain(new AuthenticationFilterChain(securityAuthProperties.getAuthenticationMethod(), securityAuthProperties.getAuthenticationUrl()));
         filterChainProxy.addSecurityFilterChain(new LogoutFilterChain(securityAuthProperties.getLogoutMethod(), securityAuthProperties.getLogoutUrl()));
-        filterChainProxy.addSecurityFilterChain(new AuthorizationFilterChain(securityAuthProperties.getAuthorizationPatterns(), authorizationPermissionSupplier));
+        filterChainProxy.addSecurityFilterChain(new AuthorizationFilterChain(securityAuthProperties.getAuthorizationPatterns(), authorizationPermissionSupplier, securityContext));
         return filterChainProxy;
     }
 }
