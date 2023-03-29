@@ -36,6 +36,8 @@ public class SecurityContextV2 {
             if (chain != null) {
                 HandlerMethod handler = (HandlerMethod) chain.getHandler();
                 return doValidPermission(handler, permissions);
+            } else {
+                return true;
             }
         } catch (Exception ignored) {
 
