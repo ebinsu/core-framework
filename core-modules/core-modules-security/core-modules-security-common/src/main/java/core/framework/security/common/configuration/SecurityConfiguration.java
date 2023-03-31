@@ -48,7 +48,12 @@ public class SecurityConfiguration {
         FilterChainProxy filterChainProxy = new FilterChainProxy();
         filterChainProxy.addSecurityFilterChain(new AuthenticationFilterChain(securityAuthProperties.getAuthenticationMethod(), securityAuthProperties.getAuthenticationUrl()));
         filterChainProxy.addSecurityFilterChain(new LogoutFilterChain(securityAuthProperties.getLogoutMethod(), securityAuthProperties.getLogoutUrl()));
-        filterChainProxy.addSecurityFilterChain(new AuthorizationFilterChain(securityAuthProperties.getAuthorizationPatterns(), authorizationPermissionSupplier, securityContext));
+        filterChainProxy.addSecurityFilterChain(
+                new AuthorizationFilterChain(securityAuthProperties.getAuthorizationPatterns(),
+                        securityAuthProperties.getAuthorizationExcludePatterns(),
+                        authorizationPermissionSupplier,
+                        securityContext)
+        );
         return filterChainProxy;
     }
 }

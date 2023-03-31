@@ -9,15 +9,21 @@ import java.util.List;
  * @author ebin
  */
 public class AuthorizationRequestMatcher implements RequestMatcher {
-    public AntPathMatcher antPathMatcher = new AntPathMatcher();
-    public final List<String> patterns;
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private final List<String> patterns;
+    private final List<String> excludePatterns;
 
-    public AuthorizationRequestMatcher(List<String> patterns) {
+    public AuthorizationRequestMatcher(List<String> patterns, List<String> excludePatterns) {
         this.patterns = patterns;
+        this.excludePatterns = excludePatterns;
     }
 
     @Override
     public boolean matches(HttpServletRequest request) {
-        return patterns.stream().anyMatch(p -> antPathMatcher.match(p, request.getRequestURI()));
+        if (excludePatterns.stream().anyMatch(p -> antPathMatcher.match(p, request.getRequestURI()))) {
+            return false;
+        } else {
+            return patterns.stream().anyMatch(p -> antPathMatcher.match(p, request.getRequestURI()));
+        }
     }
 }

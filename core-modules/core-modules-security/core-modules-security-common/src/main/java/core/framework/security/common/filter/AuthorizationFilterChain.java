@@ -8,9 +8,12 @@ import java.util.List;
  * @author ebin
  */
 public class AuthorizationFilterChain extends DefaultSecurityFilterChain {
-    public AuthorizationFilterChain(List<String> patterns, AuthorizationPermissionSupplier permissionSupplier, SecurityContextV2 securityContext) {
+    public AuthorizationFilterChain(List<String> patterns,
+                                    List<String> excludePatterns,
+                                    AuthorizationPermissionSupplier permissionSupplier,
+                                    SecurityContextV2 securityContext) {
         super(
-                new AuthorizationRequestMatcher(patterns),
+                new AuthorizationRequestMatcher(patterns, excludePatterns),
                 new AuthorizationFilter(permissionSupplier, securityContext)
         );
     }

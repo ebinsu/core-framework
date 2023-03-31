@@ -11,6 +11,7 @@ import java.util.List;
 @ConfigurationProperties(prefix = "spring.security")
 public class SecurityAuthProperties {
     private List<String> authorizationPatterns = List.of();
+    private List<String> authorizationExcludePatterns = List.of();
     private AuthenticationType authenticationType;
     private String authenticationMethod = "PUT";
     private String authenticationUrl = "/login";
@@ -73,5 +74,13 @@ public class SecurityAuthProperties {
 
     public void setSession(SecuritySessionProperties session) {
         this.session = session;
+    }
+
+    public List<String> getAuthorizationExcludePatterns() {
+        return authorizationExcludePatterns;
+    }
+
+    public void setAuthorizationExcludePatterns(List<String> authorizationExcludePatterns) {
+        this.authorizationExcludePatterns = authorizationExcludePatterns;
     }
 }
