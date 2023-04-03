@@ -1,29 +1,29 @@
 spring:
   jpa:
     show-sql: true
-  security:
-    authentication-type: "EMAIL_CODE"
-    authentication-url: "/security/login"
-    authentication-logout: "/security/logout"
-    authorization-patterns:
-      - /**
-  mail:
-    username: 601054510@qq.com
-    password: 123
-    host: smtp.qq.com
-    port: 465
-    properties:
-      mail:
-        transport:
-          protocol: smtp
-        smtp:
-          socketFactory:
-            class: javax.net.ssl.SSLSocketFactory
-          port: ${spring.mail.port}
-          auth: true
-          starttls:
-            enable: true
-            required: true
+  #  security:
+  #    authentication-type: "EMAIL_CODE"
+  #    authentication-url: "/security/login"
+  #    authentication-logout: "/security/logout"
+  #    authorization-patterns:
+  #      - /**
+  #  mail:
+  #    username: 601054510@qq.com
+  #    password: 123
+  #    host: smtp.qq.com
+  #    port: 465
+  #    properties:
+  #      mail:
+  #        transport:
+  #          protocol: smtp
+  #        smtp:
+  #          socketFactory:
+  #            class: javax.net.ssl.SSLSocketFactory
+  #          port: ${spring.mail.port}
+  #          auth: true
+  #          starttls:
+  #            enable: true
+  #            required: true
   data:
     redis:
       host: 192.168.136.128

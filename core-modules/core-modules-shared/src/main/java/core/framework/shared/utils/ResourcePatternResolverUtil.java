@@ -14,12 +14,14 @@ import java.util.stream.Collectors;
  * @author ebin
  */
 public final class ResourcePatternResolverUtil {
+    public static final String CLASSPATH_PREFIX = "classpath:";
+
     private ResourcePatternResolverUtil() {
     }
 
     public static List<Resource> resolve(String locationPattern, Predicate<Resource>... predicate) throws IOException {
         ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resourceResolver.getResources(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + locationPattern);
+        Resource[] resources = resourceResolver.getResources(CLASSPATH_PREFIX + locationPattern);
         Predicate<Resource> resourcePredicate;
         if (predicate != null && predicate.length > 1) {
             resourcePredicate = predicate[0];

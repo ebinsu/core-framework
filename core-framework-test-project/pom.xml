@@ -41,10 +41,10 @@
             <groupId>core-framework</groupId>
             <artifactId>core-modules-web</artifactId>
         </dependency>
-      <!--  <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>-->
+        <!--  <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-data-redis</artifactId>
+          </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -77,20 +77,20 @@
 
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>core-framework</groupId>-->
-<!--                <artifactId>core-checkstyle-plugin</artifactId>-->
-<!--                <version>1.0-0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>validate</id>-->
-<!--                        <phase>validate</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>core-checkstyle-file</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>core-framework</groupId>-->
+            <!--                <artifactId>core-checkstyle-plugin</artifactId>-->
+            <!--                <version>1.0-0</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>validate</id>-->
+            <!--                        <phase>validate</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>core-checkstyle-file</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
