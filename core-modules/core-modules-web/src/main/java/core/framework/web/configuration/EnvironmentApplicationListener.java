@@ -16,6 +16,7 @@ public class EnvironmentApplicationListener implements ApplicationListener<Appli
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
         Properties props = new Properties();
         props.put("server.shutdown", "graceful");
+        props.put("management.health.defaults.enabled", false);
         props.put("management.endpoint.health.probes.enabled", true);
         event.getEnvironment().getPropertySources().addFirst(new PropertiesPropertySource("web-override-properties", props));
     }
