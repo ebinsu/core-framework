@@ -1,13 +1,13 @@
 package core.framework.web.exception;
 
-import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author ebin
  */
 public interface ExceptionHandler {
-    ExceptionResponse handleHeaderAndMessage(HttpServletResponse response, Exception ex);
+    ExceptionResponse getResponseMessage(HttpServletRequest request, Exception ex);
 
     boolean support(Exception ex);
 

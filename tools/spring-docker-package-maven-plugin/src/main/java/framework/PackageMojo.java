@@ -102,7 +102,7 @@ public class PackageMojo extends AbstractMojo {
             out.write("FROM " + baseImage + "\n");
             out.write("RUN addgroup --system app && adduser --system --no-create-home --ingroup app app\n");
             out.write("USER app\n");
-            out.write("VOLUME /app\n");
+            out.write("WORKDIR /app\n");
             out.write("COPY run.sh ./\n");
             out.write("COPY dependencies/ ./\n");
             out.write("COPY spring-boot-loader/ ./\n");

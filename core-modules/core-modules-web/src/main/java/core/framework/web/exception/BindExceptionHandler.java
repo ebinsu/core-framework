@@ -1,6 +1,6 @@
 package core.framework.web.exception;
 
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -9,24 +9,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static core.framework.web.exception.DefaultHandlerExceptionResolver.ERROR_CODE_ATTRIBUTE;
+
 /**
  * @author ebin
  */
 public class BindExceptionHandler implements ExceptionHandler {
     @Override
-    public ExceptionResponse handleHeaderAndMessage(HttpServletResponse response, Exception ex) {
+    public ExceptionResponse getResponseMessage(HttpServletRequest request, Exception ex) {
         StringBuilder errorMsg = new StringBuilder();
         Map<String, List<FieldError>> errorMap = ((BindException) ex).getFieldErrors().stream().collect(Collectors.groupingBy(k -> k.getField()));
         errorMap.forEach((filed, errors) ->
                 errorMsg.append(filed)
-                .append(
-                        errors.stream()
-                                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                                .collect(Collectors.joining(","))
-                )
-                .append(';'));
-        response.setHeader("error_code", "INTERNAL_SERVER_ERROR");
-        return responseMessage(errorMsg.toString(), "INTERNAL_ERROR");
+                        .append(
+                                errors.stream()
+                                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                                        .collect(Collectors.joining(","))
+                        )
+                        .append(';'));
+        return responseMessage(errorMsg.toString(), (String) request.getAttribute(ERROR_CODE_ATTRIBUTE));
     }
 
     @Override
