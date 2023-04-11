@@ -2,6 +2,7 @@ package core.framework.jpa.hibernate.configuration;
 
 import core.framework.jpa.hibernate.support.DDDPersistenceManagedTypesScanner;
 import core.framework.jpa.hibernate.support.HibernateDomainEventStoreInitializer;
+import jakarta.persistence.SharedCacheMode;
 import jakarta.persistence.ValidationMode;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.BeanFactory;
@@ -31,6 +32,7 @@ public class HibernateConfiguration {
             prop.putIfAbsent(AvailableSettings.JAKARTA_VALIDATION_MODE, ValidationMode.AUTO);
             prop.putIfAbsent(AvailableSettings.ISOLATION, Connection.TRANSACTION_READ_COMMITTED);
             prop.putIfAbsent(AvailableSettings.STATEMENT_FETCH_SIZE, 64);
+            prop.putIfAbsent(AvailableSettings.JAKARTA_SHARED_CACHE_MODE, SharedCacheMode.UNSPECIFIED);
         };
     }
 

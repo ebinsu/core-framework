@@ -24,7 +24,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.0.28${changelist}</revision>
+        <revision>1.0.29${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.commons-validator>1.7</version.commons-validator>
@@ -33,6 +33,8 @@
         <version.mybatis>3.5.11</version.mybatis>
         <version.bson>4.7.1</version.bson>
         <version.logstash-logback-encoder>7.0.1</version.logstash-logback-encoder>
+        <version.hibernate-commons>6.0.2.Final</version.hibernate-commons>
+        <version.jandex>2.4.2.Final</version.jandex>
 
         <version.flatten-maven-plugin>1.2.2</version.flatten-maven-plugin>
         <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
@@ -145,6 +147,28 @@
                 <groupId>net.logstash.logback</groupId>
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${version.logstash-logback-encoder}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.common</groupId>
+                <artifactId>hibernate-commons-annotations</artifactId>
+                <version>${version.hibernate-commons}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>xml-apis</artifactId>
+                        <groupId>xml-apis</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jandex</artifactId>
+                <version>${version.jandex}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>xml-apis</artifactId>
+                        <groupId>xml-apis</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
