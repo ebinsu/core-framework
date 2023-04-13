@@ -1,8 +1,8 @@
 package core.framework.security.common.interceptor;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,10 +26,9 @@ public class LogoutOperation implements SecurityWebMvcEndpointHandlerMapping.Ser
 
     @Override
     public Object handle(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.logout();
-        } catch (ServletException ignored) {
-
+        HttpSession session = request.getSession();
+        if (session != null) {
+            session.invalidate();
         }
         return Map.of();
     }

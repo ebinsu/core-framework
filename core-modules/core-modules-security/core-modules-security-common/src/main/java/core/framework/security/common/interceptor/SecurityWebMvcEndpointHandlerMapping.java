@@ -46,8 +46,6 @@ public class SecurityWebMvcEndpointHandlerMapping extends RequestMappingInfoHand
             RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths(operation.getPath())
                     .options(builderConfiguration)
                     .methods(operation.getMethod())
-                    .consumes(operation.getType().toString())
-                    .produces(operation.getType().toString())
                     .build();
             registerMapping(
                     requestMappingInfo,
