@@ -1,12 +1,26 @@
 spring:
+  web:
+    cors:
+      mappings:
+        - mapping: /**
+          allowed-origins:
+            - http://dev.app.com
+          allowed-methods:
+            - "*"
+          allow-credentials: true
   jpa:
     show-sql: true
-  #  security:
-  #    authentication-type: "EMAIL_CODE"
-  #    authentication-url: "/security/login"
-  #    authentication-logout: "/security/logout"
-  #    authorization-patterns:
-  #      - /**
+  security:
+    login-request:
+      authentication-type: "USERNAME_PASSWORD"
+      url: "/security/login"
+    logout-request:
+      url: "/security/logout"
+    patterns:
+      - /**
+    excludePatterns:
+      - /test
+    security-type: INTERCEPTOR
   #  mail:
   #    username: 601054510@qq.com
   #    password: 123

@@ -3,14 +3,18 @@ package core.framework.web.configuration;
 import core.framework.web.exception.DefaultHandlerExceptionResolver;
 import core.framework.web.exception.ExceptionHandlerCustomizer;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 @Configuration
 public class DefaultWebMvcConfigurer implements WebMvcConfigurer {
+    @Autowired
+    private CORSProperties corsProperties;
     private final ObjectProvider<ExceptionHandlerCustomizer> exceptionHandlerCustomizers;
 
     public DefaultWebMvcConfigurer(ObjectProvider<ExceptionHandlerCustomizer> exceptionHandlerCustomizers) {
@@ -24,5 +28,17 @@ public class DefaultWebMvcConfigurer implements WebMvcConfigurer {
             exceptionHandlerCustomizer.exceptionHandlers().forEach(defaultHandlerExceptionResolver::addExceptionHandler);
         });
         resolvers.add(defaultHandlerExceptionResolver);
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        if (corsProperties.getMappings() != null) {
+            corsProperties.getMappings().forEach(corsMapping ->
+                    registry.addMapping(corsMapping.getMapping())
+                            .allowedOrigins(corsMapping.getAllowedOrigins().toArray(new String[]{}))
+                            .allowedMethods(corsMapping.getAllowedMethods().toArray(new String[]{}))
+                            .allowCredentials(corsMapping.isAllowCredentials())
+            );
+        }
     }
 }

@@ -1,59 +1,26 @@
 package core.framework.security.common.configuration;
 
 
-import core.framework.security.common.SecurityContextV2;
-import core.framework.security.common.filter.AuthenticationFilterChain;
-import core.framework.security.common.filter.AuthorizationFilterChain;
 import core.framework.security.common.filter.AuthorizationPermissionSupplier;
 import core.framework.security.common.filter.EmptyAuthorizationPermissionSupplier;
-import core.framework.security.common.filter.FilterChainProxy;
-import core.framework.security.common.filter.LogoutFilterChain;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 /**
  * @author ebin
  */
 @Configuration
-@EnableConfigurationProperties(SecurityAuthProperties.class)
+@EnableConfigurationProperties(SecurityProperties.class)
 public class SecurityConfiguration {
     @Autowired
-    private SecurityAuthProperties securityAuthProperties;
-
-    @Bean
-    @ConditionalOnBean(CorsConfigurationSource.class)
-    public CorsFilter corsFilter(CorsConfigurationSource configSource) {
-        return new CorsFilter(configSource);
-    }
+    private SecurityProperties securityAuthProperties;
 
     @Bean
     @ConditionalOnMissingBean
     public AuthorizationPermissionSupplier emptyAuthorizationPermissionSupplier() {
         return new EmptyAuthorizationPermissionSupplier();
-    }
-
-    @Bean
-    public SecurityContextV2 securityContext() {
-        return new SecurityContextV2();
-    }
-
-    @Bean
-    public FilterChainProxy securityFilter(AuthorizationPermissionSupplier authorizationPermissionSupplier, SecurityContextV2 securityContext) {
-        FilterChainProxy filterChainProxy = new FilterChainProxy();
-        filterChainProxy.addSecurityFilterChain(new AuthenticationFilterChain(securityAuthProperties.getAuthenticationMethod(), securityAuthProperties.getAuthenticationUrl()));
-        filterChainProxy.addSecurityFilterChain(new LogoutFilterChain(securityAuthProperties.getLogoutMethod(), securityAuthProperties.getLogoutUrl()));
-        filterChainProxy.addSecurityFilterChain(
-                new AuthorizationFilterChain(securityAuthProperties.getAuthorizationPatterns(),
-                        securityAuthProperties.getAuthorizationExcludePatterns(),
-                        authorizationPermissionSupplier,
-                        securityContext)
-        );
-        return filterChainProxy;
     }
 }

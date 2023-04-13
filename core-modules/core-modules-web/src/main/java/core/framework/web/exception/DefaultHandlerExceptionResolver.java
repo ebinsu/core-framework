@@ -1,6 +1,7 @@
 package core.framework.web.exception;
 
 import core.framework.exception.BaseRuntimeException;
+import core.framework.json.JSON;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import java.util.List;
  */
 public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionResolver {
     public static final String ERROR_CODE_ATTRIBUTE = DefaultHandlerExceptionResolver.class.getName() + ".ERROR.CODE";
+    public static final String ERROR_MESSAGE_ATTRIBUTE = DefaultHandlerExceptionResolver.class.getName() + ".ERROR.MESSAGE";
     public static final String INTERNAL_ERROR = "INTERNAL_ERROR";
     private final Logger logger = LoggerFactory.getLogger(DefaultHandlerExceptionResolver.class);
     private final MappingJackson2JsonView jsonView;
@@ -51,12 +53,15 @@ public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionRes
         } else {
             request.setAttribute(ERROR_CODE_ATTRIBUTE, INTERNAL_ERROR);
         }
+        request.setAttribute(ERROR_MESSAGE_ATTRIBUTE, ex.getMessage());
 
         ExceptionHandler exceptionHandler = exceptionHandlers.stream()
                 .filter(f -> f.support(ex)).findFirst()
                 .orElse(defaultExceptionHandler);
-        mv.addObject("exception", exceptionHandler.getResponseMessage(request, ex));
+        ExceptionResponse responseMessage = exceptionHandler.getResponseMessage(request, ex);
+        mv.addObject("exception", responseMessage);
         mv.setView(jsonView);
+        logger.error("response: " + JSON.toJSON(responseMessage));
         return mv;
     }
 

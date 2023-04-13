@@ -1,7 +1,7 @@
 package core.framework.security.undertow.authentication;
 
 import core.framework.security.common.AuthenticationType;
-import core.framework.security.common.configuration.SecurityAuthProperties;
+import core.framework.security.common.configuration.SecurityProperties;
 import core.framework.security.common.configuration.SecuritySessionProperties;
 import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.AuthMethodConfig;
@@ -25,16 +25,16 @@ public class AuthenticationCustomizer implements UndertowDeploymentInfoCustomize
     private Environment environment;
 
     @Autowired
-    private SecurityAuthProperties securityAuthProperties;
+    private SecurityProperties securityAuthProperties;
 
     @Override
     public void customize(DeploymentInfo deploymentInfo) {
         LoginConfig loginConfig = Servlets.loginConfig(environment.getProperty("spring.application.name"));
         deploymentInfo.setLoginConfig(loginConfig);
-        AuthenticationType authType = securityAuthProperties.getAuthenticationType();
+        AuthenticationType authType = securityAuthProperties.getLoginRequest().getAuthenticationType();
         Map<String, String> authProperties = Map.of(
-                AUTHENTICATION_METHOD, securityAuthProperties.getAuthenticationMethod(),
-                AUTHENTICATION_URL, securityAuthProperties.getAuthenticationUrl()
+                AUTHENTICATION_METHOD, securityAuthProperties.getLoginRequest().getMethod(),
+                AUTHENTICATION_URL, securityAuthProperties.getLoginRequest().getUrl()
         );
         if (AuthenticationType.EMAIL_CODE == authType) {
             loginConfig.addFirstAuthMethod(new AuthMethodConfig(EmailCodeAuthMechanism.NAME, authProperties));
