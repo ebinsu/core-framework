@@ -4,7 +4,6 @@ import core.framework.security.common.exception.AuthenticateFailedException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
@@ -16,7 +15,6 @@ import java.util.Map;
 public class LoginOperation implements SecurityWebMvcEndpointHandlerMapping.ServletWebOperation {
     private String path = "/login";
     private RequestMethod method = RequestMethod.PUT;
-    private final MediaType type = MediaType.APPLICATION_JSON;
 
     public LoginOperation() {
     }
@@ -45,10 +43,6 @@ public class LoginOperation implements SecurityWebMvcEndpointHandlerMapping.Serv
 
     public RequestMethod getMethod() {
         return method;
-    }
-
-    public MediaType getType() {
-        return type;
     }
 
 }

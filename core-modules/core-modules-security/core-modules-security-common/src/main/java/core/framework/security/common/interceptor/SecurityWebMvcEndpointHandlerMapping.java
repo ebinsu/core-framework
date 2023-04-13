@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.aot.hint.annotation.Reflective;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.http.MediaType;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,8 +61,6 @@ public class SecurityWebMvcEndpointHandlerMapping extends RequestMappingInfoHand
         String getPath();
 
         RequestMethod getMethod();
-
-        MediaType getType();
     }
 
     private record ServletWebOperationHandler(ServletWebOperation operation) {

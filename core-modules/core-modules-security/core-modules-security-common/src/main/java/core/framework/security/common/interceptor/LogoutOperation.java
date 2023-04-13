@@ -3,7 +3,6 @@ package core.framework.security.common.interceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Map;
@@ -14,7 +13,6 @@ import java.util.Map;
 public class LogoutOperation implements SecurityWebMvcEndpointHandlerMapping.ServletWebOperation {
     private String path = "/logout";
     private RequestMethod method = RequestMethod.PUT;
-    private final MediaType type = MediaType.APPLICATION_JSON;
 
     public LogoutOperation() {
     }
@@ -39,10 +37,6 @@ public class LogoutOperation implements SecurityWebMvcEndpointHandlerMapping.Ser
 
     public RequestMethod getMethod() {
         return method;
-    }
-
-    public MediaType getType() {
-        return type;
     }
 
 }
