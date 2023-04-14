@@ -2,14 +2,13 @@ package core.framework.security.common.interceptor;
 
 import core.framework.security.common.annotation.Anonymous;
 import core.framework.security.common.annotation.PermissionsRequired;
-import core.framework.security.common.exception.ForbiddenException;
-import core.framework.security.common.exception.UnauthorizedException;
 import core.framework.security.common.filter.AuthorizationPermissionSupplier;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -31,11 +30,13 @@ public class SecurityHandlerInterceptor implements HandlerInterceptor {
             if (!isAnonymous(handlerMethod)) {
                 HttpSession session = request.getSession(false);
                 if (session == null) {
-                    throw new UnauthorizedException();
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                    return false;
                 }
                 Set<String> permissions = permissionSupplier.getPermissions(session);
                 if (!hasPermission(handlerMethod, permissions)) {
-                    throw new ForbiddenException();
+                    response.setStatus(HttpStatus.FORBIDDEN.value());
+                    return false;
                 }
             }
         }
