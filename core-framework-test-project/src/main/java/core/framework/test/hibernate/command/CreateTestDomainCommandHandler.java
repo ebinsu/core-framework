@@ -1,6 +1,6 @@
 package core.framework.test.hibernate.command;
 
-import core.framework.command.CommandHandler;
+import core.framework.command.annotation.CommandHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,12 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ebin
  */
 @Service
-public class CreateTestDomainCommandHandler implements CommandHandler<CreatedTestDomainCommand, Void> {
+public class CreateTestDomainCommandHandler {
 
     @Transactional
-    @Override
-    public Void handle(CreatedTestDomainCommand command) {
+    @CommandHandler
+    public void handle(CreatedTestDomainCommand command) {
         command.handled = true;
-        return null;
     }
 }

@@ -2,7 +2,7 @@ package core.framework.command.configuration;
 
 import core.framework.command.CommandBus;
 import core.framework.command.support.CommandBusImpl;
-import core.framework.command.support.CommandBusInitialize;
+import core.framework.command.support.CommandHandlerAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,7 +17,7 @@ public class CommandConfiguration {
     }
 
     @Bean
-    public CommandBusInitialize commandBusInitialize() {
-        return new CommandBusInitialize();
+    public CommandHandlerAnnotationBeanPostProcessor commandHandlerAnnotationBeanPostProcessor() {
+        return new CommandHandlerAnnotationBeanPostProcessor();
     }
 }
