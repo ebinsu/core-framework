@@ -10,17 +10,8 @@ import java.util.Map;
 /**
  * @author ebin
  */
-public class LogoutOperation implements SecurityWebMvcEndpointHandlerMapping.ServletWebOperation {
-    private String path = "/logout";
-    private RequestMethod method = RequestMethod.PUT;
-
-    public LogoutOperation() {
-    }
-
-    public LogoutOperation(String path, RequestMethod method) {
-        this.path = path;
-        this.method = method;
-    }
+public record LogoutOperation(String path,
+                              RequestMethod method) implements SecurityWebMvcEndpointHandlerMapping.ServletWebOperation {
 
     @Override
     public Object handle(HttpServletRequest request, HttpServletResponse response) {
@@ -29,14 +20,6 @@ public class LogoutOperation implements SecurityWebMvcEndpointHandlerMapping.Ser
             session.invalidate();
         }
         return Map.of();
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public RequestMethod getMethod() {
-        return method;
     }
 
 }

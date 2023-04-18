@@ -9,8 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 public class BaseRuntimeExceptionHandler implements ExceptionHandler {
     @Override
     public ExceptionResponse getResponseMessage(HttpServletRequest request, Exception ex) {
-        BaseRuntimeException exception = (BaseRuntimeException) ex;
-        return responseMessage(ex.getMessage(), exception.errorCode());
+        if (ex instanceof BaseRuntimeException exception) {
+            return responseMessage(ex.getMessage(), exception.errorCode());
+        } else {
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class DefaultSecurityFilterChain implements SecurityFilterChain {
 
     @Override
     public List<Filter> getFilters() {
-        return this.filters;
+        return Collections.unmodifiableList(this.filters);
     }
 
     @Override

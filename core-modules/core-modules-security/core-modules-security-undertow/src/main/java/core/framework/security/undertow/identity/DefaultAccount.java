@@ -15,7 +15,7 @@ public class DefaultAccount implements Account {
 
     public DefaultAccount(String name, Set<String> roles) {
         this.name = name;
-        this.roles = roles;
+        this.roles = Set.copyOf(roles);
     }
 
     @Override

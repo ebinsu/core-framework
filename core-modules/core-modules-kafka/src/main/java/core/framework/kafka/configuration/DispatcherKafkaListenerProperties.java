@@ -2,6 +2,7 @@ package core.framework.kafka.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class DispatcherKafkaListenerProperties {
     }
 
     public List<String> getTopics() {
-        return topics;
+        return Collections.unmodifiableList(topics);
     }
 
     public void setTopics(List<String> topics) {

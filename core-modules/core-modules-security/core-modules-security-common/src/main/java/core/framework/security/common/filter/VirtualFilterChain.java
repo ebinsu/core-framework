@@ -28,8 +28,8 @@ public class VirtualFilterChain implements FilterChain {
 
     public VirtualFilterChain(FilterChain chain, List<Filter> additionalFilters) {
         this.originalChain = chain;
-        this.additionalFilters = additionalFilters;
-        this.size = additionalFilters.size();
+        this.additionalFilters = List.copyOf(additionalFilters);
+        this.size = this.additionalFilters.size();
     }
 
     @Override

@@ -57,8 +57,8 @@ public class HibernatePostCommitEventDispatcher implements PostCommitInsertEvent
 
     private void riseDomainEvent(Object entity) {
         if (entity instanceof AggregateRoot<?, ?> aggregateRoot) {
-            List<? extends DomainEvent<?>> domainEvents = aggregateRoot.getDomainEvents();
-            for (DomainEvent<?> domainEvent : domainEvents) {
+            List<? extends DomainEvent<?, ?>> domainEvents = aggregateRoot.getDomainEvents();
+            for (DomainEvent<?, ?> domainEvent : domainEvents) {
                 DomainEventBus.INSTANCE.publishPostCommitEvent(domainEvent);
             }
         }

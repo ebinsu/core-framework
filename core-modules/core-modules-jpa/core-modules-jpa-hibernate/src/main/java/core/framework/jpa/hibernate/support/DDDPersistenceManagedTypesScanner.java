@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -168,12 +169,12 @@ public class DDDPersistenceManagedTypesScanner {
 
         @Override
         public List<String> getManagedClassNames() {
-            return this.managedClassNames;
+            return Collections.unmodifiableList(this.managedClassNames);
         }
 
         @Override
         public List<String> getManagedPackages() {
-            return this.managedPackages;
+            return Collections.unmodifiableList(this.managedPackages);
         }
 
         @Override

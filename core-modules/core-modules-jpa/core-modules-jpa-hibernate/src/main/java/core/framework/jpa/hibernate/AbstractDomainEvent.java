@@ -8,32 +8,29 @@ import java.time.ZonedDateTime;
 /**
  * @author ebin
  */
-public abstract class AbstractDomainEvent<T extends AggregateRoot<T, ?>> implements DomainEvent<T> {
-    private final T source;
+public abstract class AbstractDomainEvent<T extends AggregateRoot<T, ID>, ID> implements DomainEvent<T, ID> {
+    private final ID aggregateRootId;
+    private final Class<T> aggregateRootClass;
     private final ZonedDateTime createdTime;
-    private Object payload;
 
-    //TODO source can be change
     public AbstractDomainEvent(T source) {
-        this.source = source;
+        this.aggregateRootId = source.getId();
+        this.aggregateRootClass = (Class<T>) source.getClass();
         this.createdTime = ZonedDateTime.now();
     }
 
     @Override
-    public T getSource() {
-        return this.source;
+    public ID getAggregateRootId() {
+        return aggregateRootId;
+    }
+
+    @Override
+    public Class<T> getAggregateRootClass() {
+        return aggregateRootClass;
     }
 
     @Override
     public ZonedDateTime getCreatedTime() {
         return this.createdTime;
-    }
-
-    public Object getPayload() {
-        return payload;
-    }
-
-    public void setPayload(Object payload) {
-        this.payload = payload;
     }
 }

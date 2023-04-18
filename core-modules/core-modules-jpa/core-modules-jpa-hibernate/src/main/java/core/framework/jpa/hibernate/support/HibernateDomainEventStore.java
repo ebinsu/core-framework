@@ -47,16 +47,16 @@ public final class HibernateDomainEventStore implements DomainEventStore {
 
     @Override
     public void persist(AggregateRoot<?, ?> aggregateRoot) {
-        List<? extends DomainEvent<?>> domainEvents = aggregateRoot.getDomainEvents();
+        List<? extends DomainEvent<?, ?>> domainEvents = aggregateRoot.getDomainEvents();
         if (domainEvents.isEmpty()) {
             return;
         }
         String persistenceUnitName = aggregateRootPersistenceType.get(aggregateRoot.getClass());
         if (persistenceUnitName != null) {
             EntityManager entityManager = entityManagers.get(persistenceUnitName);
-            for (DomainEvent<?> domainEvent : domainEvents) {
+            for (DomainEvent<?, ?> domainEvent : domainEvents) {
                 if (domainEvent instanceof AbstractDomainEvent) {
-                    DomainEventTracking domainEventTracking = new DomainEventTracking((AbstractDomainEvent<?>) domainEvent);
+                    DomainEventTracking domainEventTracking = new DomainEventTracking(aggregateRoot, domainEvent);
                     entityManager.persist(domainEventTracking);
                 }
             }

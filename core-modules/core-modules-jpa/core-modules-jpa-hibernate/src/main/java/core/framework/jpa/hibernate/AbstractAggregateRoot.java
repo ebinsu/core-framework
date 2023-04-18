@@ -19,7 +19,7 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class AbstractAggregateRoot<A extends AggregateRoot<A, ID>, ID> implements AggregateRoot<A, ID> {
     @Transient
-    private final transient List<DomainEvent<A>> domainEvents = new ArrayList<>();
+    private final transient List<DomainEvent<A, ID>> domainEvents = new ArrayList<>();
 
     @NotNull
     @Column(name = "created_time")
@@ -63,7 +63,7 @@ public abstract class AbstractAggregateRoot<A extends AggregateRoot<A, ID>, ID> 
     }
 
     @Override
-    public DomainEvent<A> registerEvent(DomainEvent<A> event) {
+    public DomainEvent<A, ID> registerEvent(DomainEvent<A, ID> event) {
         if (Objects.nonNull(event)) {
             this.domainEvents.add(event);
             return event;
@@ -72,7 +72,7 @@ public abstract class AbstractAggregateRoot<A extends AggregateRoot<A, ID>, ID> 
     }
 
     @Override
-    public List<DomainEvent<A>> getDomainEvents() {
+    public List<DomainEvent<A, ID>> getDomainEvents() {
         return Collections.unmodifiableList(domainEvents);
     }
 

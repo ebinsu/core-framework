@@ -14,8 +14,8 @@ public class AuthorizationRequestMatcher implements RequestMatcher {
     private final List<String> excludePatterns;
 
     public AuthorizationRequestMatcher(List<String> patterns, List<String> excludePatterns) {
-        this.patterns = patterns;
-        this.excludePatterns = excludePatterns;
+        this.patterns = List.copyOf(patterns);
+        this.excludePatterns = List.copyOf(excludePatterns);
     }
 
     @Override

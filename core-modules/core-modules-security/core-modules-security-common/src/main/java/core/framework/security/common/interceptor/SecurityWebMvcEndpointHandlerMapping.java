@@ -25,7 +25,7 @@ public class SecurityWebMvcEndpointHandlerMapping extends RequestMappingInfoHand
     public SecurityWebMvcEndpointHandlerMapping(List<ServletWebOperation> operations) {
         builderConfiguration = new RequestMappingInfo.BuilderConfiguration();
         builderConfiguration.setPatternParser(new PathPatternParser());
-        this.operations = operations;
+        this.operations = List.copyOf(operations);
         setOrder(-100);
     }
 
@@ -42,9 +42,9 @@ public class SecurityWebMvcEndpointHandlerMapping extends RequestMappingInfoHand
     @Override
     protected void initHandlerMethods() {
         operations.forEach(operation -> {
-            RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths(operation.getPath())
+            RequestMappingInfo requestMappingInfo = RequestMappingInfo.paths(operation.path())
                     .options(builderConfiguration)
-                    .methods(operation.getMethod())
+                    .methods(operation.method())
                     .build();
             registerMapping(
                     requestMappingInfo,
@@ -58,9 +58,9 @@ public class SecurityWebMvcEndpointHandlerMapping extends RequestMappingInfoHand
     public interface ServletWebOperation {
         Object handle(HttpServletRequest request, HttpServletResponse response);
 
-        String getPath();
+        String path();
 
-        RequestMethod getMethod();
+        RequestMethod method();
     }
 
     private record ServletWebOperationHandler(ServletWebOperation operation) {

@@ -5,7 +5,7 @@ import core.framework.jpa.hibernate.AbstractDomainEvent;
 /**
  * @author ebin
  */
-public class TestDomainEvent extends AbstractDomainEvent<TestDomain> {
+public class TestDomainEvent extends AbstractDomainEvent<TestDomain, Long> {
     public boolean handled;
 
     public TestDomainEvent(TestDomain source) {

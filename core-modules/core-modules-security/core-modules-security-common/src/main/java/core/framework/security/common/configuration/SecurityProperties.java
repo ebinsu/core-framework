@@ -3,6 +3,7 @@ package core.framework.security.common.configuration;
 import core.framework.security.common.SecurityType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class SecurityProperties {
     private SecurityType securityType = SecurityType.INTERCEPTOR;
 
     public List<String> getPatterns() {
-        return patterns;
+        return Collections.unmodifiableList(patterns);
     }
 
     public void setPatterns(List<String> patterns) {
@@ -29,7 +30,7 @@ public class SecurityProperties {
     }
 
     public List<String> getExcludePatterns() {
-        return excludePatterns;
+        return Collections.unmodifiableList(excludePatterns);
     }
 
     public void setExcludePatterns(List<String> excludePatterns) {

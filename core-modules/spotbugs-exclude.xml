@@ -1,0 +1,23 @@
+<FindBugsFilter>
+    <Match>
+        <Or>
+            <Class name="~.*\.*Properties"/>
+            <Class name="core.framework.security.undertow.session.RedisSessionManager"/>
+            <Class name="core.framework.security.undertow.session.RedisSessionManager$SessionImpl"/>
+        </Or>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+
+    <Match>
+        <Or>
+            <Class name="~.*\.*Properties"/>
+            <Class name="core.framework.query.hibernate.HibernateNameQueryExecutor"/>
+            <Class name="core.framework.security.undertow.session.RedisSessionManager"/>
+            <Class name="core.framework.security.undertow.session.HttpHeaderSessionConfig"/>
+            <Class name="core.framework.security.undertow.session.RedisSessionManager$SessionImpl"/>
+            <Class name="core.framework.security.undertow.session.RedisSessionManagerCustomizer"/>
+            <Class name="core.framework.security.undertow.session.RedisSessionManagerFactory"/>
+        </Or>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+</FindBugsFilter>

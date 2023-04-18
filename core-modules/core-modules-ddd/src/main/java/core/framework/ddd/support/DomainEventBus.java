@@ -50,24 +50,24 @@ public final class DomainEventBus {
         }
     }
 
-    public <T extends AggregateRoot<T, ?>> void publishPreCommitEvent(DomainEvent<T> event) {
+    public <T extends AggregateRoot<T, ?>> void publishPreCommitEvent(DomainEvent<T, ?> event) {
         Set<DomainPreEventListener<?>> domainEventListeners = PRE_EVENT_LISTENERS.get(event.getClass().getTypeName());
         if (domainEventListeners != null) {
-            domainEventListeners.forEach(listener -> ((DomainPreEventListener<DomainEvent<T>>) listener).onEvent(event));
+            domainEventListeners.forEach(listener -> ((DomainPreEventListener<DomainEvent<T, ?>>) listener).onEvent(event));
         }
     }
 
-    public <T extends AggregateRoot<T, ?>> void publishPostCommitEvent(DomainEvent<T> event) {
+    public <T extends AggregateRoot<T, ?>> void publishPostCommitEvent(DomainEvent<T, ?> event) {
         Set<DomainPostEventListener<?>> domainEventListeners = POST_EVENT_LISTENERS.get(event.getClass().getTypeName());
         if (domainEventListeners != null) {
             domainEventListeners.forEach(listener -> {
                 if (Objects.nonNull(taskExecutor) && listener.async()) {
                     taskExecutor.execute(() -> {
-                        ((DomainPostEventListener<DomainEvent<T>>) listener).onEvent(event);
+                        ((DomainPostEventListener<DomainEvent<T, ?>>) listener).onEvent(event);
                     });
                 } else {
                     try {
-                        ((DomainPostEventListener<DomainEvent<T>>) listener).onEvent(event);
+                        ((DomainPostEventListener<DomainEvent<T, ?>>) listener).onEvent(event);
                     } catch (Exception e) {
                         LOGGER.error(e.getMessage(), e);
                     }

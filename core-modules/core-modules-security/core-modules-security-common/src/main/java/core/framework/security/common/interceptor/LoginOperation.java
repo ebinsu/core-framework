@@ -12,17 +12,8 @@ import java.util.Map;
 /**
  * @author ebin
  */
-public class LoginOperation implements SecurityWebMvcEndpointHandlerMapping.ServletWebOperation {
-    private String path = "/login";
-    private RequestMethod method = RequestMethod.PUT;
-
-    public LoginOperation() {
-    }
-
-    public LoginOperation(String path, RequestMethod method) {
-        this.path = path;
-        this.method = method;
-    }
+public record LoginOperation(String path,
+                             RequestMethod method) implements SecurityWebMvcEndpointHandlerMapping.ServletWebOperation {
 
     @Override
     public Object handle(HttpServletRequest request, HttpServletResponse response) {
@@ -35,14 +26,6 @@ public class LoginOperation implements SecurityWebMvcEndpointHandlerMapping.Serv
             throw new AuthenticateFailedException();
         }
         return Map.of("session", request.getSession().getId());
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public RequestMethod getMethod() {
-        return method;
     }
 
 }

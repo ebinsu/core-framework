@@ -22,8 +22,8 @@ public class HibernatePreCommitEventDispatcher implements FlushEntityEventListen
     }
 
     private void riseDomainEvent(AggregateRoot<?, ?> aggregateRoot) {
-        List<? extends DomainEvent<?>> domainEvents = aggregateRoot.getDomainEvents();
-        for (DomainEvent<?> domainEvent : domainEvents) {
+        List<? extends DomainEvent<?, ?>> domainEvents = aggregateRoot.getDomainEvents();
+        for (DomainEvent<?, ?> domainEvent : domainEvents) {
             DomainEventBus.INSTANCE.publishPreCommitEvent(domainEvent);
         }
     }

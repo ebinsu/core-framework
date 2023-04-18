@@ -1,5 +1,7 @@
 package core.framework.jpa.hibernate;
 
+import core.framework.ddd.AggregateRoot;
+import core.framework.ddd.DomainEvent;
 import core.framework.json.JSON;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +12,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 /**
  * @author ebin
@@ -38,8 +39,8 @@ public class DomainEventTracking {
     @Column(name = "aggregate_root_snapshot", columnDefinition = "TEXT")
     private String aggregateRootSnapshot;
 
-    @Column(name = "payload")
-    private String payload;
+    @Column(name = "domain_event_snapshot", columnDefinition = "TEXT")
+    private String domainEventSnapshot;
 
     @NotNull
     @Column(name = "created_time")
@@ -48,17 +49,13 @@ public class DomainEventTracking {
     private DomainEventTracking() {
     }
 
-    public DomainEventTracking(AbstractDomainEvent<?> event) {
+    public DomainEventTracking(AggregateRoot<?, ?> aggregateRoot, DomainEvent<?, ?> event) {
         this.eventName = event.getClass().getName();
-        this.aggregateRootClass = event.getSource().getClass().getTypeName();
-        this.aggregateRootId = String.valueOf(event.getSource().getId());
+        this.aggregateRootClass = event.getAggregateRootClass().getTypeName();
+        this.aggregateRootId = String.valueOf(event.getAggregateRootId());
         this.createdTime = ZonedDateTime.now();
-        if (Objects.nonNull(event.getPayload())) {
-            this.payload = JSON.toJSON(event.getPayload());
-        }
-        if (Objects.nonNull(event.getSource())) {
-            this.aggregateRootSnapshot = JSON.toJSON(event.getSource());
-        }
+        this.domainEventSnapshot = JSON.toJSON(event);
+        this.aggregateRootSnapshot = JSON.toJSON(aggregateRoot);
     }
 
     public Long getId() {
@@ -69,8 +66,8 @@ public class DomainEventTracking {
         return this.createdTime;
     }
 
-    public <T> T getPayload(Class<T> instanceClass) {
-        return JSON.fromJSON(instanceClass, this.payload);
+    public String getDomainEventSnapshot() {
+        return domainEventSnapshot;
     }
 
     public String getAggregateRootClass() {

@@ -5,7 +5,7 @@ import core.framework.jpa.hibernate.AbstractDomainEvent;
 /**
  * @author ebin
  */
-public class AssignIdDomainEvent extends AbstractDomainEvent<AssignIdDomain> {
+public class AssignIdDomainEvent extends AbstractDomainEvent<AssignIdDomain, Long> {
     public AssignIdDomainEvent(AssignIdDomain source) {
         super(source);
     }
