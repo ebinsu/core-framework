@@ -79,9 +79,9 @@ public class InvocableCommandHandlerMethod {
 
     protected String formatInvokeError(String text, Object[] args) {
         String formattedArgs = IntStream.range(0, args.length)
-                .mapToObj(i -> (args[i] != null
+                .mapToObj(i -> args[i] != null
                         ? "[" + i + "] [type=" + args[i].getClass().getName() + "] [value=" + args[i] + "]"
-                        : "[" + i + "] [null]"))
+                        : "[" + i + "] [null]")
                 .collect(Collectors.joining(",\n", " ", " "));
 
         return text + "\n"
@@ -134,10 +134,6 @@ public class InvocableCommandHandlerMethod {
             super(InvocableCommandHandlerMethod.this.bridgedMethod, index);
         }
 
-        protected HandlerMethodParameter(HandlerMethodParameter original) {
-            super(original);
-        }
-
         @Override
         public Class<?> getContainingClass() {
             return InvocableCommandHandlerMethod.this.getBeanType();
@@ -151,11 +147,6 @@ public class InvocableCommandHandlerMethod {
         @Override
         public <T extends Annotation> boolean hasMethodAnnotation(Class<T> annotationType) {
             return InvocableCommandHandlerMethod.this.hasMethodAnnotation(annotationType);
-        }
-
-        @Override
-        public HandlerMethodParameter clone() {
-            return new HandlerMethodParameter(this);
         }
     }
 }

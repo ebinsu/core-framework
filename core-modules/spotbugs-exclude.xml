@@ -4,6 +4,7 @@
             <Class name="~.*\.*Properties"/>
             <Class name="core.framework.security.undertow.session.RedisSessionManager"/>
             <Class name="core.framework.security.undertow.session.RedisSessionManager$SessionImpl"/>
+            <Class name="core.framework.command.support.InvocableCommandHandlerMethod"/>
         </Or>
         <Bug pattern="EI_EXPOSE_REP"/>
     </Match>
@@ -17,6 +18,7 @@
             <Class name="core.framework.security.undertow.session.RedisSessionManager$SessionImpl"/>
             <Class name="core.framework.security.undertow.session.RedisSessionManagerCustomizer"/>
             <Class name="core.framework.security.undertow.session.RedisSessionManagerFactory"/>
+            <Class name="core.framework.command.support.InvocableCommandHandlerMethod"/>
         </Or>
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>
