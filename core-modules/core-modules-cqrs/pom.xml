@@ -15,6 +15,6 @@
     <modules>
         <module>core-modules-query</module>
         <module>core-modules-query-hibernate</module>
-        <module>core-modules-command</module>
+        <module>core-modules-cqrs-command</module>
     </modules>
 </project>

@@ -56,9 +56,7 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
                 // Non-empty set of methods
                 for (Map.Entry<Method, Set<CommandHandler>> entry : annotatedMethods.entrySet()) {
                     Method method = entry.getKey();
-                    for (CommandHandler listener : entry.getValue()) {
-                        processCommandHandler(method, bean);
-                    }
+                    processCommandHandler(method, bean);
                 }
                 this.logger.debug(" @CommandHandler methods processed on bean '" + beanName + "': " + annotatedMethods);
             }
@@ -80,8 +78,8 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
         Method methodToUse = checkProxy(method, bean);
         if (methodToUse.getParameterCount() > 1) {
             throw new IllegalStateException(String.format(
-                    "@CommandHandler method '%s' found on bean target class '%s', " +
-                            "but parameter count not equal 1.'", method.getName(),
+                    "@CommandHandler method '%s' found on bean target class '%s', "
+                            + "but parameter count not equal 1.'", method.getName(),
                     method.getDeclaringClass().getSimpleName()));
         }
         InvocableCommandHandlerMethod invocableCommandHandlerMethod = new InvocableCommandHandlerMethod(bean, methodToUse);
@@ -106,11 +104,11 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
                 ReflectionUtils.handleReflectionException(ex);
             } catch (NoSuchMethodException ex) {
                 throw new IllegalStateException(String.format(
-                        "@CommandHandler method '%s' found on bean target class '%s', " +
-                                "but not found in any interface(s) for bean JDK proxy. Either " +
-                                "pull the method up to an interface or switch to subclass (CGLIB) " +
-                                "proxies by setting proxy-target-class/proxyTargetClass " +
-                                "attribute to 'true'", method.getName(),
+                        "@CommandHandler method '%s' found on bean target class '%s', "
+                                + "but not found in any interface(s) for bean JDK proxy. Either "
+                                + "pull the method up to an interface or switch to subclass (CGLIB) "
+                                + "proxies by setting proxy-target-class/proxyTargetClass "
+                                + "attribute to 'true'", method.getName(),
                         method.getDeclaringClass().getSimpleName()), ex);
             }
         }

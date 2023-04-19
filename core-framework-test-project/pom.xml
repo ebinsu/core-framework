@@ -31,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId>core-modules-command</artifactId>
+            <artifactId>core-modules-cqrs-command</artifactId>
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>

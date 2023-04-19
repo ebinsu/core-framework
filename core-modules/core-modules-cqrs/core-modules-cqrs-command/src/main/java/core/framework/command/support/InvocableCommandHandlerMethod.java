@@ -69,26 +69,25 @@ public class InvocableCommandHandlerMethod {
         Class<?> methodDeclaringClass = method.getDeclaringClass();
         Class<?> targetBeanClass = targetBean.getClass();
         if (!methodDeclaringClass.isAssignableFrom(targetBeanClass)) {
-            String text = "The mapped handler method class '" + methodDeclaringClass.getName() +
-                    "' is not an instance of the actual bean class '" +
-                    targetBeanClass.getName() + "'. If handler requires proxying " +
-                    "(e.g. due to @Transactional), please use class-based proxying.";
+            String text = "The mapped handler method class '" + methodDeclaringClass.getName()
+                    + "' is not an instance of the actual bean class '"
+                    + targetBeanClass.getName() + "'. If handler requires proxying "
+                    + "(e.g. due to @Transactional), please use class-based proxying.";
             throw new IllegalStateException(formatInvokeError(text, args));
         }
     }
 
     protected String formatInvokeError(String text, Object[] args) {
-
         String formattedArgs = IntStream.range(0, args.length)
-                .mapToObj(i -> (args[i] != null ?
-                        "[" + i + "] [type=" + args[i].getClass().getName() + "] [value=" + args[i] + "]" :
-                        "[" + i + "] [null]"))
+                .mapToObj(i -> (args[i] != null
+                        ? "[" + i + "] [type=" + args[i].getClass().getName() + "] [value=" + args[i] + "]"
+                        : "[" + i + "] [null]"))
                 .collect(Collectors.joining(",\n", " ", " "));
 
-        return text + "\n" +
-                "Endpoint [" + getBeanType().getName() + "]\n" +
-                "Method [" + getBridgedMethod().toGenericString() + "] " +
-                "with argument values:\n" + formattedArgs;
+        return text + "\n"
+                + "Endpoint [" + getBeanType().getName() + "]\n"
+                + "Method [" + getBridgedMethod().toGenericString() + "] "
+                + "with argument values:\n" + formattedArgs;
     }
 
 
