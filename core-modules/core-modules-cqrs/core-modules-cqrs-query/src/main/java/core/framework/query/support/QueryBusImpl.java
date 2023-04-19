@@ -1,8 +1,6 @@
 package core.framework.query.support;
 
-import core.framework.query.Query;
 import core.framework.query.QueryBus;
-import core.framework.query.QueryHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +9,6 @@ import java.util.Map;
  * @author ebin
  */
 public class QueryBusImpl implements QueryBus {
-    private final Map<Class<? extends Query<?>>, QueryHandler<?, ?>> queryHandlers = new HashMap<>();
     private final Map<String, InvocableQueryHandlerMethod> queryHandlerMethods = new HashMap<>();
 
     @Override

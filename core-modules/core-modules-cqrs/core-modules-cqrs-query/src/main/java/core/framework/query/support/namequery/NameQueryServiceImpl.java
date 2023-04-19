@@ -1,7 +1,7 @@
 package core.framework.query.support.namequery;
 
+import core.framework.query.support.NameQueryService;
 import core.framework.query.support.PagingResult;
-import core.framework.query.support.NameQueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,13 +13,13 @@ import java.util.Optional;
 /**
  * @author ebin
  */
-public class NameNameQueryService implements core.framework.query.support.NameQueryService {
+public class NameQueryServiceImpl implements NameQueryService {
     private static final String TOTAL_QUERY_NAME_SUFFIX = "_total";
-    private static final Logger LOGGER = LoggerFactory.getLogger(NameNameQueryService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NameQueryServiceImpl.class);
     protected final NameQueryRepository nameQueryRepository;
     protected final Map<QueryType, NameQueryExecutor> queryExecutors = new HashMap<>();
 
-    public NameNameQueryService(NameQueryRepository nameQueryRepository) {
+    public NameQueryServiceImpl(NameQueryRepository nameQueryRepository) {
         this.nameQueryRepository = nameQueryRepository;
     }
 
@@ -28,16 +28,16 @@ public class NameNameQueryService implements core.framework.query.support.NameQu
     }
 
     @Override
-    public <T> List<T> select(NameQueryParam<T> queryParam) {
-        NameNameQueryParam<T> nameQuery = nameQueryParam(queryParam);
+    public <T> List<T> select(core.framework.query.support.NameQueryParam<T> queryParam) {
+        NameQueryParamImpl<T> nameQuery = nameQueryParam(queryParam);
         QueryStatement queryStatement = getQueryStatement(nameQuery.getQueryName(), nameQuery.getQueryParam());
         LOGGER.info(queryStatement.queryStatement());
         return executeSelectQuery(queryStatement, nameQuery.getResultType(), nameQuery.getQueryParam());
     }
 
     @Override
-    public <T> PagingResult<T> select(NameQueryParam<T> queryParam, int start, int limit) {
-        NameNameQueryParam<T> nameQuery = nameQueryParam(queryParam);
+    public <T> PagingResult<T> select(core.framework.query.support.NameQueryParam<T> queryParam, int start, int limit) {
+        NameQueryParamImpl<T> nameQuery = nameQueryParam(queryParam);
         QueryStatement queryStatement = getQueryStatement(nameQuery.getQueryName(), nameQuery.getQueryParam());
         LOGGER.info(queryStatement.queryStatement());
         QueryStatement totalQueryStatement = getTotalQueryStatement(nameQuery.getQueryName(), nameQuery.getQueryParam());
@@ -48,8 +48,8 @@ public class NameNameQueryService implements core.framework.query.support.NameQu
     }
 
     @Override
-    public <T> Optional<T> get(NameQueryParam<T> queryParam) {
-        NameNameQueryParam<T> nameQuery = nameQueryParam(queryParam);
+    public <T> Optional<T> get(core.framework.query.support.NameQueryParam<T> queryParam) {
+        NameQueryParamImpl<T> nameQuery = nameQueryParam(queryParam);
         QueryStatement queryStatement = getQueryStatement(nameQuery.getQueryName(), nameQuery.getQueryParam());
         LOGGER.info(queryStatement.queryStatement());
         return executeGetQuery(queryStatement, nameQuery.getResultType(), nameQuery.getQueryParam());
@@ -95,9 +95,9 @@ public class NameNameQueryService implements core.framework.query.support.NameQu
         return getQueryStatement(queryName + TOTAL_QUERY_NAME_SUFFIX, param);
     }
 
-    private <T> NameNameQueryParam<T> nameQueryParam(NameQueryParam<T> queryParam) {
-        if (queryParam instanceof NameNameQueryParam) {
-            return (NameNameQueryParam<T>) queryParam;
+    private <T> NameQueryParamImpl<T> nameQueryParam(core.framework.query.support.NameQueryParam<T> queryParam) {
+        if (queryParam instanceof NameQueryParamImpl) {
+            return (NameQueryParamImpl<T>) queryParam;
         } else {
             throw new UnsupportedOperationException("Only support NameQuery!");
         }

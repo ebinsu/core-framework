@@ -3,7 +3,7 @@ package core.framework.query.configuration;
 import core.framework.query.QueryBus;
 import core.framework.query.support.QueryBusImpl;
 import core.framework.query.support.QueryHandlerAnnotationBeanPostProcessor;
-import core.framework.query.support.namequery.NameNameQueryService;
+import core.framework.query.support.namequery.NameQueryServiceImpl;
 import core.framework.query.support.namequery.NameQueryExecutor;
 import core.framework.query.support.namequery.NameQueryExecutorProvider;
 import core.framework.query.support.namequery.NameQueryRepository;
@@ -43,9 +43,9 @@ public class QueryServiceConfiguration {
 
     @Bean
     @Primary
-    public NameNameQueryService nameQueryService(NameQueryRepository nameQueryRepository,
+    public NameQueryServiceImpl nameQueryService(NameQueryRepository nameQueryRepository,
                                                  ObjectProvider<NameQueryExecutorProvider> providers) {
-        NameNameQueryService nameQueryService = new NameNameQueryService(nameQueryRepository);
+        NameQueryServiceImpl nameQueryService = new NameQueryServiceImpl(nameQueryRepository);
         providers.orderedStream().forEach(provider -> {
             NameQueryExecutor executor = provider.get();
             nameQueryService.addQueryExecutors(executor);
