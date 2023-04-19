@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId>core-modules-query-hibernate</artifactId>
+            <artifactId>core-modules-cqrs-query-hibernate</artifactId>
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>

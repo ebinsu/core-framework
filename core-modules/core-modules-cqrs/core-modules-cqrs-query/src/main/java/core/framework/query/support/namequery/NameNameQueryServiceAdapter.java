@@ -1,8 +1,8 @@
 package core.framework.query.support.namequery;
 
 import core.framework.query.support.PagingResult;
-import core.framework.query.support.QueryParam;
-import core.framework.query.support.QueryService;
+import core.framework.query.support.NameQueryParam;
+import core.framework.query.support.NameQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -11,22 +11,22 @@ import java.util.Optional;
 /**
  * @author ebin
  */
-public class NameQueryServiceAdapter implements QueryService {
+public class NameNameQueryServiceAdapter implements NameQueryService {
     @Autowired
-    private NameQueryService nameQueryService;
+    private NameNameQueryService nameQueryService;
 
     @Override
-    public <T> List<T> select(QueryParam<T> queryParam) {
+    public <T> List<T> select(NameQueryParam<T> queryParam) {
         return nameQueryService.select(queryParam);
     }
 
     @Override
-    public <T> PagingResult<T> select(QueryParam<T> queryParam, int start, int limit) {
+    public <T> PagingResult<T> select(NameQueryParam<T> queryParam, int start, int limit) {
         return nameQueryService.select(queryParam, start, limit);
     }
 
     @Override
-    public <T> Optional<T> get(QueryParam<T> queryParam) {
+    public <T> Optional<T> get(NameQueryParam<T> queryParam) {
         return nameQueryService.get(queryParam);
     }
 }

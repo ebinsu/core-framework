@@ -1,7 +1,5 @@
 package core.framework.query.support.namequery;
 
-import core.framework.query.support.QueryParam;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,12 +7,12 @@ import java.util.Map;
 /**
  * @author ebin
  */
-public class NameQueryParam<T> implements QueryParam<T> {
+public class NameNameQueryParam<T> implements core.framework.query.support.NameQueryParam<T> {
     private final Map<String, Object> queryParams = new HashMap<>();
     private final String queryName;
     private final Class<T> resultType;
 
-    public NameQueryParam(String queryName, Class<T> resultType) {
+    public NameNameQueryParam(String queryName, Class<T> resultType) {
         this.queryName = queryName;
         this.resultType = resultType;
     }
@@ -33,7 +31,7 @@ public class NameQueryParam<T> implements QueryParam<T> {
         return Collections.unmodifiableMap(queryParams);
     }
 
-    public NameQueryParam<T> addQueryParam(String key, Object value) {
+    public NameNameQueryParam<T> addQueryParam(String key, Object value) {
         queryParams.put(key, value);
         return this;
     }

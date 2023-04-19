@@ -24,7 +24,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.0.33${changelist}</revision>
+        <revision>1.0.34${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.commons-validator>1.7</version.commons-validator>
@@ -94,12 +94,12 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-query</artifactId>
+                <artifactId>core-modules-cqrs-query</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-query-hibernate</artifactId>
+                <artifactId>core-modules-cqrs-query-hibernate</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

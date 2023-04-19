@@ -13,8 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>core-modules-query</module>
-        <module>core-modules-query-hibernate</module>
+        <module>core-modules-cqrs-query</module>
+        <module>core-modules-cqrs-query-hibernate</module>
         <module>core-modules-cqrs-command</module>
     </modules>
 </project>

@@ -3,7 +3,7 @@ package core.framework.query.support;
 /**
  * @author ebin
  */
-public interface QueryParam<T> {
+public interface NameQueryParam<T> {
     String getQueryName();
 
     Class<T> getResultType();

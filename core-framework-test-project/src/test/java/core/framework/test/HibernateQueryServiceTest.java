@@ -1,11 +1,11 @@
 package core.framework.test;
 
 import core.framework.query.QueryBus;
-import core.framework.query.support.QueryService;
+import core.framework.query.support.NameQueryService;
 import core.framework.test.hibernate.domain.TestDomain;
 import core.framework.test.hibernate.domain.TestDomainRepo;
 import core.framework.test.hibernate.query.GetTestDomainQuery;
-import core.framework.test.hibernate.query.GetTestDomainQueryParam;
+import core.framework.test.hibernate.query.GetTestDomainNameQueryParam;
 import core.framework.test.hibernate.query.ListTestDomainQuery;
 import core.framework.test.hibernate.query.TestDomainDTO;
 import org.junit.jupiter.api.Assertions;
@@ -28,7 +28,7 @@ import java.util.Optional;
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class HibernateQueryServiceTest {
     @Autowired
-    QueryService queryService;
+    NameQueryService queryService;
     @Autowired
     TestDomainRepo testDomainRepo;
     @Autowired
@@ -42,7 +42,7 @@ class HibernateQueryServiceTest {
         TestDomain testDomain = new TestDomain("test");
         testDomainRepo.persist(testDomain);
         transactionManager.commit(status);
-        GetTestDomainQueryParam getTestDomainCommand = new GetTestDomainQueryParam();
+        GetTestDomainNameQueryParam getTestDomainCommand = new GetTestDomainNameQueryParam();
         getTestDomainCommand.addQueryParam("id", testDomain.getId());
         Optional<TestDomainDTO> testDomainDTOOptional = queryService.get(getTestDomainCommand);
         Assertions.assertTrue(testDomainDTOOptional.isPresent());
