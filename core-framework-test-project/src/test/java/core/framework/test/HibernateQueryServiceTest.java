@@ -1,9 +1,9 @@
 package core.framework.test;
 
+import core.framework.namequery.NameQueryParam;
+import core.framework.namequery.NameQueryService;
+import core.framework.namequery.impl.NameQueryParamImpl;
 import core.framework.query.QueryBus;
-import core.framework.query.support.NameQueryParam;
-import core.framework.query.support.NameQueryService;
-import core.framework.query.support.namequery.NameQueryParamImpl;
 import core.framework.test.hibernate.domain.TestDomain;
 import core.framework.test.hibernate.domain.TestDomainRepo;
 import core.framework.test.hibernate.domain.TestValueObject;
@@ -90,7 +90,7 @@ class HibernateQueryServiceTest {
         testDomain.setValueObject(new TestValueObject("v"));
         testDomainRepo.persist(testDomain);
         transactionManager.commit(status);
-        NameQueryParam nameQueryParam = new NameQueryParamImpl("TestDomain.getName", QueryModel.class);
+        NameQueryParam<QueryModel> nameQueryParam = new NameQueryParamImpl<>("TestDomain.getName", QueryModel.class);
         QueryModel select = (QueryModel) queryService.get(nameQueryParam).get();
         Assertions.assertNotNull(select);
     }
@@ -103,7 +103,7 @@ class HibernateQueryServiceTest {
         testDomain.setValueObject(new TestValueObject("v"));
         testDomainRepo.persist(testDomain);
         transactionManager.commit(status);
-        NameQueryParam nameQueryParam = new NameQueryParamImpl("TestDomain.getName", QueryModelRecord.class);
+        NameQueryParam<QueryModelRecord> nameQueryParam = new NameQueryParamImpl<>("TestDomain.getName", QueryModelRecord.class);
         QueryModelRecord select = (QueryModelRecord) queryService.get(nameQueryParam).get();
         Assertions.assertNotNull(select);
     }

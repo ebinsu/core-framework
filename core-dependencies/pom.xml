@@ -109,12 +109,12 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-cqrs-query</artifactId>
+                <artifactId>core-modules-cqrs</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-cqrs-query-hibernate</artifactId>
+                <artifactId>core-modules-cqrs-query</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

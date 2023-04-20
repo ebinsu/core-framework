@@ -1,6 +1,7 @@
 package core.framework.test.hibernate.query;
 
-import core.framework.query.support.namequery.NameQueryParamImpl;
+
+import core.framework.namequery.impl.NameQueryParamImpl;
 
 /**
  * @author ebin

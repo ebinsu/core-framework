@@ -14,7 +14,6 @@
 
     <modules>
         <module>core-modules-cqrs-query</module>
-        <module>core-modules-cqrs-query-hibernate</module>
         <module>core-modules-cqrs-command</module>
     </modules>
 </project>

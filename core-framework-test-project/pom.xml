@@ -27,11 +27,15 @@
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId>core-modules-cqrs-query-hibernate</artifactId>
+            <artifactId>core-modules-name-query-hibernate</artifactId>
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
             <artifactId>core-modules-cqrs-command</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>core-framework</groupId>
+            <artifactId>core-modules-cqrs-query</artifactId>
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>

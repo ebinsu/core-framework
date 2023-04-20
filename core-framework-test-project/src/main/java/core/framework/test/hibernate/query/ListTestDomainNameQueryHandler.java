@@ -1,8 +1,8 @@
 package core.framework.test.hibernate.query;
 
+import core.framework.namequery.NameQueryService;
+import core.framework.namequery.impl.NameQueryParamImpl;
 import core.framework.query.annotation.QueryHandler;
-import core.framework.query.support.NameQueryService;
-import core.framework.query.support.namequery.NameQueryParamImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
