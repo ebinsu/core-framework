@@ -24,7 +24,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.0.37${changelist}</revision>
+        <revision>1.0.38${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.commons-validator>1.7</version.commons-validator>
@@ -47,6 +47,21 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-name-query</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-name-query-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-name-query-hibernate</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
                 <artifactId>core-modules-security-common</artifactId>

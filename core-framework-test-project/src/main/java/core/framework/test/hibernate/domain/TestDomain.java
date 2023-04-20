@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
+
 /**
  * @author ebin
  */
@@ -37,6 +39,16 @@ public class TestDomain extends AbstractAggregateRoot<TestDomain, Long> {
     @OneToOne
     private Demo demo;
 
+    public Integer integerNum = 1;
+
+    public Double doubleNum = 1.1d;
+
+    public Float floatNum = 1.2f;
+
+    public Long longNum = 1L;
+
+    public BigDecimal bigDecimalNum = BigDecimal.ONE;
+
     public TestDomain() {
         super("");
     }
@@ -57,5 +69,73 @@ public class TestDomain extends AbstractAggregateRoot<TestDomain, Long> {
     @Override
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
+    }
+
+    public TestEntity getEntity() {
+        return entity;
+    }
+
+    public TestValueObject getValueObject() {
+        return valueObject;
+    }
+
+    public Demo getDemo() {
+        return demo;
+    }
+
+    public void setDemo(Demo demo) {
+        this.demo = demo;
+    }
+
+    public Integer getIntegerNum() {
+        return integerNum;
+    }
+
+    public void setIntegerNum(Integer integerNum) {
+        this.integerNum = integerNum;
+    }
+
+    public Double getDoubleNum() {
+        return doubleNum;
+    }
+
+    public void setDoubleNum(Double doubleNum) {
+        this.doubleNum = doubleNum;
+    }
+
+    public Float getFloatNum() {
+        return floatNum;
+    }
+
+    public void setFloatNum(Float floatNum) {
+        this.floatNum = floatNum;
+    }
+
+    public Long getLongNum() {
+        return longNum;
+    }
+
+    public void setLongNum(Long longNum) {
+        this.longNum = longNum;
     }
 }

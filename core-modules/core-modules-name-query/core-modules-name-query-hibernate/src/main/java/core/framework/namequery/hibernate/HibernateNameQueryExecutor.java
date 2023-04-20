@@ -1,8 +1,9 @@
-package core.framework.query.hibernate;
+package core.framework.namequery.hibernate;
 
-import core.framework.query.support.namequery.NameQueryExecutor;
-import core.framework.query.support.namequery.QueryStatement;
-import core.framework.query.support.namequery.QueryType;
+
+import core.framework.namequery.NameQueryExecutor;
+import core.framework.namequery.QueryStatement;
+import core.framework.namequery.QueryType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.hibernate.jpa.AvailableHints;

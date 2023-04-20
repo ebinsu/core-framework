@@ -2,14 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>core-modules-cqrs</artifactId>
-        <groupId>core-framework</groupId>
-        <version>${revision}</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>core-framework</groupId>
+        <artifactId>core-modules-name-query</artifactId>
+        <version>1.0.38-SNAPSHOT</version>
+    </parent>
 
-    <artifactId>core-modules-cqrs-query-hibernate</artifactId>
+    <artifactId>core-modules-name-query-hibernate</artifactId>
 
     <dependencies>
         <dependency>
@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId>core-modules-cqrs-query</artifactId>
+            <artifactId>core-modules-name-query-common</artifactId>
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>

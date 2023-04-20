@@ -1,13 +1,18 @@
 package core.framework.test;
 
 import core.framework.query.QueryBus;
+import core.framework.query.support.NameQueryParam;
 import core.framework.query.support.NameQueryService;
+import core.framework.query.support.namequery.NameQueryParamImpl;
 import core.framework.test.hibernate.domain.TestDomain;
 import core.framework.test.hibernate.domain.TestDomainRepo;
-import core.framework.test.hibernate.query.GetTestDomainQuery;
+import core.framework.test.hibernate.domain.TestValueObject;
 import core.framework.test.hibernate.query.GetTestDomainNameQueryParam;
+import core.framework.test.hibernate.query.GetTestDomainQuery;
 import core.framework.test.hibernate.query.ListTestDomainQuery;
 import core.framework.test.hibernate.query.TestDomainDTO;
+import core.framework.test.query.QueryModel;
+import core.framework.test.query.QueryModelRecord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +80,31 @@ class HibernateQueryServiceTest {
         testDomainDTO = result.get(0);
         Assertions.assertNotNull(testDomainDTO.id);
         Assertions.assertNotNull(testDomainDTO.name);
+    }
+
+    @Test
+    public void test1() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        TestDomain testDomain = new TestDomain("test");
+        testDomain.setTestName("testname");
+        testDomain.setValueObject(new TestValueObject("v"));
+        testDomainRepo.persist(testDomain);
+        transactionManager.commit(status);
+        NameQueryParam nameQueryParam = new NameQueryParamImpl("TestDomain.getName", QueryModel.class);
+        QueryModel select = (QueryModel) queryService.get(nameQueryParam).get();
+        Assertions.assertNotNull(select);
+    }
+
+    @Test
+    public void test2() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        TestDomain testDomain = new TestDomain("test");
+        testDomain.setTestName("testname");
+        testDomain.setValueObject(new TestValueObject("v"));
+        testDomainRepo.persist(testDomain);
+        transactionManager.commit(status);
+        NameQueryParam nameQueryParam = new NameQueryParamImpl("TestDomain.getName", QueryModelRecord.class);
+        QueryModelRecord select = (QueryModelRecord) queryService.get(nameQueryParam).get();
+        Assertions.assertNotNull(select);
     }
 }

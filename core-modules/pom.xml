@@ -24,6 +24,7 @@
         <module>core-modules-kafka</module>
         <module>core-modules-security</module>
         <module>core-modules-web</module>
+        <module>core-modules-name-query</module>
     </modules>
 
     <build>
