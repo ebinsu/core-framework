@@ -1,6 +1,6 @@
 package core.framework.web.exception;
 
-import core.framework.exception.BaseRuntimeException;
+import core.framework.exception.ErrorCodeRuntimeException;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class BaseRuntimeExceptionHandler implements ExceptionHandler {
     @Override
     public ExceptionResponse getResponseMessage(HttpServletRequest request, Exception ex) {
-        if (ex instanceof BaseRuntimeException exception) {
+        if (ex instanceof ErrorCodeRuntimeException exception) {
             return responseMessage(ex.getMessage(), exception.errorCode());
         } else {
             throw new UnsupportedOperationException();
@@ -18,6 +18,6 @@ public class BaseRuntimeExceptionHandler implements ExceptionHandler {
 
     @Override
     public boolean support(Exception ex) {
-        return ex instanceof BaseRuntimeException;
+        return ex instanceof ErrorCodeRuntimeException;
     }
 }

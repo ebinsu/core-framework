@@ -3,7 +3,7 @@ package core.framework.exception;
 /**
  * @author ebin
  */
-public abstract class AbstractApplicationException extends BaseRuntimeException {
+public abstract class AbstractApplicationException extends ErrorCodeRuntimeException {
     public AbstractApplicationException(String message) {
         super(message);
     }

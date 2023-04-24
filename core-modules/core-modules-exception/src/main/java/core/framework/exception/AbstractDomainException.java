@@ -3,7 +3,7 @@ package core.framework.exception;
 /**
  * @author ebin
  */
-public abstract class AbstractDomainException extends BaseRuntimeException {
+public abstract class AbstractDomainException extends ErrorCodeRuntimeException {
     public AbstractDomainException(String message) {
         super(message);
     }

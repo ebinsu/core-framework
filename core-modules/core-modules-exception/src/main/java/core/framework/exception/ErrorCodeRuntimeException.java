@@ -3,20 +3,20 @@ package core.framework.exception;
 /**
  * @author ebin
  */
-public class BaseRuntimeException extends RuntimeException {
+public class ErrorCodeRuntimeException extends RuntimeException {
     private final String errorCode;
 
-    public BaseRuntimeException(String message) {
+    public ErrorCodeRuntimeException(String message) {
         super(message);
         errorCode = "UNASSIGNED";
     }
 
-    public BaseRuntimeException(String message, String errorCode) {
+    public ErrorCodeRuntimeException(String message, String errorCode) {
         super(message);
         this.errorCode = errorCode;
     }
 
-    public BaseRuntimeException(String message, String errorCode, Throwable cause) {
+    public ErrorCodeRuntimeException(String message, String errorCode, Throwable cause) {
         super(message, cause);
         this.errorCode = errorCode;
     }

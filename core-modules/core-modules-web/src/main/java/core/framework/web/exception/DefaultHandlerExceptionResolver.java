@@ -1,6 +1,6 @@
 package core.framework.web.exception;
 
-import core.framework.exception.BaseRuntimeException;
+import core.framework.exception.ErrorCodeRuntimeException;
 import core.framework.json.JSON;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,7 +48,7 @@ public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionRes
             mv.setStatus(responseStatus.value());
         }
 
-        if (ex instanceof BaseRuntimeException e) {
+        if (ex instanceof ErrorCodeRuntimeException e) {
             request.setAttribute(ERROR_CODE_ATTRIBUTE, e.errorCode());
         } else {
             request.setAttribute(ERROR_CODE_ATTRIBUTE, INTERNAL_ERROR);
