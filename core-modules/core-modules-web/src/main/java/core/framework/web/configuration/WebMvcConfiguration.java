@@ -2,7 +2,7 @@ package core.framework.web.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.framework.json.JSONMapper;
-import core.framework.web.exception.BaseRuntimeExceptionHandler;
+import core.framework.web.exception.ErrorCodeRuntimeExceptionHandler;
 import core.framework.web.exception.BindExceptionHandler;
 import core.framework.web.exception.ConstraintViolationExceptionHandler;
 import core.framework.web.exception.ExceptionHandlerCustomizer;
@@ -27,7 +27,7 @@ public class WebMvcConfiguration {
     @Bean
     public ExceptionHandlerCustomizer exceptionHandlerCustomizer() {
         return () -> List.of(
-                new BaseRuntimeExceptionHandler(),
+                new ErrorCodeRuntimeExceptionHandler(),
                 new ConstraintViolationExceptionHandler(),
                 new BindExceptionHandler()
         );

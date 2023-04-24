@@ -71,6 +71,6 @@ public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionRes
     }
 
     private void addDefaultExceptionHandler() {
-        this.exceptionHandlers.add(new BaseRuntimeExceptionHandler());
+        this.exceptionHandlers.add(new ErrorCodeRuntimeExceptionHandler());
     }
 }

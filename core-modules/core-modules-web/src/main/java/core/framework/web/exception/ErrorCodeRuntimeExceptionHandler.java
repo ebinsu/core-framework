@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 /**
  * @author ebin
  */
-public class BaseRuntimeExceptionHandler implements ExceptionHandler {
+public class ErrorCodeRuntimeExceptionHandler implements ExceptionHandler {
     @Override
     public ExceptionResponse getResponseMessage(HttpServletRequest request, Exception ex) {
         if (ex instanceof ErrorCodeRuntimeException exception) {
