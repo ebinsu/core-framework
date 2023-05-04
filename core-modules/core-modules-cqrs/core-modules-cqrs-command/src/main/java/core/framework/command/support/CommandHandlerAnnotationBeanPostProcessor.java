@@ -32,6 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author ebin
  */
 public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProcessor, Ordered, ApplicationContextAware, SmartInitializingSingleton {
+    public static final String BEAN_NAME = "commandHandlerAnnotationBeanPostProcessor";
     private final Logger logger = LoggerFactory.getLogger(CommandHandlerAnnotationBeanPostProcessor.class);
     private final Set<Class<?>> nonAnnotatedClasses = Collections.newSetFromMap(new ConcurrentHashMap<>(64));
     private final List<InvocableCommandHandlerMethod> invocableCommandHandlerMethods = new ArrayList<>();

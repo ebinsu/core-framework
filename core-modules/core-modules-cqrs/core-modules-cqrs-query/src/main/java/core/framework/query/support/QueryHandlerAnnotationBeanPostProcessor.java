@@ -32,6 +32,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author ebin
  */
 public class QueryHandlerAnnotationBeanPostProcessor implements BeanPostProcessor, Ordered, ApplicationContextAware, SmartInitializingSingleton {
+    public static final String BEAN_NAME = "queryHandlerAnnotationBeanPostProcessor";
+
     private final Logger logger = LoggerFactory.getLogger(QueryHandlerAnnotationBeanPostProcessor.class);
     private final Set<Class<?>> nonAnnotatedClasses = Collections.newSetFromMap(new ConcurrentHashMap<>(64));
     private final List<InvocableQueryHandlerMethod> invocableQueryHandlerMethods = new ArrayList<>();
