@@ -1,7 +1,7 @@
-package core.framework.command.support;
+package core.framework.ddd.support;
 
-import core.framework.command.CommandBus;
-import core.framework.command.annotation.CommandHandler;
+import core.framework.ddd.DomainEventBus;
+import core.framework.ddd.annotation.DomainEventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
@@ -31,12 +31,13 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author ebin
  */
-public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProcessor, Ordered, ApplicationContextAware, SmartInitializingSingleton {
-    public static final String BEAN_NAME = "commandHandlerAnnotationBeanPostProcessor";
-    private final Logger logger = LoggerFactory.getLogger(CommandHandlerAnnotationBeanPostProcessor.class);
+public class DomainEventHandlerAnnotationBeanPostProcessor implements BeanPostProcessor, Ordered, ApplicationContextAware, SmartInitializingSingleton {
+    public static final String BEAN_NAME = "domainEventHandlerAnnotationBeanPostProcessor";
+
+    private final Logger logger = LoggerFactory.getLogger(DomainEventHandlerAnnotationBeanPostProcessor.class);
     private final Set<Class<?>> nonAnnotatedClasses = Collections.newSetFromMap(new ConcurrentHashMap<>(64));
-    private final List<InvocableCommandHandlerMethod> invocableCommandHandlerMethods = new ArrayList<>();
-    private CommandBus commandBus;
+    private final List<InvocableDomainEventHandlerMethod> invocableDomainEventHandlerMethods = new ArrayList<>();
+    private DomainEventBus domainEventBus;
     private BeanFactory beanFactory;
 
     @Override
@@ -44,22 +45,26 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
         if (!this.nonAnnotatedClasses.contains(bean.getClass())) {
             Class<?> targetClass = AopUtils.getTargetClass(bean);
 
-            Map<Method, Set<CommandHandler>> annotatedMethods = MethodIntrospector.selectMethods(targetClass,
-                    (MethodIntrospector.MetadataLookup<Set<CommandHandler>>) method -> {
-                        Set<CommandHandler> listenerMethods = findCommandHandlerAnnotations(method);
+            Map<Method, Set<DomainEventHandler>> annotatedMethods = MethodIntrospector.selectMethods(targetClass,
+                    (MethodIntrospector.MetadataLookup<Set<DomainEventHandler>>) method -> {
+                        Set<DomainEventHandler> listenerMethods = findQueryHandlerAnnotations(method);
                         return listenerMethods.isEmpty() ? null : listenerMethods;
                     });
 
             if (annotatedMethods.isEmpty()) {
                 this.nonAnnotatedClasses.add(bean.getClass());
-                this.logger.trace("No @CommandHandler annotations found on bean type: " + bean.getClass());
+                this.logger.trace("No @DomainEventHandler annotations found on bean type: " + bean.getClass());
             } else {
                 // Non-empty set of methods
-                for (Map.Entry<Method, Set<CommandHandler>> entry : annotatedMethods.entrySet()) {
+                for (Map.Entry<Method, Set<DomainEventHandler>> entry : annotatedMethods.entrySet()) {
+                    DomainEventHandler domainEventHandlerAnno = entry.getValue().stream().findFirst().orElse(null);
+                    if (domainEventHandlerAnno == null) {
+                        continue;
+                    }
                     Method method = entry.getKey();
-                    processCommandHandler(method, bean);
+                    processDomainEventHandler(method, bean, domainEventHandlerAnno);
                 }
-                this.logger.debug(" @CommandHandler methods processed on bean '" + beanName + "': " + annotatedMethods);
+                this.logger.debug(" @DomainEventHandler methods processed on bean '" + beanName + "': " + annotatedMethods);
             }
         }
         return bean;
@@ -67,24 +72,22 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
 
     @Override
     public void afterSingletonsInstantiated() {
-        if (this.commandBus == null) {
-            this.commandBus = this.beanFactory.getBean(CommandBus.class);
+        if (this.domainEventBus == null) {
+            this.domainEventBus = this.beanFactory.getBean(DomainEventBus.class);
         }
-        invocableCommandHandlerMethods.forEach(methods -> {
-            commandBus.subscribe(methods);
-        });
+        invocableDomainEventHandlerMethods.forEach(methods -> domainEventBus.subscribe(methods));
     }
 
-    protected void processCommandHandler(Method method, Object bean) {
+    protected void processDomainEventHandler(Method method, Object bean, DomainEventHandler handlerAnno) {
         Method methodToUse = checkProxy(method, bean);
         if (methodToUse.getParameterCount() > 1) {
             throw new IllegalStateException(String.format(
-                    "@CommandHandler method '%s' found on bean target class '%s', "
+                    "@DomainEventHandler method '%s' found on bean target class '%s', "
                             + "but parameter count not equal 1.'", method.getName(),
                     method.getDeclaringClass().getSimpleName()));
         }
-        InvocableCommandHandlerMethod invocableCommandHandlerMethod = new InvocableCommandHandlerMethod(bean, methodToUse);
-        invocableCommandHandlerMethods.add(invocableCommandHandlerMethod);
+        InvocableDomainEventHandlerMethod invocableCommandHandlerMethod = new InvocableDomainEventHandlerMethod(bean, methodToUse, handlerAnno);
+        invocableDomainEventHandlerMethods.add(invocableCommandHandlerMethod);
     }
 
     private Method checkProxy(Method methodArg, Object bean) {
@@ -105,7 +108,7 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
                 ReflectionUtils.handleReflectionException(ex);
             } catch (NoSuchMethodException ex) {
                 throw new IllegalStateException(String.format(
-                        "@CommandHandler method '%s' found on bean target class '%s', "
+                        "@DomainEventHandler method '%s' found on bean target class '%s', "
                                 + "but not found in any interface(s) for bean JDK proxy. Either "
                                 + "pull the method up to an interface or switch to subclass (CGLIB) "
                                 + "proxies by setting proxy-target-class/proxyTargetClass "
@@ -116,13 +119,13 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
         return method;
     }
 
-    private Set<CommandHandler> findCommandHandlerAnnotations(Method method) {
-        Set<CommandHandler> listeners = new HashSet<>();
-        CommandHandler ann = AnnotatedElementUtils.findMergedAnnotation(method, CommandHandler.class);
+    private Set<DomainEventHandler> findQueryHandlerAnnotations(Method method) {
+        Set<DomainEventHandler> listeners = new HashSet<>();
+        DomainEventHandler ann = AnnotatedElementUtils.findMergedAnnotation(method, DomainEventHandler.class);
         if (ann != null) {
             listeners.add(ann);
         }
-        CommandHandler anns = AnnotationUtils.findAnnotation(method, CommandHandler.class);
+        DomainEventHandler anns = AnnotationUtils.findAnnotation(method, DomainEventHandler.class);
         if (anns != null) {
             listeners.add(anns);
         }

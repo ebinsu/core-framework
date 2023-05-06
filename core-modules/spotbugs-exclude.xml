@@ -6,6 +6,7 @@
             <Class name="core.framework.security.undertow.session.RedisSessionManager$SessionImpl"/>
             <Class name="core.framework.command.support.InvocableCommandHandlerMethod"/>
             <Class name="core.framework.query.support.InvocableQueryHandlerMethod"/>
+            <Class name="core.framework.ddd.support.InvocableDomainEventHandlerMethod"/>
         </Or>
         <Bug pattern="EI_EXPOSE_REP"/>
     </Match>
@@ -21,7 +22,17 @@
             <Class name="core.framework.security.undertow.session.RedisSessionManagerFactory"/>
             <Class name="core.framework.command.support.InvocableCommandHandlerMethod"/>
             <Class name="core.framework.query.support.InvocableQueryHandlerMethod"/>
+            <Class name="core.framework.ddd.support.InvocableDomainEventHandlerMethod"/>
+            <Class name="core.framework.ddd.support.DomainEventBusImpl"/>
         </Or>
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>
+
+    <Match>
+        <Or>
+            <Class name="core.framework.ddd.support.DomainEventBusHolder"/>
+        </Or>
+        <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
+    </Match>
+
 </FindBugsFilter>

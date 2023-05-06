@@ -1,20 +1,29 @@
 package core.framework.ddd.configuration;
 
-import core.framework.ddd.support.DomainEventBusInitialize;
+import core.framework.ddd.DomainEventBus;
+import core.framework.ddd.support.DomainEventBusHolder;
+import core.framework.ddd.support.DomainEventBusImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
+@Import(DomainEventHandlerBeanDefinitionRegistrar.class)
 public class DomainEventDispatcherConfiguration {
     public static final String DOMAIN_EVENT_TASK_EXECUTOR_NAME = "domainEventTaskExecutor";
     private static final int DOMAIN_EVENT_TASK_EXECUTOR_AWAIT_TERMINATION_SECONDS = 60 * 2;
 
     @Bean
-    public DomainEventBusInitialize domainEventBusInitialize() {
-        return new DomainEventBusInitialize();
+    public DomainEventBus domainEventBusInitialize(ThreadPoolTaskExecutor domainEventTaskExecutor) {
+        return new DomainEventBusImpl(domainEventTaskExecutor);
+    }
+
+    @Bean
+    public DomainEventBusHolder domainEventBusHolder() {
+        return new DomainEventBusHolder();
     }
 
     @Bean(name = DOMAIN_EVENT_TASK_EXECUTOR_NAME)

@@ -2,7 +2,8 @@ package core.framework.jpa.hibernate.support;
 
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
-import core.framework.ddd.support.DomainEventBus;
+import core.framework.ddd.annotation.Trigger;
+import core.framework.ddd.support.DomainEventBusHolder;
 import org.hibernate.event.spi.PostCommitDeleteEventListener;
 import org.hibernate.event.spi.PostCommitInsertEventListener;
 import org.hibernate.event.spi.PostCommitUpdateEventListener;
@@ -59,7 +60,7 @@ public class HibernatePostCommitEventDispatcher implements PostCommitInsertEvent
         if (entity instanceof AggregateRoot<?, ?> aggregateRoot) {
             List<? extends DomainEvent<?, ?>> domainEvents = aggregateRoot.getDomainEvents();
             for (DomainEvent<?, ?> domainEvent : domainEvents) {
-                DomainEventBus.INSTANCE.publishPostCommitEvent(domainEvent);
+                DomainEventBusHolder.get().dispatch(domainEvent, Trigger.AFTER_COMMIT);
             }
         }
     }

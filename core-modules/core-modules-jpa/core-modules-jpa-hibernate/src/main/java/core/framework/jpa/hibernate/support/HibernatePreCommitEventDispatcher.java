@@ -2,7 +2,8 @@ package core.framework.jpa.hibernate.support;
 
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
-import core.framework.ddd.support.DomainEventBus;
+import core.framework.ddd.annotation.Trigger;
+import core.framework.ddd.support.DomainEventBusHolder;
 import org.hibernate.HibernateException;
 import org.hibernate.event.spi.FlushEntityEvent;
 import org.hibernate.event.spi.FlushEntityEventListener;
@@ -24,7 +25,7 @@ public class HibernatePreCommitEventDispatcher implements FlushEntityEventListen
     private void riseDomainEvent(AggregateRoot<?, ?> aggregateRoot) {
         List<? extends DomainEvent<?, ?>> domainEvents = aggregateRoot.getDomainEvents();
         for (DomainEvent<?, ?> domainEvent : domainEvents) {
-            DomainEventBus.INSTANCE.publishPreCommitEvent(domainEvent);
+            DomainEventBusHolder.get().dispatch(domainEvent, Trigger.BEFORE_COMMIT);
         }
     }
 }

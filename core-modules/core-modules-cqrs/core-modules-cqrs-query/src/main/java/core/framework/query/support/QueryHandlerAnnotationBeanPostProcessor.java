@@ -53,14 +53,14 @@ public class QueryHandlerAnnotationBeanPostProcessor implements BeanPostProcesso
 
             if (annotatedMethods.isEmpty()) {
                 this.nonAnnotatedClasses.add(bean.getClass());
-                this.logger.trace("No @KafkaListener annotations found on bean type: " + bean.getClass());
+                this.logger.trace("No @QueryHandler annotations found on bean type: " + bean.getClass());
             } else {
                 // Non-empty set of methods
                 for (Map.Entry<Method, Set<QueryHandler>> entry : annotatedMethods.entrySet()) {
                     Method method = entry.getKey();
                     processQueryHandler(method, bean);
                 }
-                this.logger.debug(" @CommandHandler methods processed on bean '" + beanName + "': " + annotatedMethods);
+                this.logger.debug(" @QueryHandler methods processed on bean '" + beanName + "': " + annotatedMethods);
             }
         }
         return bean;
