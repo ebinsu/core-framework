@@ -6,6 +6,7 @@ import com.mysql.cj.interceptors.QueryInterceptor;
 import com.mysql.cj.log.Log;
 import com.mysql.cj.protocol.Resultset;
 import com.mysql.cj.protocol.ServerSession;
+import core.framework.exception.marker.ErrorCodeMarker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +47,7 @@ public class MySQLQueryInterceptor implements QueryInterceptor {
             if (noIndexUsed || badIndexUsed) {
                 String message = noIndexUsed ? "no index used" : "bad index used";
                 String sqlValue = sql.get();
-                LOGGER.warn("{}, sql={}", message, sqlValue);
+                LOGGER.warn(new ErrorCodeMarker("NO_INDEX_USED"), "{}, sql={}", message, sqlValue);
             }
         }
         return null;
