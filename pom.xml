@@ -13,6 +13,5 @@
         <module>core-parent</module>
         <module>core-modules</module>
         <module>core-framework-test-project</module>
-        <module>tools</module>
     </modules>
 </project>
