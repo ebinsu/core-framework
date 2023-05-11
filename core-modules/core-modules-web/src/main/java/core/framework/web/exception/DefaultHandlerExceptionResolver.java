@@ -1,6 +1,7 @@
 package core.framework.web.exception;
 
 import core.framework.exception.ErrorCodeRuntimeException;
+import core.framework.exception.marker.ErrorCodeMarker;
 import core.framework.json.JSON;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -56,18 +57,18 @@ public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionRes
         request.setAttribute(ERROR_MESSAGE_ATTRIBUTE, ex.getMessage());
 
         ExceptionHandler exceptionHandler = exceptionHandlers.stream()
-                .filter(f -> f.support(ex)).findFirst()
-                .orElse(defaultExceptionHandler);
+            .filter(f -> f.support(ex)).findFirst()
+            .orElse(defaultExceptionHandler);
         ExceptionResponse responseMessage = exceptionHandler.getResponseMessage(request, ex);
         mv.addObject("exception", responseMessage);
         mv.setView(jsonView);
-        logger.error("response: " + JSON.toJSON(responseMessage));
+        logger.error(new ErrorCodeMarker(request.getAttribute(ERROR_CODE_ATTRIBUTE).toString()), "response: " + JSON.toJSON(responseMessage));
         return mv;
     }
 
     @Override
     protected void logException(Exception ex, HttpServletRequest request) {
-        logger.error(ex.getMessage(), ex);
+
     }
 
     private void addDefaultExceptionHandler() {
