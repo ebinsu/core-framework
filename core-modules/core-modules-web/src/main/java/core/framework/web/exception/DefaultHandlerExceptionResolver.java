@@ -68,7 +68,7 @@ public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionRes
 
     @Override
     protected void logException(Exception ex, HttpServletRequest request) {
-
+        logger.error(new ErrorCodeMarker(request.getAttribute(ERROR_CODE_ATTRIBUTE).toString()), ex.getMessage(), ex);
     }
 
     private void addDefaultExceptionHandler() {
