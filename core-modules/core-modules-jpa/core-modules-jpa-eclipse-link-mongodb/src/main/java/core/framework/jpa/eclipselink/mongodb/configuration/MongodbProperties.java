@@ -1,10 +1,13 @@
 package core.framework.jpa.eclipselink.mongodb.configuration;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 import java.util.List;
 
 /**
  * @author ebin
  */
+@ConfigurationProperties(prefix = "spring.jpa.mongodb")
 public class MongodbProperties {
     private String host;
     private String port;
