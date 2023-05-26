@@ -14,6 +14,7 @@ import org.eclipse.persistence.nosql.adapters.mongo.MongoPlatform;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -26,6 +27,7 @@ import java.util.Properties;
  * @author ebin
  */
 @Configuration
+@EnableConfigurationProperties({MongodbProperties.class})
 public class MongodbConfiguration {
     public static final String MONGODB_PERSISTENCE_UNIT_INFO_NAME = "mongodb";
     public static final String MONGODB_PERSISTENCE_UNIT_INFO_BEAN_NAME = "mongodbPersistenceUnitInfo";
@@ -37,7 +39,6 @@ public class MongodbConfiguration {
     public MongodbConfiguration(MongodbProperties mongodbProperties) {
         this.mongodbProperties = mongodbProperties;
     }
-
 
     @Bean
     public MongodbDomainEventPersistenceDriver mongodbDomainEventPersistenceDriver() {
