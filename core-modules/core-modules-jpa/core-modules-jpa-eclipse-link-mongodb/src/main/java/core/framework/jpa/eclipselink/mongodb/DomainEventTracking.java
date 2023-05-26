@@ -6,10 +6,12 @@ import core.framework.json.JSON;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import org.eclipse.persistence.nosql.annotations.DataFormatType;
+import org.eclipse.persistence.nosql.annotations.Field;
+import org.eclipse.persistence.nosql.annotations.NoSql;
 
 import java.time.ZonedDateTime;
 
@@ -18,11 +20,12 @@ import java.time.ZonedDateTime;
  */
 @Entity
 @Table(name = "domain_event_tracking")
+@NoSql(dataFormat = DataFormatType.MAPPED)
 public class DomainEventTracking {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @GeneratedValue
+    @Field(name = "_id")
+    private String id;
 
     @NotNull
     @Column(name = "event_name")
@@ -58,7 +61,7 @@ public class DomainEventTracking {
         this.aggregateRootSnapshot = JSON.toJSON(aggregateRoot);
     }
 
-    public Long getId() {
+    public String getId() {
         return this.id;
     }
 

@@ -13,7 +13,6 @@
         <module>core-parent</module>
         <module>core-modules</module>
         <module>core-framework-test-project</module>
-        <module>mongodb-test</module>
         <module>mongodb-test-1</module>
     </modules>
 </project>
