@@ -4,6 +4,7 @@ import core.framework.jpa.common.support.ConfigurableEntityManagerFactoryBean;
 import core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo;
 import core.framework.jpa.eclipselink.ConfigurablePersistenceUnitInfoPersistenceProvider;
 import core.framework.jpa.eclipselink.DomainEventSessionEventListener;
+import core.framework.jpa.eclipselink.mongodb.DomainEventTracking;
 import core.framework.jpa.eclipselink.mongodb.support.MongodbDomainEventPersistenceDriver;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.ValidationMode;
@@ -64,14 +65,14 @@ public class MongodbConfiguration {
 
         properties.put(ECLIPSE_LINK_NOSQL_PREFIX + MongoConnectionSpec.READ_PREFERENCE, mongodbProperties.getReadPreference().name());
         properties.put(ECLIPSE_LINK_NOSQL_PREFIX + MongoConnectionSpec.WRITE_CONCERN, mongodbProperties.getWriteConcern().name());
-        properties.putIfAbsent(AvailableSettings.JAKARTA_VALIDATION_MODE, ValidationMode.AUTO);
+        properties.putIfAbsent(AvailableSettings.JAKARTA_VALIDATION_MODE, ValidationMode.AUTO.name());
 
         ConfigurablePersistenceUnitInfo configurablePersistenceUnitInfo = new ConfigurablePersistenceUnitInfo(MONGODB_PERSISTENCE_UNIT_INFO_NAME);
         configurablePersistenceUnitInfo.setPersistenceProviderClassName(ConfigurablePersistenceUnitInfoPersistenceProvider.class.getName());
         configurablePersistenceUnitInfo.setPackagesToScan(mongodbProperties.getPackagesToScan());
         configurablePersistenceUnitInfo.setProperties(properties);
         configurablePersistenceUnitInfo.setTransactionType(PersistenceUnitTransactionType.RESOURCE_LOCAL);
-
+        configurablePersistenceUnitInfo.addManagedClassName(DomainEventTracking.class.getName());
         return configurablePersistenceUnitInfo;
     }
 

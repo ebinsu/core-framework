@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    mongodb:
+      host: "192.168.136.128"
+      port: "30002"
+      db: "demo"
+      packages-to-scan:
+        - core.test

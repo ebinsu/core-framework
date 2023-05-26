@@ -25,16 +25,24 @@ public class MongoDBTest {
     @Rollback(value = false)
     public void test1() {
         TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-        try {
-            Order o1 = new Order();
-            o1.add("1");
-            entityManager.persist(o1);
-            transactionManager.commit(status);
-        } catch (Exception e) {
-            transactionManager.rollback(status);
-        }
-
+        TestDomain testDomain = new TestDomain("test");
+        testDomain.registerEvent(new TestDomainEvent(testDomain));
+        System.out.println(testDomain.getId());
+        entityManager.persist(testDomain);
+        System.out.println(testDomain.getId());
+        transactionManager.commit(status);
+        System.out.println(testDomain.getId());
     }
+
+    @Test
+    @Rollback(value = false)
+    public void test2() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        Order o = new Order();
+        entityManager.persist(o);
+        transactionManager.commit(status);
+    }
+
 
     public static void main(String[] args) {
 //        EntityManagerFactory entityManagerFactory =
