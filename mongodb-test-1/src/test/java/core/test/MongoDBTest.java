@@ -1,9 +1,12 @@
 package core.test;
 
+import core.framework.jpa.eclipselink.mongodb.configuration.MongodbConfiguration;
+import core.framework.jpa.hibernate.mysql.configuration.HibernateConfiguration;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -19,6 +22,7 @@ public class MongoDBTest {
     EntityManager entityManager;
 
     @Autowired
+    @Qualifier(MongodbConfiguration.MONGODB_TRANSACTION_MANAGER_BEAN_NAME)
     PlatformTransactionManager transactionManager;
 
     @Test

@@ -19,6 +19,7 @@ public class ExcludeAutoConfigurationImportFilter implements AutoConfigurationIm
             if (Objects.nonNull(className)) {
                 matches[i] = !(className.contains("org.springframework.boot.autoconfigure.data")
                     || className.contains("org.springframework.boot.autoconfigure.jdbc")
+                    || className.contains("org.springframework.boot.autoconfigure.sql")
                     || className.contains("org.springframework.boot.autoconfigure.mongo"));
             }
         }

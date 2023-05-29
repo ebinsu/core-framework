@@ -25,8 +25,25 @@
             <artifactId>core-modules-jpa-eclipse-link-mongodb</artifactId>
         </dependency>
         <dependency>
+            <groupId>core-framework</groupId>
+            <artifactId>core-modules-jpa-hibernate-mysql</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
+            <version>4.0.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-ant</artifactId>
+            <version>6.1.4.Final</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

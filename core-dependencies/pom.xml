@@ -104,6 +104,11 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
+                <artifactId>core-modules-jpa-hibernate-mysql</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
                 <artifactId>core-modules-jpa-common</artifactId>
                 <version>${revision}</version>
             </dependency>

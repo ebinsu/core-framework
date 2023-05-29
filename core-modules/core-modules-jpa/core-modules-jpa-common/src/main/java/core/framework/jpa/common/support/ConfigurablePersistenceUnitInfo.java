@@ -58,6 +58,11 @@ public class ConfigurablePersistenceUnitInfo extends MutablePersistenceUnitInfo 
     }
 
     @Override
+    public ClassLoader getNewTempClassLoader() {
+        return null;
+    }
+
+    @Override
     public ClassLoader getClassLoader() {
         return this.classLoader;
     }
