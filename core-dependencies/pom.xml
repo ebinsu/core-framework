@@ -114,7 +114,7 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-jpa-eclipse-link</artifactId>
+                <artifactId>core-modules-jpa-eclipse-link-common</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

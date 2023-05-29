@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>core-modules-jpa-eclipse-link</artifactId>
+    <artifactId>core-modules-jpa-eclipse-link-common</artifactId>
 
     <dependencies>
         <dependency>

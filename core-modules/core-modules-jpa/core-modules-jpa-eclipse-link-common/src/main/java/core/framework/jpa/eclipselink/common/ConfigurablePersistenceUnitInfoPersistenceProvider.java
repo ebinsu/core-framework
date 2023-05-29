@@ -1,4 +1,4 @@
-package core.framework.jpa.eclipselink;
+package core.framework.jpa.eclipselink.common;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.spi.ClassTransformer;

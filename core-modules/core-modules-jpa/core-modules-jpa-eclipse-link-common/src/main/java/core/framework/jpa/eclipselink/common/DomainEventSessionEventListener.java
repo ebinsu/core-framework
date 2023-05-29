@@ -1,4 +1,4 @@
-package core.framework.jpa.eclipselink;
+package core.framework.jpa.eclipselink.common;
 
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;

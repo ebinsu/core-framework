@@ -1,5 +1,6 @@
 package core.test;
 
+import core.framework.ddd.annotation.AggregateRoot;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * @author ebin
  */
-@Entity
+@AggregateRoot
 @Table(name = "orders")
 @NoSql(dataFormat = DataFormatType.MAPPED)
 public class Order implements Serializable {

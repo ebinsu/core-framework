@@ -2,8 +2,8 @@ package core.framework.jpa.eclipselink.mongodb.configuration;
 
 import core.framework.jpa.common.support.ConfigurableEntityManagerFactoryBean;
 import core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo;
-import core.framework.jpa.eclipselink.ConfigurablePersistenceUnitInfoPersistenceProvider;
-import core.framework.jpa.eclipselink.DomainEventSessionEventListener;
+import core.framework.jpa.eclipselink.common.ConfigurablePersistenceUnitInfoPersistenceProvider;
+import core.framework.jpa.eclipselink.common.DomainEventSessionEventListener;
 import core.framework.jpa.eclipselink.mongodb.DomainEventTracking;
 import core.framework.jpa.eclipselink.mongodb.support.MongodbDomainEventPersistenceDriver;
 import jakarta.persistence.EntityManagerFactory;

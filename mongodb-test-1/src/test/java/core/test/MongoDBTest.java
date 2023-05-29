@@ -1,7 +1,6 @@
 package core.test;
 
 import core.framework.jpa.eclipselink.mongodb.configuration.MongodbConfiguration;
-import core.framework.jpa.hibernate.mysql.configuration.HibernateConfiguration;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Test;
