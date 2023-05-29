@@ -15,6 +15,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.SharedCacheMode;
 import jakarta.persistence.ValidationMode;
 import jakarta.persistence.spi.PersistenceUnitTransactionType;
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class HibernateConfiguration {
         hikariConfig.setJdbcUrl(jpaMysqlProperties.getJdbcUrl());
         hikariConfig.setUsername(jpaMysqlProperties.getUsername());
         hikariConfig.setPassword(jpaMysqlProperties.getPassword());
+        hikariConfig.setTransactionIsolation("TRANSACTION_READ_COMMITTED");
         hikariConfig.setAutoCommit(false);
         hikariConfig.addDataSourceProperty(PropertyKey.queryInterceptors.getKeyName(), MySQLQueryInterceptor.class.getName());
         return new HikariDataSource(hikariConfig);
@@ -65,6 +67,7 @@ public class HibernateConfiguration {
         properties.putIfAbsent(AvailableSettings.ISOLATION, Connection.TRANSACTION_READ_COMMITTED);
         properties.putIfAbsent(AvailableSettings.STATEMENT_FETCH_SIZE, STATEMENT_FETCH_SIZE);
         properties.putIfAbsent(AvailableSettings.JAKARTA_SHARED_CACHE_MODE, SharedCacheMode.UNSPECIFIED);
+        properties.putIfAbsent(AvailableSettings.PHYSICAL_NAMING_STRATEGY, CamelCaseToUnderscoresNamingStrategy.class.getName());
 
         ConfigurablePersistenceUnitInfo configurablePersistenceUnitInfo = new ConfigurablePersistenceUnitInfo(MYSQL_PERSISTENCE_UNIT_INFO_NAME);
         configurablePersistenceUnitInfo.setPackagesToScan(jpaMysqlProperties.getPackagesToScan());

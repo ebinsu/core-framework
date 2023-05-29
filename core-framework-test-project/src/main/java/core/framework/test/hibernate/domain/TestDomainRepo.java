@@ -1,7 +1,8 @@
 package core.framework.test.hibernate.domain;
 
 import core.framework.ddd.Repository;
-import core.framework.jpa.hibernate.AbstractJPARepository;
+import core.framework.jpa.common.AbstractJPARepository;
+import core.framework.jpa.hibernate.mysql.configuration.HibernateConfiguration;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
@@ -10,7 +11,7 @@ import jakarta.persistence.PersistenceContext;
  */
 @org.springframework.stereotype.Repository
 public class TestDomainRepo extends AbstractJPARepository<TestDomain, Long> implements Repository<TestDomain, Long> {
-    @PersistenceContext
+    @PersistenceContext(unitName = HibernateConfiguration.MYSQL_PERSISTENCE_UNIT_INFO_NAME)
     EntityManager entityManager;
 
     @Override

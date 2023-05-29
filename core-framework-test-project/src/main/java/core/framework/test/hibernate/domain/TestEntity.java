@@ -1,7 +1,7 @@
 package core.framework.test.hibernate.domain;
 
 import core.framework.ddd.annotation.Entity;
-import core.framework.jpa.hibernate.AbstractEntity;
+import core.framework.jpa.common.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

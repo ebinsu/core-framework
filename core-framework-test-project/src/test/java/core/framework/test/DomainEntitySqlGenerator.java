@@ -1,13 +1,11 @@
 package core.framework.test;
 
-import core.framework.jpa.hibernate.DomainEventTracking;
-import core.framework.jpa.hibernate.configuration.HibernateConfiguration;
-import core.framework.jpa.hibernate.support.DDDPersistenceManagedTypesScanner;
+
+import core.framework.jpa.hibernate.mysql.DomainEventTracking;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
-import org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl;
-import org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Environment;
+import org.hibernate.dialect.MySQL8Dialect;
 import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
 import org.hibernate.jpa.boot.spi.Bootstrap;
@@ -55,7 +53,7 @@ public class DomainEntitySqlGenerator {
         ApplicationContext applicationContext = application.run();
         DataSource dataSource = applicationContext.getBean(DataSource.class);
         Properties props = new Properties();
-        props.put(Environment.DIALECT, MySQLDialect.class);
+        props.put(Environment.DIALECT, MySQL8Dialect.class);
         props.put(Environment.DATASOURCE, dataSource);
         props.put(Environment.UNIQUE_CONSTRAINT_SCHEMA_UPDATE_STRATEGY, UniqueConstraintSchemaUpdateStrategy.RECREATE_QUIETLY);
         props.put(AvailableSettings.PHYSICAL_NAMING_STRATEGY, CamelCaseToUnderscoresNamingStrategy.class.getName());

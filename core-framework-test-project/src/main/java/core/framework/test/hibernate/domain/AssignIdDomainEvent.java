@@ -1,6 +1,7 @@
 package core.framework.test.hibernate.domain;
 
-import core.framework.jpa.hibernate.AbstractDomainEvent;
+
+import core.framework.jpa.common.AbstractDomainEvent;
 
 /**
  * @author ebin

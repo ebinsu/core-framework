@@ -1,7 +1,7 @@
 package core.framework.test.hibernate.domain;
 
 import core.framework.ddd.annotation.AggregateRoot;
-import core.framework.jpa.hibernate.AbstractAggregateRoot;
+import core.framework.jpa.common.AbstractAggregateRoot;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 

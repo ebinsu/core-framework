@@ -1,4 +1,4 @@
-package core.framework.jpa.common.support;
+package core.framework.test;
 
 import core.framework.ddd.annotation.AggregateRoot;
 import core.framework.ddd.annotation.ValueObject;
@@ -7,13 +7,10 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PersistenceException;
-import jakarta.persistence.spi.ClassTransformer;
-import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.index.CandidateComponentsIndex;
 import org.springframework.context.index.CandidateComponentsIndexLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternUtils;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
@@ -21,13 +18,16 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
-import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
+import org.springframework.lang.Nullable;
+import org.springframework.orm.jpa.persistenceunit.PersistenceManagedTypes;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -36,14 +36,14 @@ import java.util.Set;
 /**
  * @author ebin
  */
-public class ConfigurablePersistenceUnitInfo extends MutablePersistenceUnitInfo implements ResourceLoaderAware {
+public class DDDPersistenceManagedTypesScanner {
     private static final String CLASS_RESOURCE_PATTERN = "/**/*.class";
-    private static final String XML_RESOURCE_PATTERN = "/**/*Finder.xml";
+
     private static final String PACKAGE_INFO_SUFFIX = ".package-info";
-    private static final Set<AnnotationTypeFilter> ENTITY_TYPE_FILTERS;
+
+    private static final Set<AnnotationTypeFilter> ENTITY_TYPE_FILTERS = new LinkedHashSet<>(4);
 
     static {
-        ENTITY_TYPE_FILTERS = new LinkedHashSet<>(8);
         ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(Entity.class, false));
         ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(Embeddable.class, false));
         ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(MappedSuperclass.class, false));
@@ -53,76 +53,46 @@ public class ConfigurablePersistenceUnitInfo extends MutablePersistenceUnitInfo 
         ENTITY_TYPE_FILTERS.add(new AnnotationTypeFilter(ValueObject.class, false));
     }
 
-    private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
-    private CandidateComponentsIndex componentsIndex;
-    private ClassLoader classLoader = resourcePatternResolver.getClassLoader();
+    private final ResourcePatternResolver resourcePatternResolver;
 
-    public ConfigurablePersistenceUnitInfo(String persistenceUnitName) {
-        this.setPersistenceUnitName(persistenceUnitName);
-        this.setExcludeUnlistedClasses(true);
-    }
+    @Nullable
+    private final CandidateComponentsIndex componentsIndex;
 
-    @Override
-    public ClassLoader getNewTempClassLoader() {
-        return null;
-    }
 
-    @Override
-    public ClassLoader getClassLoader() {
-        return this.classLoader;
-    }
-
-    @Override
-    public void addTransformer(ClassTransformer classTransformer) {
-    }
-
-    @Override
-    public void setResourceLoader(ResourceLoader resourceLoader) {
+    public DDDPersistenceManagedTypesScanner(ResourceLoader resourceLoader) {
         this.resourcePatternResolver = ResourcePatternUtils.getResourcePatternResolver(resourceLoader);
         this.componentsIndex = CandidateComponentsIndexLoader.loadIndex(resourceLoader.getClassLoader());
     }
 
-    public void setPackagesToScan(List<String> packagesToScan) {
-        if (packagesToScan != null) {
-            for (String pkg : packagesToScan) {
-                scanPackage(pkg);
-                scanMappingResources(pkg);
-            }
+    /**
+     * Scan the specified packages and return a {@link PersistenceManagedTypes} that
+     * represents the result of the scanning.
+     *
+     * @param packagesToScan the packages to scan
+     * @return the {@link PersistenceManagedTypes} instance
+     */
+    public PersistenceManagedTypes scan(String... packagesToScan) {
+        ScanResult scanResult = new ScanResult();
+        for (String pkg : packagesToScan) {
+            scanPackage(pkg, scanResult);
         }
+        return scanResult.toJpaManagedTypes();
     }
 
-    private void scanMappingResources(String pkg) {
-        String pattern = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
-            + ClassUtils.convertClassNameToResourcePath(pkg) + XML_RESOURCE_PATTERN;
-        try {
-            Resource[] resources = this.resourcePatternResolver.getResources(pattern);
-            for (Resource resource : resources) {
-                String url = resource.getURL().toString();
-                String basePackagePath = pkg.replace(".", "/").replace("*", "");
-                url = url.substring(url.indexOf(basePackagePath));
-                this.addMappingFileName(url);
-            }
-        } catch (IOException e) {
-            //ignore
-            throw new PersistenceException("Failed to scan classpath for unlisted entity class mapping resources", e);
-        }
-    }
-
-    private void scanPackage(String pkg) {
+    private void scanPackage(String pkg, ScanResult scanResult) {
         if (this.componentsIndex != null) {
             Set<String> candidates = new HashSet<>();
             for (AnnotationTypeFilter filter : ENTITY_TYPE_FILTERS) {
                 candidates.addAll(this.componentsIndex.getCandidateTypes(pkg, filter.getAnnotationType().getName()));
             }
-            candidates.forEach(this::addManagedClassName);
-            Set<String> managedPackages = this.componentsIndex.getCandidateTypes(pkg, "package-info");
-            managedPackages.forEach(this::addManagedPackage);
+            scanResult.managedClassNames.addAll(candidates);
+            scanResult.managedPackages.addAll(this.componentsIndex.getCandidateTypes(pkg, "package-info"));
             return;
         }
 
         try {
             String pattern = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
-                + ClassUtils.convertClassNameToResourcePath(pkg) + CLASS_RESOURCE_PATTERN;
+                    + ClassUtils.convertClassNameToResourcePath(pkg) + CLASS_RESOURCE_PATTERN;
             Resource[] resources = this.resourcePatternResolver.getResources(pattern);
             MetadataReaderFactory readerFactory = new CachingMetadataReaderFactory(this.resourcePatternResolver);
             for (Resource resource : resources) {
@@ -130,19 +100,20 @@ public class ConfigurablePersistenceUnitInfo extends MutablePersistenceUnitInfo 
                     MetadataReader reader = readerFactory.getMetadataReader(resource);
                     String className = reader.getClassMetadata().getClassName();
                     if (matchesFilter(reader, readerFactory)) {
-                        this.addManagedClassName(className);
-                        if (this.getPersistenceUnitRootUrl() == null) {
+                        scanResult.managedClassNames.add(className);
+                        if (scanResult.persistenceUnitRootUrl == null) {
                             URL url = resource.getURL();
                             if (ResourceUtils.isJarURL(url)) {
-                                this.setPersistenceUnitRootUrl(ResourceUtils.extractJarFileURL(url));
+                                scanResult.persistenceUnitRootUrl = ResourceUtils.extractJarFileURL(url);
                             }
                         }
                     } else if (className.endsWith(PACKAGE_INFO_SUFFIX)) {
-                        this.addManagedPackage(
-                            className.substring(0, className.length() - PACKAGE_INFO_SUFFIX.length()));
+                        scanResult.managedPackages.add(className.substring(0,
+                                className.length() - PACKAGE_INFO_SUFFIX.length()));
                     }
                 } catch (FileNotFoundException ex) {
                     // Ignore non-readable resource
+                    throw new Error("Failed to scan classpath for unlisted entity classes", ex);
                 }
             }
         } catch (IOException ex) {
@@ -150,6 +121,10 @@ public class ConfigurablePersistenceUnitInfo extends MutablePersistenceUnitInfo 
         }
     }
 
+    /**
+     * Check whether any of the configured entity type filters matches
+     * the current class descriptor contained in the metadata reader.
+     */
     private boolean matchesFilter(MetadataReader reader, MetadataReaderFactory readerFactory) throws IOException {
         for (TypeFilter filter : ENTITY_TYPE_FILTERS) {
             if (filter.match(reader, readerFactory)) {
@@ -157,5 +132,56 @@ public class ConfigurablePersistenceUnitInfo extends MutablePersistenceUnitInfo 
             }
         }
         return false;
+    }
+
+    public static class ScanResult {
+
+        private final List<String> managedClassNames = new ArrayList<>();
+
+        private final List<String> managedPackages = new ArrayList<>();
+
+        @Nullable
+        private URL persistenceUnitRootUrl;
+
+        PersistenceManagedTypes toJpaManagedTypes() {
+            return new SimplePersistenceManagedTypes(this.managedClassNames,
+                    this.managedPackages, this.persistenceUnitRootUrl);
+        }
+
+    }
+
+    public static class SimplePersistenceManagedTypes implements PersistenceManagedTypes {
+
+        private final List<String> managedClassNames;
+
+        private final List<String> managedPackages;
+
+        @Nullable
+        private final URL persistenceUnitRootUrl;
+
+
+        SimplePersistenceManagedTypes(List<String> managedClassNames, List<String> managedPackages,
+                                      @Nullable URL persistenceUnitRootUrl) {
+            this.managedClassNames = managedClassNames;
+            this.managedPackages = managedPackages;
+            this.persistenceUnitRootUrl = persistenceUnitRootUrl;
+        }
+
+        @Override
+        public List<String> getManagedClassNames() {
+            return Collections.unmodifiableList(this.managedClassNames);
+        }
+
+        @Override
+        public List<String> getManagedPackages() {
+            return Collections.unmodifiableList(this.managedPackages);
+        }
+
+        @Override
+        @Nullable
+        public URL getPersistenceUnitRootUrl() {
+            return this.persistenceUnitRootUrl;
+        }
+
     }
 }
