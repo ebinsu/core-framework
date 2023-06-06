@@ -24,10 +24,10 @@
             <groupId>core-framework</groupId>
             <artifactId>core-modules-jpa-eclipse-link-mongodb</artifactId>
         </dependency>
-        <dependency>
-            <groupId>core-framework</groupId>
-            <artifactId>core-modules-jpa-hibernate-mysql</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>core-framework</groupId>-->
+<!--            <artifactId>core-modules-jpa-hibernate-mysql</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

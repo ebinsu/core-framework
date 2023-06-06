@@ -43,7 +43,9 @@ public class MongoDBTest {
         TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
         Order o = new Order();
         entityManager.persist(o);
+        System.out.println(o.getId());
         transactionManager.commit(status);
+        System.out.println(o.getId());
     }
 
 

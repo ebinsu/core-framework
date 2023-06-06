@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import org.bson.types.ObjectId;
 import org.eclipse.persistence.nosql.annotations.DataFormatType;
 import org.eclipse.persistence.nosql.annotations.Field;
 import org.eclipse.persistence.nosql.annotations.NoSql;
@@ -35,17 +36,12 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(String id) {
-        this.id = id;
+    public String getId() {
+        return id;
     }
 
-    public Order(String id, String description) {
-        this.id = id;
-        this.description = description;
-    }
-
-    public void add(String e) {
-        event.add(e);
+    public String getDescription() {
+        return description;
     }
 
     public List<String> getEvent() {

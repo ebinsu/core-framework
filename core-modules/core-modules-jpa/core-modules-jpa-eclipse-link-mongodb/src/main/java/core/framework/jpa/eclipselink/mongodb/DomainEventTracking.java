@@ -39,10 +39,10 @@ public class DomainEventTracking {
     @Column(name = "aggregate_root_id")
     private String aggregateRootId;
 
-    @Column(name = "aggregate_root_snapshot", columnDefinition = "TEXT")
+    @Column(name = "aggregate_root_snapshot")
     private String aggregateRootSnapshot;
 
-    @Column(name = "domain_event_snapshot", columnDefinition = "TEXT")
+    @Column(name = "domain_event_snapshot")
     private String domainEventSnapshot;
 
     @NotNull

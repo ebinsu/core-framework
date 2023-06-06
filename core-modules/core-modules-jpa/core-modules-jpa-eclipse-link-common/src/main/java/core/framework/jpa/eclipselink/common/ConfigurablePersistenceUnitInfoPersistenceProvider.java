@@ -7,13 +7,14 @@ import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.config.SystemProperties;
 import org.eclipse.persistence.exceptions.PersistenceUnitLoadingException;
 import org.eclipse.persistence.internal.jpa.EntityManagerFactoryImpl;
-import org.eclipse.persistence.internal.jpa.EntityManagerFactoryProvider;
 import org.eclipse.persistence.internal.jpa.EntityManagerSetupImpl;
 import org.eclipse.persistence.internal.jpa.deployment.JavaSECMPInitializer;
 import org.eclipse.persistence.jpa.PersistenceProvider;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.eclipse.persistence.internal.jpa.EntityManagerFactoryProvider.getConfigPropertyAsString;
 
 /**
  * Get PersistenceUnitName from ConfigurablePersistenceUnitInfo rather than persistence.xml
@@ -29,16 +30,16 @@ public class ConfigurablePersistenceUnitInfoPersistenceProvider extends Persiste
 
         Map nonNullProperties = (properties == null) ? new HashMap<>() : properties;
 
-        String forceTargetServer = EntityManagerFactoryProvider.getConfigPropertyAsString(SystemProperties.ENFORCE_TARGET_SERVER, null);
+        String forceTargetServer = getConfigPropertyAsString(SystemProperties.ENFORCE_TARGET_SERVER, null);
         if ("true".equalsIgnoreCase(forceTargetServer)) {
             nonNullProperties.remove(PersistenceUnitProperties.TARGET_SERVER);
         }
 
-        EntityManagerSetupImpl emSetupImpl = null;
-        if (EntityManagerSetupImpl.mustBeCompositeMember(info)) {
+        DDDSupportEntityManagerSetupImpl emSetupImpl = null;
+        if (DDDSupportEntityManagerSetupImpl.mustBeCompositeMember(info)) {
             // persistence unit cannot be used standalone (only as a composite member).
             // still the factory will be created but attempt to createEntityManager would cause an exception.
-            emSetupImpl = new EntityManagerSetupImpl(info.getPersistenceUnitName(), info.getPersistenceUnitName());
+            emSetupImpl = new DDDSupportEntityManagerSetupImpl(info.getPersistenceUnitName(), info.getPersistenceUnitName());
             // predeploy assigns puInfo and does not do anything else.
             // the session is not created, no need to add emSetupImpl to the global map.
             emSetupImpl.predeploy(info, nonNullProperties);
@@ -50,7 +51,7 @@ public class ConfigurablePersistenceUnitInfoPersistenceProvider extends Persiste
             synchronized (EntityManagerFactoryProvider.emSetupImpls) {
                 emSetupImpl = EntityManagerFactoryProvider.getEntityManagerSetupImpl(sessionName);
                 if (emSetupImpl == null) {
-                    emSetupImpl = new EntityManagerSetupImpl(uniqueName, sessionName);
+                    emSetupImpl = new DDDSupportEntityManagerSetupImpl(uniqueName, sessionName);
                     isNew = true;
                     emSetupImpl.setIsInContainerMode(true);
                     // if predeploy fails then emSetupImpl shouldn't be added to FactoryProvider
