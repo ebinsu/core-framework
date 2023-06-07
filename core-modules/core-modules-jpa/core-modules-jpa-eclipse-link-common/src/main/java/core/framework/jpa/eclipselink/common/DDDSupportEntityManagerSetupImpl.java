@@ -644,7 +644,7 @@ public class DDDSupportEntityManagerSetupImpl extends EntityManagerSetupImpl imp
                 }
 
                 EntityManagerFactoryProvider.warnOldProperties(predeployProperties, session);
-                session.getPlatform().setConversionManager(new JPAConversionManager());
+                session.getPlatform().setConversionManager(new ExtendConversionManager());
 
                 if (this.staticWeaveInfo == null) {
                     if (!isComposite) {

@@ -6,7 +6,6 @@ import org.eclipse.persistence.internal.jpa.metadata.MetadataProcessor;
 import org.eclipse.persistence.internal.jpa.metadata.accessors.classes.ConverterAccessor;
 import org.eclipse.persistence.internal.jpa.metadata.accessors.classes.EmbeddableAccessor;
 import org.eclipse.persistence.internal.jpa.metadata.accessors.classes.EntityAccessor;
-import org.eclipse.persistence.internal.jpa.metadata.accessors.classes.MappedSuperclassAccessor;
 import org.eclipse.persistence.internal.jpa.metadata.accessors.objects.MetadataClass;
 import org.eclipse.persistence.internal.jpa.metadata.xml.XMLEntityMappings;
 import org.eclipse.persistence.internal.sessions.AbstractSession;
@@ -109,9 +108,9 @@ public class DDDMetadataProcessor extends MetadataProcessor {
                 // NPE or a CNF, a warning or exception is thrown in loadClass()
                 if (candidateClass != null) {
                     if (PersistenceUnitProcessor.isEntity(candidateClass) && !m_project.hasEntity(candidateClass) && !m_project.hasEmbeddable(candidateClass)) {
-                        m_project.addEntityAccessor(new EntityAccessor(PersistenceUnitProcessor.getEntityAnnotation(candidateClass), candidateClass, m_project));
+                        m_project.addEntityAccessor(new ExtendEntityAccessor(PersistenceUnitProcessor.getEntityAnnotation(candidateClass), candidateClass, m_project));
                     } else if (PersistenceUnitProcessor.isEmbeddable(candidateClass) && !m_project.hasEmbeddable(candidateClass) && !m_project.hasEntity(candidateClass)) {
-                        m_project.addEmbeddableAccessor(new EmbeddableAccessor(PersistenceUnitProcessor.getEmbeddableAnnotation(candidateClass), candidateClass, m_project));
+                        m_project.addEmbeddableAccessor(new ExtendEmbeddableAccessor(PersistenceUnitProcessor.getEmbeddableAnnotation(candidateClass), candidateClass, m_project));
                     } else if (PersistenceUnitProcessor.isStaticMetamodelClass(candidateClass)) {
                         m_project.addStaticMetamodelClass(PersistenceUnitProcessor.getStaticMetamodelAnnotation(candidateClass), candidateClass);
                     } else if (PersistenceUnitProcessor.isConverter(candidateClass) && !m_project.hasConverterAccessor(candidateClass)) {
@@ -119,15 +118,15 @@ public class DDDMetadataProcessor extends MetadataProcessor {
                     } else if (PersistenceUnitProcessor.isMappedSuperclass(candidateClass) && !m_project.hasMappedSuperclass(candidateClass)) {
                         // ensure mapped superclasses will be added to the metamodel even if they do not have entity subclasses
                         // add the mapped superclass to keep track of it in case it is not processed later (has no subclasses).
-                        m_project.addMappedSuperclass(new MappedSuperclassAccessor(
+                        m_project.addMappedSuperclass(new ExtendMappedSuperclassAccessor(
                             PersistenceUnitProcessor.getMappedSuperclassAnnotation(candidateClass),
                             candidateClass, m_project));
                     } else if ((DDDPersistenceUnitProcessor.isAggregateRoot(candidateClass) || DDDPersistenceUnitProcessor.isEntity(candidateClass))
                         && !m_project.hasEntity(candidateClass)
                         && !m_project.hasEmbeddable(candidateClass)) {
-                        m_project.addEntityAccessor(new EntityAccessor(PersistenceUnitProcessor.getEntityAnnotation(candidateClass), candidateClass, m_project));
+                        m_project.addEntityAccessor(new ExtendEntityAccessor(PersistenceUnitProcessor.getEntityAnnotation(candidateClass), candidateClass, m_project));
                     } else if (DDDPersistenceUnitProcessor.isValueObject(candidateClass) && !m_project.hasEmbeddable(candidateClass) && !m_project.hasEntity(candidateClass)) {
-                        m_project.addEmbeddableAccessor(new EmbeddableAccessor(PersistenceUnitProcessor.getEmbeddableAnnotation(candidateClass), candidateClass, m_project));
+                        m_project.addEmbeddableAccessor(new ExtendEmbeddableAccessor(PersistenceUnitProcessor.getEmbeddableAnnotation(candidateClass), candidateClass, m_project));
                     }
                 }
             }

@@ -1,10 +1,8 @@
 package core.test;
 
 import core.framework.jpa.common.AbstractAggregateRoot;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.eclipse.persistence.nosql.annotations.DataFormatType;
@@ -12,6 +10,7 @@ import org.eclipse.persistence.nosql.annotations.Field;
 import org.eclipse.persistence.nosql.annotations.NoSql;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author ebin
@@ -25,6 +24,8 @@ public class TestDomain extends AbstractAggregateRoot<TestDomain, String> {
     @GeneratedValue
     @Field(name = "_id")
     private String id;
+
+    public LocalDateTime testTime;
 
     private String name;
 
@@ -49,6 +50,13 @@ public class TestDomain extends AbstractAggregateRoot<TestDomain, String> {
         this.name = name;
     }
 
+    public LocalDateTime getTestTime() {
+        return testTime;
+    }
+
+    public void setTestTime(LocalDateTime testTime) {
+        this.testTime = testTime;
+    }
 
     @Override
     public String getId() {

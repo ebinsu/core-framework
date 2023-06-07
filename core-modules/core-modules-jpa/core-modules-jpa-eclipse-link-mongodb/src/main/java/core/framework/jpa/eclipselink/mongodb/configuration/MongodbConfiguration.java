@@ -5,13 +5,14 @@ import core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo;
 import core.framework.jpa.eclipselink.common.ConfigurablePersistenceUnitInfoPersistenceProvider;
 import core.framework.jpa.eclipselink.common.DomainEventSessionEventListener;
 import core.framework.jpa.eclipselink.mongodb.DomainEventTracking;
+import core.framework.jpa.eclipselink.mongodb.support.ExtendMongoConnectionSpec;
+import core.framework.jpa.eclipselink.mongodb.support.ExtendMongoPlatform;
 import core.framework.jpa.eclipselink.mongodb.support.MongodbDomainEventPersistenceDriver;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.ValidationMode;
 import jakarta.persistence.spi.PersistenceUnitTransactionType;
 import org.eclipse.persistence.eis.EISConnectionSpec;
 import org.eclipse.persistence.nosql.adapters.mongo.MongoConnectionSpec;
-import org.eclipse.persistence.nosql.adapters.mongo.MongoPlatform;
 import org.hibernate.cfg.AvailableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -49,9 +50,9 @@ public class MongodbConfiguration {
     @Bean(name = MONGODB_PERSISTENCE_UNIT_INFO_BEAN_NAME)
     public ConfigurablePersistenceUnitInfo mongodbPersistenceUnitInfo() {
         Properties properties = new Properties();
-        properties.put("eclipselink.logging.level", "OFF");
-        properties.put("eclipselink.target-database", MongoPlatform.class.getName());
-        properties.put("eclipselink.nosql.connection-spec", MongoConnectionSpec.class.getName());
+        properties.put("eclipselink.logging.level", "FINEST");
+        properties.put("eclipselink.target-database", ExtendMongoPlatform.class.getName());
+        properties.put("eclipselink.nosql.connection-spec", ExtendMongoConnectionSpec.class.getName());
         properties.put("eclipselink.session-event-listener", DomainEventSessionEventListener.class.getName());
 
         properties.put(ECLIPSE_LINK_NOSQL_PREFIX + MongoConnectionSpec.PORT, mongodbProperties.getPort());
