@@ -36,9 +36,5 @@
             <groupId>core-framework</groupId>
             <artifactId>core-modules-shared</artifactId>
         </dependency>
-        <dependency>
-            <groupId>core-framework</groupId>
-            <artifactId>core-modules-jpa-common</artifactId>
-        </dependency>
     </dependencies>
 </project>

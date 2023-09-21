@@ -106,7 +106,7 @@ class HibernateDDDTest {
     public void testPreDomainEvent() {
         TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
         TestDomain testDomain = new TestDomain("test");
-        TestDomainPreEvent testDomainPreEvent = new TestDomainPreEvent(testDomain);
+        TestDomainPreEvent testDomainPreEvent = new TestDomainPreEvent();
         testDomain.registerEvent(testDomainPreEvent);
         testDomainRepo.persist(testDomain);
         transactionManager.commit(status);
@@ -117,7 +117,7 @@ class HibernateDDDTest {
     public void testPostDomainEvent() {
         TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
         TestDomain testDomain = new TestDomain("test");
-        TestDomainEvent testDomainEvent = new TestDomainEvent(testDomain);
+        TestDomainEvent testDomainEvent = new TestDomainEvent();
         TestEntity testEntity = new TestEntity("test");
         testDomain.setEntity(testEntity);
         testDomain.registerEvent(testDomainEvent);
