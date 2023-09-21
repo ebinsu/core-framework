@@ -30,6 +30,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.persistenceunit.PersistenceManagedTypes;
+import org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.util.StringUtils;
 
@@ -115,5 +116,10 @@ public class HibernateConfiguration {
             packages = AutoConfigurationPackages.get(beanFactory);
         }
         return new DDDPersistenceManagedTypesScanner(resourceLoader).scan(StringUtils.toStringArray(packages));
+    }
+
+    @Bean
+    public PersistenceUnitPostProcessor persistenceUnitCustomizer(){
+       return new PersistenceUnitCustomizer();
     }
 }
