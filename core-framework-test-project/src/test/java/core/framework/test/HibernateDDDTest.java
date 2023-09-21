@@ -53,7 +53,7 @@ class HibernateDDDTest {
         TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
         AssignIdDomain assignIdDomain = new AssignIdDomain();
         assignIdDomain.abc = 1L;
-        assignIdDomain.registerEvent(new AssignIdDomainEvent(assignIdDomain));
+        assignIdDomain.registerEvent(new AssignIdDomainEvent());
         entityManager.persist(assignIdDomain);
         transactionManager.commit(status);
     }
@@ -63,14 +63,14 @@ class HibernateDDDTest {
         TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
         AssignIdDomain assignIdDomain = new AssignIdDomain();
         assignIdDomain.abc = 1L;
-        assignIdDomain.registerEvent(new AssignIdDomainEvent(assignIdDomain));
+        assignIdDomain.registerEvent(new AssignIdDomainEvent());
         entityManager.persist(assignIdDomain);
         transactionManager.commit(status);
 
         status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
         AssignIdDomain assignIdDomain1 = entityManager.find(AssignIdDomain.class, 1L);
         assignIdDomain1.name = "1";
-        assignIdDomain1.registerEvent(new AssignIdDomainEvent(assignIdDomain));
+        assignIdDomain1.registerEvent(new AssignIdDomainEvent());
         entityManager.merge(assignIdDomain1);
         transactionManager.commit(status);
     }
@@ -85,7 +85,7 @@ class HibernateDDDTest {
 
         status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
         AssignIdDomain assignIdDomain1 = entityManager.find(AssignIdDomain.class, 1L);
-        assignIdDomain1.registerEvent(new AssignIdDomainEvent(assignIdDomain));
+        assignIdDomain1.registerEvent(new AssignIdDomainEvent());
         entityManager.remove(assignIdDomain1);
         transactionManager.commit(status);
     }

@@ -1,7 +1,7 @@
 package core.framework.test.hibernate.domain;
 
 
-import core.framework.jpa.common.AbstractDomainEvent;
+import core.framework.ddd.support.AbstractDomainEvent;
 
 /**
  * @author ebin
@@ -9,7 +9,4 @@ import core.framework.jpa.common.AbstractDomainEvent;
 public class TestDomainEvent extends AbstractDomainEvent<TestDomain, Long> {
     public boolean handled;
 
-    public TestDomainEvent(TestDomain source) {
-        super(source);
-    }
 }

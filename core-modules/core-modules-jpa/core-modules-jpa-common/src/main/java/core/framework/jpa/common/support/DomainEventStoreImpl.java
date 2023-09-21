@@ -2,8 +2,8 @@ package core.framework.jpa.common.support;
 
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
+import core.framework.ddd.support.AbstractDomainEvent;
 import core.framework.exception.marker.ErrorCodeMarker;
-import core.framework.jpa.common.AbstractDomainEvent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
  * @author ebin
  */
 public final class DomainEventStoreImpl implements core.framework.ddd.DomainEventStore {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventStoreImpl.class);
     public static final DomainEventStoreImpl INSTANCE = new DomainEventStoreImpl();
+    private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventStoreImpl.class);
 
     private Map<String, EntityManager> entityManagers;
     private Map<Class<?>, String> aggregateRootPersistenceType;
@@ -52,6 +52,7 @@ public final class DomainEventStoreImpl implements core.framework.ddd.DomainEven
 
     @Override
     public void persist(AggregateRoot<?, ?> aggregateRoot) {
+        aggregateRoot.prepareDispatchDomainEvent();
         List<? extends DomainEvent<?, ?>> domainEvents = aggregateRoot.getDomainEvents();
         if (domainEvents.isEmpty()) {
             return;

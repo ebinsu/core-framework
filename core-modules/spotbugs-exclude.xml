@@ -2,11 +2,13 @@
     <Match>
         <Or>
             <Class name="~.*\.*Properties"/>
+            <Class name="~.*\.*Configuration"/>
             <Class name="core.framework.security.undertow.session.RedisSessionManager"/>
             <Class name="core.framework.security.undertow.session.RedisSessionManager$SessionImpl"/>
             <Class name="core.framework.command.support.InvocableCommandHandlerMethod"/>
             <Class name="core.framework.query.support.InvocableQueryHandlerMethod"/>
             <Class name="core.framework.ddd.support.InvocableDomainEventHandlerMethod"/>
+            <Class name="core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo"/>
         </Or>
         <Bug pattern="EI_EXPOSE_REP"/>
     </Match>
@@ -14,6 +16,7 @@
     <Match>
         <Or>
             <Class name="~.*\.*Properties"/>
+            <Class name="~.*\.*Configuration"/>
             <Class name="core.framework.namequery.hibernate.HibernateNameQueryExecutor"/>
             <Class name="core.framework.security.undertow.session.RedisSessionManager"/>
             <Class name="core.framework.security.undertow.session.HttpHeaderSessionConfig"/>
@@ -24,6 +27,10 @@
             <Class name="core.framework.query.support.InvocableQueryHandlerMethod"/>
             <Class name="core.framework.ddd.support.InvocableDomainEventHandlerMethod"/>
             <Class name="core.framework.ddd.support.DomainEventBusImpl"/>
+            <Class name="core.framework.ddd.support.AbstractDomainEvent"/>
+            <Class name="core.framework.jpa.common.support.ConfigurableEntityManagerFactoryBean"/>
+            <Class name="core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo"/>
+            <Class name="core.framework.mongodb.MongodbDomainEventStoreImpl"/>
         </Or>
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>

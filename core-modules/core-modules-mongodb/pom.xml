@@ -3,27 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>core-modules-mongodb</artifactId>
     <parent>
-        <artifactId>core-modules-jpa</artifactId>
+        <artifactId>core-modules</artifactId>
         <groupId>core-framework</groupId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>core-modules-jpa-common</artifactId>
-
     <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
         <dependency>
             <groupId>core-framework</groupId>
             <artifactId>core-modules-ddd</artifactId>
@@ -32,13 +20,27 @@
             <groupId>core-framework</groupId>
             <artifactId>core-modules-json</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>core-framework</groupId>
-            <artifactId>core-modules-shared</artifactId>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
         <dependency>
-            <groupId>core-framework</groupId>
-            <artifactId>core-modules-jpa-common</artifactId>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>4.1.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>3.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.10.2</version>
+        </dependency>
+
     </dependencies>
+
 </project>

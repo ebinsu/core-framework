@@ -13,10 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>core-modules-jpa-common</module>
-        <module>core-modules-jpa-hibernate</module>
         <module>core-modules-jpa-hibernate-mysql</module>
-        <module>core-modules-jpa-eclipse-link-common</module>
-        <module>core-modules-jpa-eclipse-link-mongodb</module>
     </modules>
 
 </project>

@@ -7,6 +7,7 @@ import core.framework.jpa.common.support.ConfigurableEntityManagerFactoryBean;
 import core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo;
 import core.framework.jpa.common.support.DomainEventPersistenceDriver;
 import core.framework.jpa.hibernate.mysql.DomainEventTracking;
+import core.framework.jpa.hibernate.mysql.support.DDDPersistenceManagedTypesScanner;
 import core.framework.jpa.hibernate.mysql.support.MysqlDomainEventPersistenceDriver;
 import core.framework.jpa.hibernate.mysql.support.MysqlPersistenceUnitCustomizer;
 import core.framework.jpa.hibernate.mysql.support.SpringHibernateJpaPersistenceProvider;
@@ -17,17 +18,24 @@ import jakarta.persistence.ValidationMode;
 import jakarta.persistence.spi.PersistenceUnitTransactionType;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.AvailableSettings;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
+import org.springframework.boot.autoconfigure.domain.EntityScanPackages;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.persistenceunit.PersistenceManagedTypes;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Properties;
 
 @Configuration
@@ -98,5 +106,14 @@ public class HibernateConfiguration {
     @Bean
     public DomainEventPersistenceDriver mysqlDomainEventPersistenceDriver() {
         return new MysqlDomainEventPersistenceDriver();
+    }
+
+    @Bean
+    public PersistenceManagedTypes persistenceManagedTypes(BeanFactory beanFactory, ResourceLoader resourceLoader) {
+        List<String> packages = EntityScanPackages.get(beanFactory).getPackageNames();
+        if (packages.isEmpty() && AutoConfigurationPackages.has(beanFactory)) {
+            packages = AutoConfigurationPackages.get(beanFactory);
+        }
+        return new DDDPersistenceManagedTypesScanner(resourceLoader).scan(StringUtils.toStringArray(packages));
     }
 }

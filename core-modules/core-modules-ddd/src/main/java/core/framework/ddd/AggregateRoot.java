@@ -11,4 +11,8 @@ public interface AggregateRoot<T extends AggregateRoot<T, ID>, ID> extends Entit
     List<DomainEvent<T, ID>> getDomainEvents();
 
     void clearDomainEvents();
+
+    default void prepareDispatchDomainEvent() {
+        getDomainEvents().forEach(e -> e.prepareDispatch((T) this));
+    }
 }

@@ -11,5 +11,7 @@ public interface DomainEvent<T extends AggregateRoot<T, ID>, ID> {
     Class<T> getAggregateRootClass();
 
     ZonedDateTime getCreatedTime();
+
+    void prepareDispatch(T source);
 }
 

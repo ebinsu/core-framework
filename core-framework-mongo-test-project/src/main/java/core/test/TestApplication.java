@@ -1,8 +1,6 @@
-package core.framework.test;
+package core.test;
 
-import core.framework.jpa.hibernate.mysql.configuration.HibernateConfiguration;
 import core.framework.mongodb.configuration.MongodbConfiguration;
-import core.framework.mysql.configuration.DataSourceConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
@@ -10,7 +8,7 @@ import org.springframework.context.annotation.Import;
 /**
  * @author ebin
  */
-@SpringBootApplication(exclude = {HibernateConfiguration.class, DataSourceConfiguration.class})
+@SpringBootApplication
 @Import({
     MongodbConfiguration.class
 })

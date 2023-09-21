@@ -25,6 +25,7 @@
         <module>core-modules-security</module>
         <module>core-modules-web</module>
         <module>core-modules-name-query</module>
+        <module>core-modules-mongodb</module>
     </modules>
 
     <build>

@@ -24,14 +24,14 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.0.44${changelist}</revision>
+        <revision>1.0.45${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.commons-validator>1.7</version.commons-validator>
         <version.commons-io>2.11.0</version.commons-io>
         <version.commons-lang3>3.12.0</version.commons-lang3>
         <version.mybatis>3.5.11</version.mybatis>
-        <version.bson>4.7.1</version.bson>
+        <version.bson>4.10.2</version.bson>
         <version.logstash-logback-encoder>7.0.1</version.logstash-logback-encoder>
         <version.hibernate-commons>6.0.2.Final</version.hibernate-commons>
         <version.jandex>2.4.2.Final</version.jandex>
@@ -114,16 +114,6 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-jpa-eclipse-link-common</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>core-framework</groupId>
-                <artifactId>core-modules-jpa-eclipse-link-mongodb</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>core-framework</groupId>
                 <artifactId>core-modules-shared</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -150,6 +140,11 @@
             <dependency>
                 <groupId>core-framework</groupId>
                 <artifactId>core-modules-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-mongodb</artifactId>
                 <version>${revision}</version>
             </dependency>
 
