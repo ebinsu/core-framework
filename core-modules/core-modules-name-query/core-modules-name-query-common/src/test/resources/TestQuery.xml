@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE named-queries SYSTEM "namedquery.dtd">
+
+<named-queries namespace="test">
+    <mongo id="1">
+        {
+        find: "domain_event_tracking",
+        <filter>
+            <if test="id!=null">
+                _id : #{id},
+            </if>
+            <if test="name!=null">
+                name : #{id},
+            </if>
+        </filter>
+        }
+    </mongo>
+</named-queries>

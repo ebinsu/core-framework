@@ -29,7 +29,7 @@ public class MybatisNameQueryRepository implements NameQueryRepository {
             return;
         try {
             XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(resource.getInputStream(), this.configuration,
-                    resource.toString(), this.configuration.getSqlFragments());
+                resource.toString(), this.configuration.getSqlFragments());
             xmlMapperBuilder.parse();
             logger.info("Add query file. Filename = " + resource.getFilename());
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class MybatisNameQueryRepository implements NameQueryRepository {
     private QueryType getQueryType(String queryName) {
         QueryType queryType = queryTypes.get(queryName);
         if (queryType == null) {
-            throw new RuntimeException("Query statement: [\" + queryName + \"] not found");
+            throw new RuntimeException("Query statement: [" + queryName + "] not found");
         }
         return queryType;
     }

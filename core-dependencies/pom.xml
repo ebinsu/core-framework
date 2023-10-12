@@ -30,7 +30,7 @@
         <version.commons-validator>1.7</version.commons-validator>
         <version.commons-io>2.11.0</version.commons-io>
         <version.commons-lang3>3.12.0</version.commons-lang3>
-        <version.mybatis>3.5.11</version.mybatis>
+        <version.mybatis>3.5.13</version.mybatis>
         <version.bson>4.10.2</version.bson>
         <version.logstash-logback-encoder>7.0.1</version.logstash-logback-encoder>
         <version.hibernate-commons>6.0.2.Final</version.hibernate-commons>

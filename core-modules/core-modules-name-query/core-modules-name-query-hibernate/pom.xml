@@ -13,16 +13,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
             <groupId>core-framework</groupId>
             <artifactId>core-modules-name-query-common</artifactId>
         </dependency>

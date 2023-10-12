@@ -1,19 +1,12 @@
 package core.framework.test;
 
-import core.framework.jpa.hibernate.mysql.configuration.HibernateConfiguration;
-import core.framework.mongodb.configuration.MongodbConfiguration;
-import core.framework.mysql.configuration.DataSourceConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 
 /**
  * @author ebin
  */
-@SpringBootApplication(exclude = {HibernateConfiguration.class, DataSourceConfiguration.class})
-@Import({
-    MongodbConfiguration.class
-})
+@SpringBootApplication
 public class TestApplication {
     public static void main(String[] args) {
         SpringApplication.run(TestApplication.class, args);

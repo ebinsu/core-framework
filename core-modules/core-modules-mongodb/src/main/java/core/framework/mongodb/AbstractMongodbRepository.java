@@ -2,6 +2,7 @@ package core.framework.mongodb;
 
 import core.framework.ddd.Repository;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -44,12 +45,14 @@ public abstract class AbstractMongodbRepository<T extends AbstractAggregateRoot<
 
     @Override
     public List<T> selectByQueryString(String queryString, Object... params) {
-        return null;
+        BasicQuery query = new BasicQuery(queryString);
+        return getMongoOperations().find(query, entityClass);
     }
 
     @Override
     public Optional<T> findByQueryString(String queryString, Object... params) {
-        return Optional.empty();
+        BasicQuery query = new BasicQuery(queryString);
+        return Optional.ofNullable(getMongoOperations().findOne(query, entityClass));
     }
 
     @Override
