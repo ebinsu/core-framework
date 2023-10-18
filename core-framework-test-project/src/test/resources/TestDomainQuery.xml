@@ -1,19 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE named-queries SYSTEM "namedquery.dtd">
 
-<mapper namespace="TestDomain">
-    <select id="get" parameterType="java.util.HashMap">
+<named-queries namespace="test">
+    <sql id="get" result-class="java.util.HashMap">
         SELECT * FROM test
         <where>
             <if test="id!=null">
                 and id = :id
             </if>
         </where>
-    </select>
-
-    <select id="getName" parameterType="java.util.HashMap">
+    </sql>
+    <sql id="getName" result-class="java.util.HashMap">
         SELECT name as "name",test_name as "testName",voname as "voname" ,
         double_num as "doubleNum", float_num as "floatNum",
         long_num as "longNum", big_decimal_num as "bigDecimalNum"
@@ -24,5 +21,5 @@
                 and id = :id
             </if>
         </where>
-    </select>
-</mapper>
+    </sql>
+</named-queries>

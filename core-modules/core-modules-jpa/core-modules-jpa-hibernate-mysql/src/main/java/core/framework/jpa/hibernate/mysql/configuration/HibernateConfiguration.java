@@ -119,7 +119,7 @@ public class HibernateConfiguration {
     }
 
     @Bean
-    public PersistenceUnitPostProcessor persistenceUnitCustomizer(){
-       return new PersistenceUnitCustomizer();
+    public PersistenceUnitPostProcessor persistenceUnitCustomizer() {
+        return new PersistenceUnitCustomizer();
     }
 }

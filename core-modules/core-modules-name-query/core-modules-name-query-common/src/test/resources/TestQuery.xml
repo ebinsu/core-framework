@@ -2,7 +2,7 @@
 <!DOCTYPE named-queries SYSTEM "namedquery.dtd">
 
 <named-queries namespace="test">
-    <mongo id="1">
+    <mongo id="1" result-class="java.util.Map">
         {
         find: "domain_event_tracking",
         <filter>
