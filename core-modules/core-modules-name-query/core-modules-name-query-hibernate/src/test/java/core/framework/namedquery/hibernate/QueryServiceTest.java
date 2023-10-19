@@ -2,7 +2,7 @@ package core.framework.namedquery.hibernate;
 
 import core.framework.namedquery.NamedQueryService;
 import core.framework.namedquery.configuration.NamedQueryConfiguration;
-import core.framework.namedquery.hibernate.configuration.HibernateQueryServiceConfiguration;
+import core.framework.namedquery.hibernate.configuration.HibernateNamedQueryServiceConfiguration;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +26,7 @@ import java.util.Map;
 @SpringBootTest(classes = {
     TestConfig.class,
     NamedQueryConfiguration.class,
-    HibernateQueryServiceConfiguration.class,
+    HibernateNamedQueryServiceConfiguration.class,
     DataSourceAutoConfiguration.class,
     HibernateJpaAutoConfiguration.class
 })

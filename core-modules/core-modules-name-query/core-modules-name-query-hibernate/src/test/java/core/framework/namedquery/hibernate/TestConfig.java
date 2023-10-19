@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class TestConfig {
-
     @Bean
     public EntityManagerFactoryBuilderCustomizer entityManagerFactoryBuilderCustomizer() {
         return new EntityManagerFactoryBuilderCustomizer() {
@@ -19,5 +18,10 @@ public class TestConfig {
                 builder.setPersistenceUnitPostProcessors(pui -> pui.addManagedClassName(TestEntity.class.getName()));
             }
         };
+    }
+
+    @Bean
+    public HibernateNamedQueryDatasourceProvider hibernateNamedQueryDatasourceProvider() {
+        return new TestHibernateNamedQueryDatasourceProvider();
     }
 }

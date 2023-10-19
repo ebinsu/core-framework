@@ -20,6 +20,7 @@ import java.util.Optional;
  * @author ebin
  */
 @SpringBootTest(classes = {
+    TestConfig.class,
     NamedQueryConfiguration.class,
     MongoTemplateQueryServiceConfiguration.class,
     EmbeddedMongoAutoConfiguration.class,
