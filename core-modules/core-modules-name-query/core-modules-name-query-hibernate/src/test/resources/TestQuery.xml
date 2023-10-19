@@ -2,12 +2,16 @@
 <!DOCTYPE named-queries SYSTEM "namedquery.dtd">
 
 <named-queries namespace="test">
-    <sql id="1" result-class="java.util.Map">
-        select * from test
+    <fragment id="f1">
         <where>
             <if test="name!=null">
                 name = #{name}
             </if>
         </where>
+    </fragment>
+
+    <sql id="1" result-class="java.util.Map">
+        select * from test
+        <include ref-id="f1"/>
     </sql>
 </named-queries>

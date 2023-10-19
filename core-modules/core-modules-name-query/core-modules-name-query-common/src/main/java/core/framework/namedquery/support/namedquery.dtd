@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!ELEMENT named-queries (sql* | mongo*)+>
+<!ELEMENT named-queries (sql* | mongo* | fragment*)+>
 <!ATTLIST named-queries
         namespace CDATA #REQUIRED
         >

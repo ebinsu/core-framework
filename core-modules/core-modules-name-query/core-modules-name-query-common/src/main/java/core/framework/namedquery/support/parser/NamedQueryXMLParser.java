@@ -29,6 +29,7 @@ import java.util.Optional;
  * @author ebin
  */
 public class NamedQueryXMLParser {
+
     public Pair<List<MixedNode>, List<FragmentNode>> parse(List<Resource> resources) {
         ResolverContext resolverContext = new ResolverContext();
         List<MixedNode> nodes = new ArrayList<>();
@@ -47,31 +48,22 @@ public class NamedQueryXMLParser {
                     MixedNode node;
                     String name = child.getName();
                     Class<?> resultClass;
-                    String id = namespace + "." + child.getAttributes().getProperty("id");
+                    String id = child.getAttributes().getProperty("id");
+                    if ("fragment".equals(name)) {
+                        fragmentNodes.add(new FragmentNode(namespace, id, ChildrenNodeHelper.build(child)));
+                        continue;
+                    }
                     try {
                         resultClass = Class.forName(child.getAttributes().getProperty("result-class"));
                     } catch (ClassNotFoundException e) {
                         throw new RuntimeException(e);
                     }
-                    if ("fragment".equals(name)) {
-                        fragmentNodes.add(new FragmentNode(id, ChildrenNodeHelper.build(child)));
-                        continue;
-                    }
                     if ("sql".equals(name)) {
-                        node = new SqlNode(
-                            id,
-                            resultClass,
-                            ChildrenNodeHelper.build(child)
-                        );
+                        node = new SqlNode(namespace, id, resultClass, ChildrenNodeHelper.build(child));
                     } else {
                         MongoNode.ReadPreference readPreference = Optional.ofNullable(child.getAttributes().getProperty("read-preference"))
                             .map(MongoNode.ReadPreference::valueOf).orElse(MongoNode.ReadPreference.SECONDARY_PREFERRED);
-                        node = new MongoNode(
-                            id,
-                            resultClass,
-                            ChildrenNodeHelper.build(child),
-                            readPreference
-                        );
+                        node = new MongoNode(namespace, id, resultClass, ChildrenNodeHelper.build(child), readPreference);
                     }
                     nodes.add(node);
                 }

@@ -17,7 +17,11 @@ public class IncludeNode implements Node {
 
     @Override
     public boolean apply(NamedQueryContext context) {
-        Optional<FragmentNode> fragmentNodeOptional = context.getFragmentNode(refId);
+        String id = refId;
+        if (!refId.contains(FragmentNode.ID_SEPARATOR)) {
+            id = context.getNamespace() + FragmentNode.ID_SEPARATOR + refId;
+        }
+        Optional<FragmentNode> fragmentNodeOptional = context.getFragmentNode(id);
         if (fragmentNodeOptional.isPresent()) {
             FragmentNode fragmentNode = fragmentNodeOptional.get();
             fragmentNode.apply(context);

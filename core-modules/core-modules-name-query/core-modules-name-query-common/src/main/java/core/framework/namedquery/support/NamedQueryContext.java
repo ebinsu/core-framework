@@ -14,12 +14,13 @@ import java.util.StringJoiner;
  * @author ebin
  */
 public class NamedQueryContext {
+    private final String namespace;
     private final Map<String, FragmentNode> fragmentNodes;
     private final Map<String, Object> parameter;
 
     private final StringJoiner queryBuilder = new StringJoiner(" ");
 
-    public NamedQueryContext(Object parameter, Map<String, FragmentNode> fragmentNodes) {
+    public NamedQueryContext(String namespace, Object parameter, Map<String, FragmentNode> fragmentNodes) {
         if (parameter != null) {
             if (parameter instanceof Map<?, ?> map) {
                 this.parameter = (Map<String, Object>) new HashMap<>(map);
@@ -30,6 +31,11 @@ public class NamedQueryContext {
             this.parameter = new HashMap<>(0);
         }
         this.fragmentNodes = fragmentNodes;
+        this.namespace = namespace;
+    }
+
+    public String getNamespace() {
+        return namespace;
     }
 
     public Map<String, FragmentNode> getFragmentNodes() {

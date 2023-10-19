@@ -12,8 +12,8 @@ import java.util.List;
 public class MongoNode extends MixedNode {
     private final ReadPreference readPreference;
 
-    public MongoNode(String id, Class<?> resultClass, List<Node> nodes, ReadPreference readPreference) {
-        super(id, QueryType.MONGODB, resultClass, nodes);
+    public MongoNode(String namespace, String id, Class<?> resultClass, List<Node> nodes, ReadPreference readPreference) {
+        super(namespace, id, QueryType.MONGODB, resultClass, nodes);
         this.readPreference = readPreference;
     }
 

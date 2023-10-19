@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class SqlNode extends MixedNode {
 
-    public SqlNode(String id, Class<?> resultClass, List<Node> nodes) {
-        super(id, QueryType.SQL, resultClass, nodes);
+    public SqlNode(String namespace, String id, Class<?> resultClass, List<Node> nodes) {
+        super(namespace, id, QueryType.SQL, resultClass, nodes);
     }
 }

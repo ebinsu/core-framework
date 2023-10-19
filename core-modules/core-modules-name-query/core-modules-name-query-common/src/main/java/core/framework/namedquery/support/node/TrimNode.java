@@ -75,7 +75,7 @@ public class TrimNode implements Node {
 
     @Override
     public boolean apply(NamedQueryContext context) {
-        NamedQueryContext childrenContext = new NamedQueryContext(context.getParameter(), context.getFragmentNodes());
+        NamedQueryContext childrenContext = new NamedQueryContext(context.getNamespace(), context.getParameter(), context.getFragmentNodes());
         childrenNodes.forEach(node -> node.apply(childrenContext));
 
         TrimHelper util = new TrimHelper(childrenContext.getQuery(), prefix, prefixesToOverride, suffix, suffixesToOverride);

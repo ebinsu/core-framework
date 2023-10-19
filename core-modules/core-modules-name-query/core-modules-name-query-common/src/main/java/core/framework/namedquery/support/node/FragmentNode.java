@@ -8,11 +8,14 @@ import java.util.List;
  * @author ebin
  */
 public class FragmentNode implements Node {
+    public static final String ID_SEPARATOR = ".";
+    private final String namespace;
     private final String id;
     private final List<Node> childrenNodes;
 
-    public FragmentNode(String id, List<Node> childrenNodes) {
-        this.id = id;
+    public FragmentNode(String namespace, String id, List<Node> childrenNodes) {
+        this.namespace = namespace;
+        this.id = namespace + ID_SEPARATOR + id;
         this.childrenNodes = childrenNodes;
     }
 
@@ -20,9 +23,13 @@ public class FragmentNode implements Node {
         return id;
     }
 
+    public String getNamespace() {
+        return namespace;
+    }
+
     @Override
     public boolean apply(NamedQueryContext context) {
-        NamedQueryContext childrenContext = new NamedQueryContext(context.getParameter(), context.getFragmentNodes());
+        NamedQueryContext childrenContext = new NamedQueryContext(context.getNamespace(), context.getParameter(), context.getFragmentNodes());
         childrenNodes.forEach(node -> node.apply(childrenContext));
         context.appendQuery(childrenContext.getQuery());
         childrenContext.getParameter().forEach(context::addParameter);
