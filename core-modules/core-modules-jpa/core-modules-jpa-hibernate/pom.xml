@@ -10,7 +10,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>core-modules-jpa-hibernate-mysql</artifactId>
+    <artifactId>core-modules-jpa-hibernate</artifactId>
 
     <dependencies>
         <dependency>

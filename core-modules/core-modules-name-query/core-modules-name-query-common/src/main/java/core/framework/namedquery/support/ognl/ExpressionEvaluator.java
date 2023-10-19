@@ -1,8 +1,5 @@
 package core.framework.namedquery.support.ognl;
 
-import org.apache.ibatis.builder.BuilderException;
-import org.apache.ibatis.scripting.xmltags.OgnlCache;
-
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -33,7 +30,7 @@ public final class ExpressionEvaluator {
             if (nullable) {
                 return null;
             }
-            throw new BuilderException("The expression '" + expression + "' evaluated to a null value.");
+            throw new RuntimeException("The expression '" + expression + "' evaluated to a null value.");
         }
         if (value instanceof Iterable) {
             return (Iterable<?>) value;
@@ -53,7 +50,7 @@ public final class ExpressionEvaluator {
         if (value instanceof Map) {
             return ((Map) value).entrySet();
         }
-        throw new BuilderException(
+        throw new RuntimeException(
             "Error evaluating expression '" + expression + "'.  Return value (" + value + ") was not iterable.");
     }
 }

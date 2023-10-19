@@ -5,7 +5,6 @@ import ognl.MemberAccess;
 import ognl.Ognl;
 import ognl.OgnlContext;
 import ognl.OgnlException;
-import org.apache.ibatis.builder.BuilderException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,7 +24,7 @@ public final class OgnlCache {
             OgnlContext context = Ognl.createDefaultContext(root, MEMBER_ACCESS, new DefaultClassResolver(), null);
             return Ognl.getValue(parseExpression(expression), context, root);
         } catch (OgnlException e) {
-            throw new BuilderException("Error evaluating expression '" + expression + "'. Cause: " + e, e);
+            throw new RuntimeException("Error evaluating expression '" + expression + "'. Cause: " + e, e);
         }
     }
 

@@ -6,7 +6,6 @@ import core.framework.namedquery.support.node.MixedNode;
 import core.framework.namedquery.support.node.mongo.MongoNode;
 import core.framework.namedquery.support.node.sql.SqlNode;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.ibatis.builder.BuilderException;
 import org.springframework.core.io.Resource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -84,7 +83,7 @@ public class NamedQueryXMLParser {
         try {
             return resolverContext.getXpath().evaluate(expression, root, XPathConstants.NODE);
         } catch (Exception e) {
-            throw new BuilderException("Error evaluating XPath.  Cause: " + e, e);
+            throw new RuntimeException("Error evaluating XPath.  Cause: " + e, e);
         }
     }
 
@@ -120,7 +119,7 @@ public class NamedQueryXMLParser {
             });
             return builder.parse(inputSource);
         } catch (Exception e) {
-            throw new BuilderException("Error creating document instance.  Cause: " + e, e);
+            throw new RuntimeException("Error creating document instance.  Cause: " + e, e);
         }
     }
 }

@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>core-modules-jpa-common</module>
-        <module>core-modules-jpa-hibernate-mysql</module>
+        <module>core-modules-jpa-hibernate</module>
     </modules>
 
 </project>

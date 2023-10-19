@@ -30,11 +30,16 @@
         <version.commons-validator>1.7</version.commons-validator>
         <version.commons-io>2.11.0</version.commons-io>
         <version.commons-lang3>3.12.0</version.commons-lang3>
+        <version.commons-beanutils>1.9.4</version.commons-beanutils>
         <version.mybatis>3.5.13</version.mybatis>
         <version.bson>4.10.2</version.bson>
         <version.logstash-logback-encoder>7.0.1</version.logstash-logback-encoder>
         <version.hibernate-commons>6.0.2.Final</version.hibernate-commons>
         <version.jandex>2.4.2.Final</version.jandex>
+        <version.ognl>3.4.2</version.ognl>
+        <version.flapdoodle-embed-mongo>4.9.3</version.flapdoodle-embed-mongo>
+        <version.mongodb-driver-legacy>4.11.0</version.mongodb-driver-legacy>
+        <version.mongodb-driver-sync>4.8.0</version.mongodb-driver-sync>
 
         <version.flatten-maven-plugin>1.2.2</version.flatten-maven-plugin>
         <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
@@ -104,7 +109,7 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-jpa-hibernate-mysql</artifactId>
+                <artifactId>core-modules-jpa-hibernate</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -199,6 +204,31 @@
                         <groupId>xml-apis</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>ognl</groupId>
+                <artifactId>ognl</artifactId>
+                <version>${version.ognl}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${version.commons-beanutils}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-legacy</artifactId>
+                <version>${version.mongodb-driver-legacy}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.flapdoodle.embed</groupId>
+                <artifactId>de.flapdoodle.embed.mongo.spring30x</artifactId>
+                <version>${version.flapdoodle-embed-mongo}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-sync</artifactId>
+                <version>${version.mongodb-driver-sync}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

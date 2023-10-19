@@ -2,7 +2,6 @@ package core.framework.namedquery.support.parser;
 
 import core.framework.namedquery.support.node.Node;
 import core.framework.namedquery.support.node.NodeBuilder;
-import org.apache.ibatis.builder.BuilderException;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public final class ChildrenNodeHelper {
                 String nodeName = child.getNode().getNodeName();
                 NodeBuilder nodeBuilder = node.getResolverContext().getNodeBuilder(nodeName);
                 if (nodeBuilder == null) {
-                    throw new BuilderException("Unknown element <" + nodeName + "> in SQL statement.");
+                    throw new RuntimeException("Unknown element <" + nodeName + "> in SQL statement.");
                 }
                 nodes.add(nodeBuilder.build(child));
             }
