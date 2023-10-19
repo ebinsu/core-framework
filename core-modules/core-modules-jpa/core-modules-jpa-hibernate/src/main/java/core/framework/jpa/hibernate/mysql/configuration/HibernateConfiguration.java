@@ -1,23 +1,21 @@
 package core.framework.jpa.hibernate.mysql.configuration;
 
-import com.mysql.cj.conf.PropertyKey;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import core.framework.jpa.common.support.ConfigurableEntityManagerFactoryBean;
 import core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo;
 import core.framework.jpa.common.support.DomainEventPersistenceDriver;
 import core.framework.jpa.hibernate.mysql.DomainEventTracking;
+import core.framework.jpa.hibernate.mysql.support.ConfigurablePersistenceUnitCustomizer;
+import core.framework.jpa.hibernate.mysql.support.ConfigurablePersistenceUnitDataSourceProvider;
 import core.framework.jpa.hibernate.mysql.support.DDDPersistenceManagedTypesScanner;
-import core.framework.jpa.hibernate.mysql.support.MysqlDomainEventPersistenceDriver;
-import core.framework.jpa.hibernate.mysql.support.MysqlPersistenceUnitCustomizer;
+import core.framework.jpa.hibernate.mysql.support.SQLDomainEventPersistenceDriver;
 import core.framework.jpa.hibernate.mysql.support.SpringHibernateJpaPersistenceProvider;
-import core.framework.mysql.MySQLQueryInterceptor;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.SharedCacheMode;
 import jakarta.persistence.ValidationMode;
 import jakarta.persistence.spi.PersistenceUnitTransactionType;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.tool.schema.Action;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,65 +38,60 @@ import java.util.List;
 import java.util.Properties;
 
 @Configuration
-@EnableConfigurationProperties({HibernateMysqlProperties.class})
+@EnableConfigurationProperties({HibernateProperties.class})
 public class HibernateConfiguration {
     public static final int STATEMENT_FETCH_SIZE = 64;
-    public static final String MYSQL_PERSISTENCE_UNIT_INFO_NAME = "mysql";
-    public static final String MYSQL_PERSISTENCE_UNIT_INFO_BEAN_NAME = "mysqlPersistenceUnitInfo";
-    public static final String MYSQL_ENTITY_MANAGER_FACTORY_BEAN_NAME = "mysqlEntityManagerFactory";
-    public static final String MYSQL_TRANSACTION_MANAGER_BEAN_NAME = "mysqlTransactionManager";
+    public static final String PERSISTENCE_UNIT_INFO_NAME = "default";
+    public static final String PERSISTENCE_UNIT_INFO_BEAN_NAME = "defaultPersistenceUnitInfo";
+    public static final String ENTITY_MANAGER_FACTORY_BEAN_NAME = "defaultEntityManagerFactory";
+    public static final String TRANSACTION_MANAGER_BEAN_NAME = "defaultTransactionManager";
 
-    private final HibernateMysqlProperties jpaMysqlProperties;
+    private final HibernateProperties hibernateProperties;
 
-    public HibernateConfiguration(HibernateMysqlProperties jpaMysqlProperties) {
-        this.jpaMysqlProperties = jpaMysqlProperties;
+    public HibernateConfiguration(HibernateProperties hibernateProperties) {
+        this.hibernateProperties = hibernateProperties;
     }
 
-    @Bean
-    public HikariDataSource dataSource() {
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setDriverClassName(com.mysql.cj.jdbc.Driver.class.getName());
-        hikariConfig.setJdbcUrl(jpaMysqlProperties.getJdbcUrl());
-        hikariConfig.setUsername(jpaMysqlProperties.getUsername());
-        hikariConfig.setPassword(jpaMysqlProperties.getPassword());
-        hikariConfig.setTransactionIsolation("TRANSACTION_READ_COMMITTED");
-        hikariConfig.setAutoCommit(false);
-        hikariConfig.addDataSourceProperty(PropertyKey.queryInterceptors.getKeyName(), MySQLQueryInterceptor.class.getName());
-        return new HikariDataSource(hikariConfig);
-    }
-
-    @Bean(name = MYSQL_PERSISTENCE_UNIT_INFO_BEAN_NAME)
-    public ConfigurablePersistenceUnitInfo mysqlPersistenceUnitInfo(DataSource dataSource, ObjectProvider<MysqlPersistenceUnitCustomizer> customizers) {
+    @Bean(name = PERSISTENCE_UNIT_INFO_BEAN_NAME)
+    public ConfigurablePersistenceUnitInfo persistenceUnitInfo(@Autowired(required = false) DataSource dataSource,
+                                                               ObjectProvider<ConfigurablePersistenceUnitDataSourceProvider> provider,
+                                                               ObjectProvider<ConfigurablePersistenceUnitCustomizer> customizers) {
         Properties properties = new Properties();
         properties.put(AvailableSettings.CONNECTION_PROVIDER_DISABLES_AUTOCOMMIT, "true");
-        properties.put(AvailableSettings.SHOW_SQL, "true");
+        properties.put(AvailableSettings.SHOW_SQL, hibernateProperties.isShowSql());
         properties.putIfAbsent(AvailableSettings.JAKARTA_VALIDATION_MODE, ValidationMode.AUTO);
         properties.putIfAbsent(AvailableSettings.ISOLATION, Connection.TRANSACTION_READ_COMMITTED);
         properties.putIfAbsent(AvailableSettings.STATEMENT_FETCH_SIZE, STATEMENT_FETCH_SIZE);
         properties.putIfAbsent(AvailableSettings.JAKARTA_SHARED_CACHE_MODE, SharedCacheMode.UNSPECIFIED);
         properties.putIfAbsent(AvailableSettings.PHYSICAL_NAMING_STRATEGY, CamelCaseToUnderscoresNamingStrategy.class.getName());
+        properties.putIfAbsent(AvailableSettings.HBM2DDL_AUTO, Action.interpretJpaSetting(hibernateProperties.getHbm2ddl()));
 
-        ConfigurablePersistenceUnitInfo configurablePersistenceUnitInfo = new ConfigurablePersistenceUnitInfo(MYSQL_PERSISTENCE_UNIT_INFO_NAME);
-        configurablePersistenceUnitInfo.setPackagesToScan(jpaMysqlProperties.getPackagesToScan());
+        ConfigurablePersistenceUnitInfo configurablePersistenceUnitInfo = new ConfigurablePersistenceUnitInfo(PERSISTENCE_UNIT_INFO_NAME);
+        configurablePersistenceUnitInfo.setPackagesToScan(hibernateProperties.getPackagesToScan());
         configurablePersistenceUnitInfo.setPersistenceProviderClassName(SpringHibernateJpaPersistenceProvider.class.getName());
         configurablePersistenceUnitInfo.addManagedClassName(DomainEventTracking.class.getName());
         configurablePersistenceUnitInfo.setProperties(properties);
         configurablePersistenceUnitInfo.setTransactionType(PersistenceUnitTransactionType.RESOURCE_LOCAL);
-        configurablePersistenceUnitInfo.setNonJtaDataSource(dataSource);
+        ConfigurablePersistenceUnitDataSourceProvider dataSourceProvider = provider.getIfAvailable();
+        if (dataSourceProvider != null) {
+            configurablePersistenceUnitInfo.setNonJtaDataSource(dataSourceProvider.get());
+        } else {
+            configurablePersistenceUnitInfo.setNonJtaDataSource(dataSource);
+        }
 
         customizers.orderedStream().forEach(customizer -> customizer.customize(configurablePersistenceUnitInfo));
         return configurablePersistenceUnitInfo;
     }
 
-    @Bean(name = MYSQL_ENTITY_MANAGER_FACTORY_BEAN_NAME)
-    public ConfigurableEntityManagerFactoryBean mysqlEntityManagerFactory(@Autowired @Qualifier(MYSQL_PERSISTENCE_UNIT_INFO_BEAN_NAME) ConfigurablePersistenceUnitInfo mysqlPersistenceUnitInfo) {
-        return new ConfigurableEntityManagerFactoryBean(mysqlPersistenceUnitInfo);
+    @Bean(name = ENTITY_MANAGER_FACTORY_BEAN_NAME)
+    public ConfigurableEntityManagerFactoryBean entityManagerFactory(@Autowired @Qualifier(PERSISTENCE_UNIT_INFO_BEAN_NAME) ConfigurablePersistenceUnitInfo persistenceUnitInfo) {
+        return new ConfigurableEntityManagerFactoryBean(persistenceUnitInfo);
     }
 
-    @Bean(name = MYSQL_TRANSACTION_MANAGER_BEAN_NAME)
-    public PlatformTransactionManager transactionManager(@Autowired @Qualifier(MYSQL_ENTITY_MANAGER_FACTORY_BEAN_NAME) EntityManagerFactory mysqlEntityManager) {
+    @Bean(name = TRANSACTION_MANAGER_BEAN_NAME)
+    public PlatformTransactionManager transactionManager(@Autowired @Qualifier(ENTITY_MANAGER_FACTORY_BEAN_NAME) EntityManagerFactory entityManager) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(mysqlEntityManager);
+        transactionManager.setEntityManagerFactory(entityManager);
         transactionManager.setDefaultTimeout(30);
         transactionManager.setRollbackOnCommitFailure(true);
         return transactionManager;
@@ -106,7 +99,7 @@ public class HibernateConfiguration {
 
     @Bean
     public DomainEventPersistenceDriver mysqlDomainEventPersistenceDriver() {
-        return new MysqlDomainEventPersistenceDriver();
+        return new SQLDomainEventPersistenceDriver();
     }
 
     @Bean
@@ -120,6 +113,6 @@ public class HibernateConfiguration {
 
     @Bean
     public PersistenceUnitPostProcessor persistenceUnitCustomizer() {
-        return new PersistenceUnitCustomizer();
+        return new core.framework.jpa.hibernate.mysql.configuration.PersistenceUnitCustomizer();
     }
 }

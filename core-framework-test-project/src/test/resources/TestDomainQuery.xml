@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE named-queries SYSTEM "namedquery.dtd">
 
-<named-queries namespace="test">
+<named-queries namespace="TestDomain">
     <sql id="get" result-class="java.util.HashMap">
         SELECT * FROM test
         <where>

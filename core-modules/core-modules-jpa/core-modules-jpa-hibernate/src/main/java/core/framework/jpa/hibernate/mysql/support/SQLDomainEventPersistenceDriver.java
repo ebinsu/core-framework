@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author ebin
  */
-public class MysqlDomainEventPersistenceDriver implements DomainEventPersistenceDriver {
+public class SQLDomainEventPersistenceDriver implements DomainEventPersistenceDriver {
     @Override
     public void persist(AggregateRoot<?, ?> aggregateRoot, EntityManager entityManager) {
         List<? extends DomainEvent<?, ?>> domainEvents = aggregateRoot.getDomainEvents();
@@ -24,6 +24,6 @@ public class MysqlDomainEventPersistenceDriver implements DomainEventPersistence
 
     @Override
     public String getPersistenceUnitName() {
-        return HibernateConfiguration.MYSQL_PERSISTENCE_UNIT_INFO_NAME;
+        return HibernateConfiguration.PERSISTENCE_UNIT_INFO_NAME;
     }
 }

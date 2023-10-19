@@ -1,5 +1,6 @@
 package core.framework.test;
 
+import core.framework.namedquery.hibernate.HibernateNamedQueryDatasourceProvider;
 import core.framework.test.web.EmailCodeIdentityManager;
 import io.undertow.security.idm.IdentityManager;
 import org.springframework.context.annotation.Bean;
@@ -14,5 +15,10 @@ public class Config {
     @Bean
     public IdentityManager identityManager() {
         return new EmailCodeIdentityManager();
+    }
+
+    @Bean
+    public HibernateNamedQueryDatasourceProvider hibernateNamedQueryDatasourceProvider() {
+        return new HibernateNamedQueryDatasourceProviderImpl();
     }
 }

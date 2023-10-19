@@ -22,6 +22,9 @@ public class NamedQueryRepositoryImpl implements NamedQueryRepository {
     @Override
     public NamedQuery get(String queryName, Object parameter) {
         MixedNode mixedNode = nodes.get(queryName);
+        if (mixedNode == null) {
+            throw new RuntimeException("Query [" + queryName + "] not found !");
+        }
         NamedQueryContext context = new NamedQueryContext(mixedNode.getNamespace(), parameter, fragmentNodes);
         mixedNode.apply(context);
         if (mixedNode instanceof SqlNode) {

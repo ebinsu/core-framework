@@ -7,6 +7,6 @@ import core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo;
  * @author ebin
  */
 @FunctionalInterface
-public interface MysqlPersistenceUnitCustomizer {
+public interface ConfigurablePersistenceUnitCustomizer {
     void customize(ConfigurablePersistenceUnitInfo persistenceUnitInfo);
 }

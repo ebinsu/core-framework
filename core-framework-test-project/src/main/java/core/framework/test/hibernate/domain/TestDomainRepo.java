@@ -11,7 +11,7 @@ import jakarta.persistence.PersistenceContext;
  */
 @org.springframework.stereotype.Repository
 public class TestDomainRepo extends AbstractJPARepository<TestDomain, Long> implements Repository<TestDomain, Long> {
-    @PersistenceContext(unitName = HibernateConfiguration.MYSQL_PERSISTENCE_UNIT_INFO_NAME)
+    @PersistenceContext(unitName = HibernateConfiguration.PERSISTENCE_UNIT_INFO_NAME)
     EntityManager entityManager;
 
     @Override

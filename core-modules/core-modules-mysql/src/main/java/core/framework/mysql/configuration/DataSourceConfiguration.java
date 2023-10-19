@@ -20,6 +20,8 @@ public class DataSourceConfiguration {
         if (StringUtils.hasText(properties.getName())) {
             dataSource.setPoolName(properties.getName());
         }
+        dataSource.setDriverClassName(com.mysql.cj.jdbc.Driver.class.getName());
+        dataSource.setTransactionIsolation("TRANSACTION_READ_COMMITTED");
         dataSource.setAutoCommit(false);
         dataSource.addDataSourceProperty(PropertyKey.queryInterceptors.getKeyName(), MySQLQueryInterceptor.class.getName());
         return dataSource;

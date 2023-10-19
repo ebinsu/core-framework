@@ -9,14 +9,16 @@ spring:
             - "*"
           allow-credentials: true
   jpa:
-    show-sql: true
-    mysql:
+    hibernate:
+      show-sql: true
+      hbm2ddl: create
       packages-to-scan:
         - core.framework.test.hibernate
         - core.framework.test.demo
-      jdbc-url: jdbc:mysql://192.168.136.128:30001/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
-      username: root
-      password: ebinsu12345!
+  #    mysql:
+  #      jdbc-url: jdbc:mysql://192.168.136.128:30001/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+  #      username: root
+  #      password: ebinsu12345!
   security:
     login-request:
       authentication-type: "USERNAME_PASSWORD"
