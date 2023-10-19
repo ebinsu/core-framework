@@ -29,14 +29,8 @@
         value CDATA #REQUIRED
         >
 
-<!ELEMENT include ()*>
+<!ELEMENT include (#PCDATA)*>
 <!ATTLIST include ref-id CDATA #REQUIRED>
-
-<!ELEMENT property EMPTY>
-<!ATTLIST property
-        name CDATA #REQUIRED
-        value CDATA #REQUIRED
-        >
 
 <!ELEMENT trim (#PCDATA | include | trim | where | foreach | choose | if | bind)*>
 <!ATTLIST trim
