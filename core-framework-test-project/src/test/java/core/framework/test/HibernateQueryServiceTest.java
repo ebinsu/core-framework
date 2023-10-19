@@ -4,6 +4,8 @@ import core.framework.namedquery.NamedQueryService;
 import core.framework.query.QueryBus;
 import core.framework.test.hibernate.domain.TestDomain;
 import core.framework.test.hibernate.domain.TestDomainRepo;
+import core.framework.test.hibernate.query.GetTestDomainQuery;
+import core.framework.test.hibernate.query.ListTestDomainQuery;
 import core.framework.test.hibernate.query.TestDomainDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -53,49 +55,24 @@ class HibernateQueryServiceTest {
         Assertions.assertNotNull(testDomainDTO.name);
     }
 
-//    @Test
-//    public void testQueryBus() {
-//        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-//        TestDomain testDomain = new TestDomain("test");
-//        testDomainRepo.persist(testDomain);
-//        transactionManager.commit(status);
-//
-//        GetTestDomainQuery getTestDomainQuery = new GetTestDomainQuery();
-//        TestDomainDTO testDomainDTO = queryBus.dispatch(getTestDomainQuery);
-//        Assertions.assertNotNull(testDomainDTO.id);
-//        Assertions.assertNotNull(testDomainDTO.name);
-//
-//        ListTestDomainQuery query = new ListTestDomainQuery();
-//        List<TestDomainDTO> result = queryBus.dispatch(query);
-//        Assertions.assertFalse(result.isEmpty());
-//        testDomainDTO = result.get(0);
-//        Assertions.assertNotNull(testDomainDTO.id);
-//        Assertions.assertNotNull(testDomainDTO.name);
-//    }
-//
-//    @Test
-//    public void test1() {
-//        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-//        TestDomain testDomain = new TestDomain("test");
-//        testDomain.setTestName("testname");
-//        testDomain.setValueObject(new TestValueObject("v"));
-//        testDomainRepo.persist(testDomain);
-//        transactionManager.commit(status);
-//        NameQueryParam<QueryModel> nameQueryParam = new NameQueryParamImpl<>("TestDomain.getName", QueryModel.class);
-//        QueryModel select = (QueryModel) queryService.get(nameQueryParam).get();
-//        Assertions.assertNotNull(select);
-//    }
-//
-//    @Test
-//    public void test2() {
-//        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-//        TestDomain testDomain = new TestDomain("test");
-//        testDomain.setTestName("testname");
-//        testDomain.setValueObject(new TestValueObject("v"));
-//        testDomainRepo.persist(testDomain);
-//        transactionManager.commit(status);
-//        NameQueryParam<QueryModelRecord> nameQueryParam = new NameQueryParamImpl<>("TestDomain.getName", QueryModelRecord.class);
-//        QueryModelRecord select = (QueryModelRecord) queryService.get(nameQueryParam).get();
-//        Assertions.assertNotNull(select);
-//    }
+    @Test
+    public void testQueryBus() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        TestDomain testDomain = new TestDomain("test");
+        testDomainRepo.persist(testDomain);
+        transactionManager.commit(status);
+
+        GetTestDomainQuery getTestDomainQuery = new GetTestDomainQuery();
+        getTestDomainQuery.id = testDomain.getId();
+        TestDomainDTO testDomainDTO = queryBus.dispatch(getTestDomainQuery);
+        Assertions.assertNotNull(testDomainDTO.id);
+        Assertions.assertNotNull(testDomainDTO.name);
+
+        ListTestDomainQuery query = new ListTestDomainQuery();
+        List<TestDomainDTO> result = queryBus.dispatch(query);
+        Assertions.assertFalse(result.isEmpty());
+        testDomainDTO = result.get(0);
+        Assertions.assertNotNull(testDomainDTO.id);
+        Assertions.assertNotNull(testDomainDTO.name);
+    }
 }

@@ -15,6 +15,6 @@ public class GetTestDomainNameQueryHandler {
 
     @QueryHandler
     public TestDomainDTO handle(GetTestDomainQuery query) {
-        return (TestDomainDTO) nameQueryService.get("TestDomain.get").orElseThrow();
+        return (TestDomainDTO) nameQueryService.get("TestDomain.get", query).orElseThrow();
     }
 }

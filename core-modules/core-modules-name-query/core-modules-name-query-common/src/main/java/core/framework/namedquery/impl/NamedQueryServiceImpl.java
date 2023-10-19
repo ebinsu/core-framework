@@ -83,7 +83,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
         if (parameter != null) {
             if (parameter.length == 1) {
                 param = parameter[0];
-            } else {
+            } else if (parameter.length > 1) {
                 throw new UnsupportedOperationException("Only one parameter can be passed !");
             }
         }

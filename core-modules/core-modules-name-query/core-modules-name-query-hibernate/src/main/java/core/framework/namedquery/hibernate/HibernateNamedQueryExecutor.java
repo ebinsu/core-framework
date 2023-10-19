@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -54,7 +55,9 @@ public class HibernateNamedQueryExecutor implements NamedQueryExecutor {
 
     private <T> Query createQuery(String sql, Class<T> beanType, Map<String, Object> param) {
         Query query = entityManager.createNativeQuery(sql).setHint(QueryHints.HINT_READONLY, true);
-        param.forEach(query::setParameter);
+        query.getParameters().forEach(parameter ->
+            Optional.ofNullable(param.get(parameter.getName())).ifPresent(value -> query.setParameter(parameter.getName(), value))
+        );
         org.hibernate.query.Query<?> unwrapQuery = query.unwrap(org.hibernate.query.Query.class);
         unwrapQuery.setTupleTransformer(getTransformer(beanType));
         return query;
