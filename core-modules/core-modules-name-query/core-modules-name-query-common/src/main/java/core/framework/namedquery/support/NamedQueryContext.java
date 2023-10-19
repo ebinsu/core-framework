@@ -1,21 +1,25 @@
 package core.framework.namedquery.support;
 
 import core.framework.json.JSONMapper;
+import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.parser.QueryStringUtils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.StringJoiner;
 
 /**
  * @author ebin
  */
 public class NamedQueryContext {
-    private Map<String, Object> parameter;
+    private final Map<String, FragmentNode> fragmentNodes;
+    private final Map<String, Object> parameter;
 
     private final StringJoiner queryBuilder = new StringJoiner(" ");
 
-    public NamedQueryContext(Object parameter) {
+    public NamedQueryContext(Object parameter, Map<String, FragmentNode> fragmentNodes) {
         if (parameter != null) {
             if (parameter instanceof Map<?, ?> map) {
                 this.parameter = (Map<String, Object>) new HashMap<>(map);
@@ -25,6 +29,15 @@ public class NamedQueryContext {
         } else {
             this.parameter = new HashMap<>(0);
         }
+        this.fragmentNodes = fragmentNodes;
+    }
+
+    public Map<String, FragmentNode> getFragmentNodes() {
+        return Collections.unmodifiableMap(fragmentNodes);
+    }
+
+    public Optional<FragmentNode> getFragmentNode(String id) {
+        return Optional.ofNullable(fragmentNodes.get(id));
     }
 
     public Map<String, Object> getParameter() {

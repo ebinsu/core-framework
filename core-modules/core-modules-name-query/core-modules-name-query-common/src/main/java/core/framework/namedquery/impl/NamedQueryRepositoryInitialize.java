@@ -1,8 +1,11 @@
 package core.framework.namedquery.impl;
 
 import core.framework.namedquery.NamedQueryRepository;
+import core.framework.namedquery.support.node.FragmentNode;
+import core.framework.namedquery.support.node.MixedNode;
 import core.framework.namedquery.support.parser.NamedQueryXMLParser;
 import core.framework.shared.utils.ResourcePatternResolverUtil;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -26,6 +29,8 @@ public class NamedQueryRepositoryInitialize implements ApplicationListener<Conte
             throw new Error(e);
         }
         NamedQueryXMLParser namedQueryXMLParser = new NamedQueryXMLParser();
-        namedQueryXMLParser.parse(resources).forEach(repository::register);
+        Pair<List<MixedNode>, List<FragmentNode>> parse = namedQueryXMLParser.parse(resources);
+        parse.getLeft().forEach(repository::register);
+        parse.getRight().forEach(repository::register);
     }
 }

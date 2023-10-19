@@ -1,9 +1,11 @@
 package core.framework.namedquery.support.parser;
 
 import core.framework.namedquery.support.ResolverContext;
+import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.node.MixedNode;
 import core.framework.namedquery.support.node.mongo.MongoNode;
 import core.framework.namedquery.support.node.sql.SqlNode;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.ibatis.builder.BuilderException;
 import org.springframework.core.io.Resource;
 import org.w3c.dom.Document;
@@ -27,9 +29,10 @@ import java.util.Optional;
  * @author ebin
  */
 public class NamedQueryXMLParser {
-    public List<MixedNode> parse(List<Resource> resources) {
+    public Pair<List<MixedNode>, List<FragmentNode>> parse(List<Resource> resources) {
         ResolverContext resolverContext = new ResolverContext();
-        List<MixedNode> nodes = new ArrayList<>(resources.size());
+        List<MixedNode> nodes = new ArrayList<>();
+        List<FragmentNode> fragmentNodes = new ArrayList<>();
         for (Resource resource : resources) {
             Document document;
             try (InputStream inputStream = resource.getInputStream()) {
@@ -50,6 +53,10 @@ public class NamedQueryXMLParser {
                     } catch (ClassNotFoundException e) {
                         throw new RuntimeException(e);
                     }
+                    if ("fragment".equals(name)) {
+                        fragmentNodes.add(new FragmentNode(id, ChildrenNodeHelper.build(child)));
+                        continue;
+                    }
                     if ("sql".equals(name)) {
                         node = new SqlNode(
                             id,
@@ -66,12 +73,11 @@ public class NamedQueryXMLParser {
                             readPreference
                         );
                     }
-
                     nodes.add(node);
                 }
             }
         }
-        return nodes;
+        return Pair.of(nodes, fragmentNodes);
     }
 
     public XMLNode evalNode(Object root, String expression, ResolverContext resolverContext) {

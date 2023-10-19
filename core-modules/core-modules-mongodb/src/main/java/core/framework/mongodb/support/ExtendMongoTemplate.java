@@ -84,7 +84,9 @@ public class ExtendMongoTemplate extends MongoTemplate {
             return;
         }
         MongoPersistentEntity<?> persistentEntity = getConverter().getMappingContext().getPersistentEntity(objectToSave.getClass());
-
+        if (persistentEntity == null) {
+            return;
+        }
         MongoPersistentProperty requiredIdProperty = persistentEntity.getRequiredIdProperty();
         IdentifierAccessor identifierAccessor = persistentEntity.getIdentifierAccessor(objectToSave);
         Object identifier = identifierAccessor.getIdentifier();

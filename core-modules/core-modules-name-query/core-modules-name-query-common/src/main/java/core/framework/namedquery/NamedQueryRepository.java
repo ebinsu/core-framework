@@ -1,5 +1,6 @@
 package core.framework.namedquery;
 
+import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.node.MixedNode;
 
 /**
@@ -9,4 +10,6 @@ public interface NamedQueryRepository {
     NamedQuery get(String queryName, Object parameter);
 
     void register(MixedNode node);
+
+    void register(FragmentNode node);
 }

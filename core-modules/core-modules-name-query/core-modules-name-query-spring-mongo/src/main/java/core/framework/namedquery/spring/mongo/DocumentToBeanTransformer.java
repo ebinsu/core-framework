@@ -24,7 +24,7 @@ public class DocumentToBeanTransformer {
     private Constructor<?> constructor;
     private final Map<String, ImmutablePair<Class<?>, Converter>> constructorParameters = new LinkedHashMap<>();
     private final Map<String, ImmutableTriple<Field, Class<?>, Converter>> fields = new LinkedHashMap<>();
-    private boolean isMap = false;
+    private boolean isMap;
 
     public DocumentToBeanTransformer(Class<?> resultClass) {
         this.resultClass = resultClass;
@@ -66,7 +66,7 @@ public class DocumentToBeanTransformer {
             Object[] args = constructorParameters.entrySet().stream()
                 .map(entry -> {
                     String name = entry.getKey();
-                    if (name.equals("id")) {
+                    if ("id".equals(name)) {
                         name = "_id";
                     }
                     ImmutablePair<Class<?>, Converter> pair = entry.getValue();
