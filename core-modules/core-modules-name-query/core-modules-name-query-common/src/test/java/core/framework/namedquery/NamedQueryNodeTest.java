@@ -115,7 +115,7 @@ public class NamedQueryNodeTest {
         IncludeNode includeNode = new IncludeNode("f1");
         StaticTextNode and = new StaticTextNode("and");
         SqlNode sqlNode = new SqlNode("1", "1", Object.class, List.of(includeNode, and, ifNode));
-        NamedQueryContext context = new NamedQueryContext("1", Map.of("name", NAME_VARIABLE), Map.of("f1", fragmentNode));
+        NamedQueryContext context = new NamedQueryContext("1", Map.of("name", NAME_VARIABLE), Map.of("1.f1", fragmentNode));
         sqlNode.apply(context);
         Assertions.assertEquals("test and test", context.getQuery());
     }

@@ -1,6 +1,5 @@
 package core.framework.jpa.hibernate.mysql.configuration;
 
-import org.hibernate.tool.schema.Action;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;

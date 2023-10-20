@@ -8,6 +8,12 @@ spring:
           allowed-methods:
             - "*"
           allow-credentials: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.136.128:30001/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: ebinsu12345!
+    name: test
   jpa:
     hibernate:
       show-sql: true

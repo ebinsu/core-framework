@@ -28,7 +28,7 @@ public class NamedQueryRepositoryTest {
         SqlNode sqlNode = new SqlNode(TEST_NS, TEST_ID, Map.class, List.of(whereNode));
         NamedQueryRepository namedQueryRepository = new NamedQueryRepositoryImpl();
         namedQueryRepository.register(sqlNode);
-        NamedQuery namedQuery = namedQueryRepository.get(TEST_ID, Map.of("name", NAME_VARIABLE));
+        NamedQuery namedQuery = namedQueryRepository.get(TEST_NS + "." + TEST_ID, Map.of("name", NAME_VARIABLE));
         Assertions.assertEquals("WHERE test", namedQuery.getQuery());
         Assertions.assertEquals(NAME_VARIABLE, namedQuery.getQueryParameter("name"));
     }
@@ -40,7 +40,7 @@ public class NamedQueryRepositoryTest {
         SqlNode sqlNode = new SqlNode(TEST_NS, TEST_ID, Map.class, List.of(forEachNode));
         NamedQueryRepository namedQueryRepository = new NamedQueryRepositoryImpl();
         namedQueryRepository.register(sqlNode);
-        NamedQuery namedQuery = namedQueryRepository.get(TEST_ID, Map.of("col", param));
+        NamedQuery namedQuery = namedQueryRepository.get(TEST_NS + "." + TEST_ID, Map.of("col", param));
         Assertions.assertEquals("( #{__collection__col__0} , #{__collection__col__1} , #{__collection__col__2} )", namedQuery.getQuery());
         Assertions.assertEquals("a", namedQuery.getQueryParameter("__collection__col__0"));
         Assertions.assertEquals("b", namedQuery.getQueryParameter("__collection__col__1"));
