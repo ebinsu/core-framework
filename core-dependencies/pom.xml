@@ -64,7 +64,17 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-name-query-hibernate</artifactId>
+                <artifactId>core-modules-name-query-jpa</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-name-query-jdbc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-name-query-mongo</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

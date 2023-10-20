@@ -39,6 +39,9 @@ public class NamedQueryRepositoryImpl implements NamedQueryRepository {
     @Override
     public void register(MixedNode node) {
         if (node != null) {
+            if (nodes.containsKey(node.getId())) {
+                throw new RuntimeException("Named query [" + node.getId() + "] already exists !");
+            }
             nodes.put(node.getId(), node);
         }
     }
@@ -46,6 +49,9 @@ public class NamedQueryRepositoryImpl implements NamedQueryRepository {
     @Override
     public void register(FragmentNode node) {
         if (node != null) {
+            if (fragmentNodes.containsKey(node.getId())) {
+                throw new RuntimeException("Fragment [" + node.getId() + "] already exists !");
+            }
             fragmentNodes.put(node.getId(), node);
         }
     }

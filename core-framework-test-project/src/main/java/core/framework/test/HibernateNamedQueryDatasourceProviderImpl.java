@@ -1,6 +1,6 @@
 package core.framework.test;
 
-import core.framework.namedquery.hibernate.HibernateNamedQueryDatasourceProvider;
+import core.framework.namedquery.jpa.HibernateNamedQueryDatasourceProvider;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 

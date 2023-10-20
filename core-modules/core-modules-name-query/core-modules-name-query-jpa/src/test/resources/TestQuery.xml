@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE named-queries SYSTEM "namedquery.dtd">
+
+<named-queries namespace="test">
+    <fragment id="f1">
+        <where>
+            <if test="name!=null">
+                name = #{name}
+            </if>
+        </where>
+    </fragment>
+
+    <sql id="1" result-class="java.util.Map">
+        SELECT id as "id",name as "name"  FROM test
+        <include ref-id="f1"/>
+    </sql>
+</named-queries>

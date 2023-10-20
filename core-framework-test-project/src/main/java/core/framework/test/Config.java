@@ -1,6 +1,6 @@
 package core.framework.test;
 
-import core.framework.namedquery.hibernate.HibernateNamedQueryDatasourceProvider;
+import core.framework.namedquery.jpa.HibernateNamedQueryDatasourceProvider;
 import core.framework.test.web.EmailCodeIdentityManager;
 import io.undertow.security.idm.IdentityManager;
 import org.springframework.context.annotation.Bean;

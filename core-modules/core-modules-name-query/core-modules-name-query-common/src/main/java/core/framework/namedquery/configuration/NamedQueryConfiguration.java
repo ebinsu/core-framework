@@ -9,6 +9,7 @@ import core.framework.namedquery.impl.NamedQueryRepositoryInitialize;
 import core.framework.namedquery.impl.NamedQueryServiceImpl;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Primary;
  * @author ebin
  */
 @Configuration
+@EnableConfigurationProperties({NamedQueryProperties.class})
 public class NamedQueryConfiguration {
     @Bean
     public NamedQueryRepositoryInitialize namedQueryRepositoryInitialize() {

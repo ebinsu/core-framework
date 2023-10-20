@@ -35,7 +35,7 @@
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId>core-modules-name-query-hibernate</artifactId>
+            <artifactId>core-modules-name-query-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
