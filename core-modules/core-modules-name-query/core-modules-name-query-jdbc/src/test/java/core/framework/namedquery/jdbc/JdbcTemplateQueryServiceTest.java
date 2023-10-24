@@ -3,10 +3,8 @@ package core.framework.namedquery.jdbc;
 import core.framework.namedquery.NamedQueryService;
 import core.framework.namedquery.configuration.NamedQueryConfiguration;
 import core.framework.namedquery.jdbc.configuration.JdbcTemplateNamedQueryServiceConfiguration;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +51,9 @@ public class JdbcTemplateQueryServiceTest {
         jdbcTemplate.update("""
             insert into test (id, name) values (default, 'test')
             """);
+        jdbcTemplate.update("""
+            insert into test (id, name) values (default, 'test1')
+            """);
     }
 
     @Test
@@ -66,8 +67,8 @@ public class JdbcTemplateQueryServiceTest {
 
     @Test
     public void test_select() {
-        List<Object> select = namedQueryService.select("test.1", Map.of("name", "test"));
-        System.out.println(select);
+        List<Object> select = namedQueryService.select("test.1");
+        Assertions.assertFalse(select.isEmpty());
     }
 
 

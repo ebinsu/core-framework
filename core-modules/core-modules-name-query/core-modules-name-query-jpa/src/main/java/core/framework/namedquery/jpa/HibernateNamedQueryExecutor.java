@@ -51,8 +51,10 @@ public class HibernateNamedQueryExecutor implements NamedQueryExecutor {
         Query query = this.createQuery(queryString, namedQuery.getResultClass(), param);
         if (maxReturnRows != null) {
             query.setMaxResults(maxReturnRows);
+            query.setHint(AvailableHints.HINT_FETCH_SIZE, Math.min(batchSize, maxReturnRows));
+        } else {
+            query.setHint(AvailableHints.HINT_FETCH_SIZE, batchSize);
         }
-        query.setHint(AvailableHints.HINT_FETCH_SIZE, batchSize);
         return query.getResultList();
     }
 

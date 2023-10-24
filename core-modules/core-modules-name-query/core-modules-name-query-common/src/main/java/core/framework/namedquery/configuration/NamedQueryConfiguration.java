@@ -34,8 +34,9 @@ public class NamedQueryConfiguration {
     @Bean
     @Primary
     public NamedQueryService nameQueryService(NamedQueryRepository nameQueryRepository,
-                                              ObjectProvider<NamedQueryExecutorProvider> providers) {
-        NamedQueryServiceImpl nameQueryService = new NamedQueryServiceImpl(nameQueryRepository);
+                                              ObjectProvider<NamedQueryExecutorProvider> providers,
+                                              NamedQueryProperties properties) {
+        NamedQueryServiceImpl nameQueryService = new NamedQueryServiceImpl(nameQueryRepository, properties.getDefaultMaxReturnSize());
         providers.orderedStream().forEach(provider -> nameQueryService.register(provider.get().getLeft(), provider.get().getRight()));
         return nameQueryService;
     }

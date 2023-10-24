@@ -5,23 +5,23 @@
         namespace CDATA #REQUIRED
         >
 
-<!ELEMENT fragment (#PCDATA | include | trim | where | foreach | choose | if | bind)*>
+<!ELEMENT fragment (#PCDATA | include | where | foreach | choose | if | bind)*>
 <!ATTLIST fragment
         id CDATA #REQUIRED
         >
 
-<!ELEMENT sql (#PCDATA | include | trim | foreach | choose | if | bind | where)*>
+<!ELEMENT sql (#PCDATA | include | foreach | choose | if | bind | where)*>
 <!ATTLIST sql
         id CDATA #REQUIRED
         result-class CDATA #REQUIRED>
 
-<!ELEMENT mongo (#PCDATA | include | trim | foreach | choose | if | bind | filter)*>
+<!ELEMENT mongo (#PCDATA | include | foreach | choose | if | bind | filter)*>
 <!ATTLIST mongo
         id CDATA #REQUIRED
         result-class CDATA #REQUIRED>
 
-<!ELEMENT where (#PCDATA | include | trim | where | foreach | choose | if | bind)*>
-<!ELEMENT filter (#PCDATA | include | trim | foreach | choose | if | bind)*>
+<!ELEMENT where (#PCDATA | include | where | foreach | choose | if | bind)*>
+<!ELEMENT filter (#PCDATA | include | foreach | choose | if | bind)*>
 
 <!ELEMENT bind EMPTY>
 <!ATTLIST bind
@@ -32,14 +32,6 @@
 <!ELEMENT include (#PCDATA)*>
 <!ATTLIST include ref-id CDATA #REQUIRED>
 
-<!ELEMENT trim (#PCDATA | include | trim | where | foreach | choose | if | bind)*>
-<!ATTLIST trim
-        prefix CDATA #IMPLIED
-        prefixOverrides CDATA #IMPLIED
-        suffix CDATA #IMPLIED
-        suffixOverrides CDATA #IMPLIED
-        >
-
 <!ELEMENT foreach (#PCDATA)*>
 <!ATTLIST foreach
         collection CDATA #REQUIRED
@@ -49,9 +41,9 @@
         >
 
 <!ELEMENT choose (when* , otherwise?)>
-<!ELEMENT when (#PCDATA | include | trim | where | foreach | choose | if | bind)*>
+<!ELEMENT when (#PCDATA | include | where | foreach | choose | if | bind)*>
 <!ATTLIST when test CDATA #REQUIRED>
-<!ELEMENT otherwise (#PCDATA | include | trim | where | foreach | choose | if | bind)*>
+<!ELEMENT otherwise (#PCDATA | include | where | foreach | choose | if | bind)*>
 
-<!ELEMENT if (#PCDATA | include | trim | where | foreach | choose | if | bind)*>
+<!ELEMENT if (#PCDATA | include | where | foreach | choose | if | bind)*>
 <!ATTLIST if test CDATA #REQUIRED>

@@ -19,15 +19,16 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class NamedQueryServiceImpl implements NamedQueryService {
     private static final Logger LOGGER = LoggerFactory.getLogger(NamedQueryService.class);
-    private static final int DEFAULT_RETURN_ROWS = 64;
     private static final String START = "start";
     private static final String LIMIT = "limit";
     private static final String TOTAL_QUERY_NAME_SUFFIX = ".total";
     private final NamedQueryRepository namedQueryRepository;
     private final Map<QueryType, NamedQueryExecutor> namedQueryExecutors = new ConcurrentHashMap<>();
+    private final int defaultMaxReturnSize;
 
-    public NamedQueryServiceImpl(NamedQueryRepository namedQueryRepository) {
+    public NamedQueryServiceImpl(NamedQueryRepository namedQueryRepository, int defaultMaxReturnSize) {
         this.namedQueryRepository = namedQueryRepository;
+        this.defaultMaxReturnSize = defaultMaxReturnSize;
     }
 
     public void register(QueryType type, NamedQueryExecutor executor) {
@@ -42,7 +43,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
         if (namedQueryExecutor == null) {
             throw new RuntimeException("Query type [" + namedQuery.getQuery() + "] executor not found !");
         }
-        return namedQueryExecutor.execute(namedQuery, DEFAULT_RETURN_ROWS);
+        return namedQueryExecutor.execute(namedQuery, defaultMaxReturnSize);
     }
 
 

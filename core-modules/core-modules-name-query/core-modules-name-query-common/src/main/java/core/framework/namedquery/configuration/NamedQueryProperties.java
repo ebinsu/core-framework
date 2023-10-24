@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "spring.named-query")
 public class NamedQueryProperties {
+    private Integer defaultMaxReturnSize = 256;
     private Integer batchSize = 128;
 
     public Integer getBatchSize() {
@@ -15,5 +16,13 @@ public class NamedQueryProperties {
 
     public void setBatchSize(Integer batchSize) {
         this.batchSize = batchSize;
+    }
+
+    public Integer getDefaultMaxReturnSize() {
+        return defaultMaxReturnSize;
+    }
+
+    public void setDefaultMaxReturnSize(Integer defaultMaxReturnSize) {
+        this.defaultMaxReturnSize = defaultMaxReturnSize;
     }
 }

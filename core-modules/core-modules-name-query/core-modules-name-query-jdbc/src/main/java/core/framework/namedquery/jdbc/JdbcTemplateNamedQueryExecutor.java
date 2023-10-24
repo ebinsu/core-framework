@@ -52,8 +52,11 @@ public class JdbcTemplateNamedQueryExecutor implements NamedQueryExecutor {
         PreparedStatement preparedStatement = con.prepareStatement(finalQueryString);
         if (maxReturnRows != null) {
             preparedStatement.setMaxRows(maxReturnRows);
+            preparedStatement.setFetchSize(Math.min(batchSize, maxReturnRows));
+        } else {
+            preparedStatement.setFetchSize(batchSize);
         }
-        preparedStatement.setFetchSize(batchSize);
+
         IntStream.range(0, params.length).forEach(index -> {
             try {
                 preparedStatement.setObject(index + 1, params[index]);

@@ -8,7 +8,6 @@ import core.framework.namedquery.support.node.IncludeNode;
 import core.framework.namedquery.support.node.NodeBuilder;
 import core.framework.namedquery.support.node.OtherwiseNode;
 import core.framework.namedquery.support.node.TextNodeBuilder;
-import core.framework.namedquery.support.node.TrimNode;
 import core.framework.namedquery.support.node.mongo.FilterNode;
 import core.framework.namedquery.support.node.sql.WhereNode;
 
@@ -34,7 +33,6 @@ public class ResolverContext {
         nodeBuilders.put("choose", new ChooseNode.Builder());
         nodeBuilders.put("when", new IfNode.Builder());
         nodeBuilders.put("otherwise", new OtherwiseNode.Builder());
-        nodeBuilders.put("trim", new TrimNode.Builder());
         nodeBuilders.put("include", new IncludeNode.Builder());
         nodeBuilders.put("foreach", new ForEachNode.Builder());
         nodeBuilders.put("where", new WhereNode.Builder());
