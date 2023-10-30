@@ -1,10 +1,10 @@
-package core.framework.jpa.hibernate.mysql.support;
+package core.framework.jpa.hibernate.support;
 
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
 import core.framework.jpa.common.support.DomainEventPersistenceDriver;
-import core.framework.jpa.hibernate.mysql.DomainEventTracking;
-import core.framework.jpa.hibernate.mysql.configuration.HibernateConfiguration;
+import core.framework.jpa.hibernate.configuration.HibernateConfiguration;
+import core.framework.jpa.hibernate.DomainEventTracking;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;

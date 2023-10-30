@@ -1,21 +1,20 @@
-package core.framework.jpa.hibernate.mysql.configuration;
+package core.framework.jpa.hibernate.configuration;
 
 import core.framework.jpa.common.support.ConfigurableEntityManagerFactoryBean;
 import core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo;
 import core.framework.jpa.common.support.DomainEventPersistenceDriver;
-import core.framework.jpa.hibernate.mysql.DomainEventTracking;
-import core.framework.jpa.hibernate.mysql.support.ConfigurablePersistenceUnitCustomizer;
-import core.framework.jpa.hibernate.mysql.support.ConfigurablePersistenceUnitDataSourceProvider;
-import core.framework.jpa.hibernate.mysql.support.DDDPersistenceManagedTypesScanner;
-import core.framework.jpa.hibernate.mysql.support.SQLDomainEventPersistenceDriver;
-import core.framework.jpa.hibernate.mysql.support.SpringHibernateJpaPersistenceProvider;
+import core.framework.jpa.hibernate.DomainEventTracking;
+import core.framework.jpa.hibernate.support.ConfigurablePersistenceUnitCustomizer;
+import core.framework.jpa.hibernate.support.ConfigurablePersistenceUnitDataSourceProvider;
+import core.framework.jpa.hibernate.support.DDDPersistenceManagedTypesScanner;
+import core.framework.jpa.hibernate.support.SQLDomainEventPersistenceDriver;
+import core.framework.jpa.hibernate.support.SpringHibernateJpaPersistenceProvider;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.SharedCacheMode;
 import jakarta.persistence.ValidationMode;
 import jakarta.persistence.spi.PersistenceUnitTransactionType;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.AvailableSettings;
-import org.hibernate.tool.schema.Action;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,7 @@ public class HibernateConfiguration {
     public static final int STATEMENT_FETCH_SIZE = 64;
     public static final String PERSISTENCE_UNIT_INFO_NAME = "default";
     public static final String PERSISTENCE_UNIT_INFO_BEAN_NAME = "defaultPersistenceUnitInfo";
-    public static final String ENTITY_MANAGER_FACTORY_BEAN_NAME = "defaultEntityManagerFactory";
+    public static final String ENTITY_MANAGER_FACTORY_BEAN_NAME = "entityManagerFactory";
     public static final String TRANSACTION_MANAGER_BEAN_NAME = "defaultTransactionManager";
 
     private final HibernateProperties hibernateProperties;
@@ -67,7 +66,7 @@ public class HibernateConfiguration {
         properties.putIfAbsent(AvailableSettings.STATEMENT_FETCH_SIZE, STATEMENT_FETCH_SIZE);
         properties.putIfAbsent(AvailableSettings.JAKARTA_SHARED_CACHE_MODE, SharedCacheMode.UNSPECIFIED);
         properties.putIfAbsent(AvailableSettings.PHYSICAL_NAMING_STRATEGY, CamelCaseToUnderscoresNamingStrategy.class.getName());
-        properties.putIfAbsent(AvailableSettings.HBM2DDL_AUTO, Action.interpretJpaSetting(hibernateProperties.getHbm2ddl()));
+        properties.putIfAbsent(AvailableSettings.HBM2DDL_AUTO, hibernateProperties.getHbm2ddl());
 
         ConfigurablePersistenceUnitInfo configurablePersistenceUnitInfo = new ConfigurablePersistenceUnitInfo(PERSISTENCE_UNIT_INFO_NAME);
         configurablePersistenceUnitInfo.setPackagesToScan(hibernateProperties.getPackagesToScan());
@@ -116,6 +115,6 @@ public class HibernateConfiguration {
 
     @Bean
     public PersistenceUnitPostProcessor persistenceUnitCustomizer() {
-        return new core.framework.jpa.hibernate.mysql.configuration.PersistenceUnitCustomizer();
+        return new PersistenceUnitCustomizer();
     }
 }

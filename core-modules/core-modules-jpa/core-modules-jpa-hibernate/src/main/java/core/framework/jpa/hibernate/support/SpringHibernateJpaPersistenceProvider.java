@@ -1,4 +1,4 @@
-package core.framework.jpa.hibernate.mysql.support;
+package core.framework.jpa.hibernate.support;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.spi.PersistenceUnitInfo;
@@ -24,12 +24,12 @@ public class SpringHibernateJpaPersistenceProvider extends HibernatePersistenceP
             mergedClassesAndPackages.addAll(((SmartPersistenceUnitInfo) info).getManagedPackages());
         }
         return new EntityManagerFactoryBuilderImpl(
-                new PersistenceUnitInfoDescriptor(info) {
-                    @Override
-                    public List<String> getManagedClassNames() {
-                        return mergedClassesAndPackages;
-                    }
-                }, properties).build();
+            new PersistenceUnitInfoDescriptor(info) {
+                @Override
+                public List<String> getManagedClassNames() {
+                    return mergedClassesAndPackages;
+                }
+            }, properties).build();
     }
 
 }

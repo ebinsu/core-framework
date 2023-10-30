@@ -10,11 +10,14 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
  * @author ebin
  */
 public class MysqlDataSourceBeanPostProcessor implements BeanPostProcessor {
+    public static final String BEAN_NAME = "mysqlDataSourceBeanPostProcessor";
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof HikariDataSource dataSource) {
             if (dataSource.getJdbcUrl().startsWith("jdbc:mysql")) {
+                dataSource.setTransactionIsolation("TRANSACTION_READ_COMMITTED");
+                dataSource.setAutoCommit(false);
                 dataSource.addDataSourceProperty(PropertyKey.queryInterceptors.getKeyName(), MySQLQueryInterceptor.class.getName());
             }
         }

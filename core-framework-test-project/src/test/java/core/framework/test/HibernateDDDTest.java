@@ -1,6 +1,6 @@
 package core.framework.test;
 
-import core.framework.jpa.hibernate.mysql.DomainEventTracking;
+import core.framework.jpa.hibernate.DomainEventTracking;
 import core.framework.test.hibernate.domain.AssignIdDomain;
 import core.framework.test.hibernate.domain.AssignIdDomainEvent;
 import core.framework.test.hibernate.domain.AssignIdEntity;
@@ -15,6 +15,8 @@ import jakarta.persistence.Query;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -28,6 +30,7 @@ import java.util.Optional;
  * @author ebin
  */
 @SpringBootTest
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class HibernateDDDTest {
     @Autowired
     TestDomainRepo testDomainRepo;

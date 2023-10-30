@@ -1,4 +1,4 @@
-package core.framework.jpa.hibernate.mysql.support;
+package core.framework.jpa.hibernate.support;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.boot.spi.BootstrapContext;

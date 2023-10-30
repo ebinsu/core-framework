@@ -33,6 +33,7 @@ public class ConfigurableEntityManagerFactoryBean extends AbstractEntityManagerF
     public ConfigurableEntityManagerFactoryBean(PersistenceUnitInfo persistenceUnitInfo) {
         this.persistenceUnitInfo = persistenceUnitInfo;
         this.setPersistenceUnitName(persistenceUnitInfo.getPersistenceUnitName());
+        this.setJpaProperties(persistenceUnitInfo.getProperties());
     }
 
     @Override

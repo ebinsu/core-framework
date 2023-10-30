@@ -1,12 +1,11 @@
 package core.framework.test;
 
 
-import core.framework.jpa.hibernate.mysql.DomainEventTracking;
+import core.framework.jpa.hibernate.DomainEventTracking;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.MySQL8Dialect;
-import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
 import org.hibernate.jpa.boot.spi.Bootstrap;
 import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;

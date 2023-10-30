@@ -1,4 +1,4 @@
-package core.framework.jpa.hibernate.mysql.configuration;
+package core.framework.jpa.hibernate.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

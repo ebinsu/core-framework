@@ -1,1 +1,1 @@
-core.framework.jpa.hibernate.mysql.support.DomainEventIntegrator
+core.framework.jpa.hibernate.support.DomainEventIntegrator

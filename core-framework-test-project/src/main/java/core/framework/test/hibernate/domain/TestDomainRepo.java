@@ -2,7 +2,7 @@ package core.framework.test.hibernate.domain;
 
 import core.framework.ddd.Repository;
 import core.framework.jpa.common.AbstractJPARepository;
-import core.framework.jpa.hibernate.mysql.configuration.HibernateConfiguration;
+import core.framework.jpa.hibernate.configuration.HibernateConfiguration;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 

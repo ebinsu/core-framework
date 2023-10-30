@@ -1,4 +1,4 @@
-package core.framework.jpa.hibernate.mysql;
+package core.framework.jpa.hibernate;
 
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;

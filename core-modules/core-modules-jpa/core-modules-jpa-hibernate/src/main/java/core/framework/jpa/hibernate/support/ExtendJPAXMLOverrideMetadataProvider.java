@@ -1,4 +1,4 @@
-package core.framework.jpa.hibernate.mysql.support;
+package core.framework.jpa.hibernate.support;
 
 import org.hibernate.annotations.common.reflection.AnnotationReader;
 import org.hibernate.boot.spi.BootstrapContext;

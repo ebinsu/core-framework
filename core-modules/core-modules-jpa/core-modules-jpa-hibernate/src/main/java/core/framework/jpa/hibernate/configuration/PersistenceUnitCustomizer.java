@@ -1,6 +1,6 @@
-package core.framework.jpa.hibernate.mysql.configuration;
+package core.framework.jpa.hibernate.configuration;
 
-import core.framework.jpa.hibernate.mysql.DomainEventTracking;
+import core.framework.jpa.hibernate.DomainEventTracking;
 import core.framework.shared.utils.ResourcePatternResolverUtil;
 import org.springframework.core.io.Resource;
 import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;

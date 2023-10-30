@@ -24,7 +24,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.0.46${changelist}</revision>
+        <revision>1.0.48${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.commons-validator>1.7</version.commons-validator>
@@ -110,11 +110,6 @@
             <dependency>
                 <groupId>core-framework</groupId>
                 <artifactId>core-modules-mysql</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>core-framework</groupId>
-                <artifactId>core-modules-jpa-hibernate</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

@@ -1,3 +1,1 @@
-org.springframework.context.ApplicationListener=core.framework.jpa.hibernate.mysql.configuration.EnvironmentApplicationListener
-
-org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=core.framework.jpa.hibernate.mysql.configuration.ExcludeAutoConfigurationImportFilter
+org.springframework.context.ApplicationListener=core.framework.jpa.hibernate.configuration.EnvironmentApplicationListener

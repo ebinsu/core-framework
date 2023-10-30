@@ -1,1 +1,1 @@
-core.framework.jpa.hibernate.mysql.support.ReflectionManagerMetadataBuilderInitializer
+core.framework.jpa.hibernate.support.ReflectionManagerMetadataBuilderInitializer

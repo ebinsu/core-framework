@@ -1,4 +1,4 @@
-package core.framework.jpa.hibernate.mysql.support;
+package core.framework.jpa.hibernate.support;
 
 
 import core.framework.jpa.common.support.ConfigurablePersistenceUnitInfo;
