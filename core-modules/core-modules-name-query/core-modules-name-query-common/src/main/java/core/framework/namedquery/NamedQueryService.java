@@ -11,5 +11,7 @@ public interface NamedQueryService {
 
     <T> PagingResult<T> paging(String queryName, Object... parameter);
 
+    <T> PagingResult<T> paging(String queryName, int start, int limit, Object... parameter);
+
     <T> Optional<T> get(String queryName, Object... parameter);
 }

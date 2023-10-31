@@ -1,6 +1,5 @@
 package core.framework.namedquery.support;
 
-import core.framework.json.JSONMapper;
 import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.parser.QueryStringUtils;
 
@@ -20,13 +19,9 @@ public class NamedQueryContext {
 
     private final StringJoiner queryBuilder = new StringJoiner(" ");
 
-    public NamedQueryContext(String namespace, Object parameter, Map<String, FragmentNode> fragmentNodes) {
+    public NamedQueryContext(String namespace, Map<String, Object> parameter, Map<String, FragmentNode> fragmentNodes) {
         if (parameter != null) {
-            if (parameter instanceof Map<?, ?> map) {
-                this.parameter = (Map<String, Object>) new HashMap<>(map);
-            } else {
-                this.parameter = (Map<String, Object>) JSONMapper.OBJECT_MAPPER.convertValue(parameter, Map.class);
-            }
+            this.parameter = new HashMap<>(parameter);
         } else {
             this.parameter = new HashMap<>(0);
         }

@@ -20,7 +20,7 @@ public class NamedQueryRepositoryImpl implements NamedQueryRepository {
     private final Map<String, FragmentNode> fragmentNodes = new ConcurrentHashMap<>();
 
     @Override
-    public NamedQuery get(String queryName, Object parameter) {
+    public NamedQuery get(String queryName, Map<String, Object> parameter) {
         MixedNode mixedNode = nodes.get(queryName);
         if (mixedNode == null) {
             throw new RuntimeException("Query [" + queryName + "] not found !");
