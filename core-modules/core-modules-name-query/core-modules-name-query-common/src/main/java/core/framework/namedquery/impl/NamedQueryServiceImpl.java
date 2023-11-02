@@ -97,6 +97,9 @@ public class NamedQueryServiceImpl implements NamedQueryService {
                 throw new UnsupportedOperationException("Only one parameter can be passed !");
             }
         }
+        if (param == null) {
+            return Map.of();
+        }
         if (param instanceof Map<?, ?> map) {
             return (Map<String, Object>) map;
         } else {

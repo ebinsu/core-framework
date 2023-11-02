@@ -67,7 +67,7 @@ public class JdbcTemplateQueryServiceTest {
 
     @Test
     public void test_select() {
-        List<Object> select = namedQueryService.select("test.1");
+        List<Map<String, Object>> select = namedQueryService.select("test.1");
         Assertions.assertFalse(select.isEmpty());
     }
 
