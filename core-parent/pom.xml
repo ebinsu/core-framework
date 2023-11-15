@@ -88,5 +88,12 @@
                 <artifactId>flatten-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.extensions</groupId>
+                <artifactId>maven-build-cache-extension</artifactId>
+                <version>${version.maven-build-cache-extension}</version>
+            </extension>
+        </extensions>
     </build>
 </project>

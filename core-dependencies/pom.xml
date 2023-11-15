@@ -48,6 +48,7 @@
         <version.spotbugs-maven-plugin>4.7.2.1</version.spotbugs-maven-plugin>
         <version.spotbugs>4.7.3</version.spotbugs>
         <version.maven-pmd-plugin>3.20.0</version.maven-pmd-plugin>
+        <version.maven-build-cache-extension>1.0.1</version.maven-build-cache-extension>
     </properties>
 
     <dependencyManagement>
