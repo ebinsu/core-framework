@@ -31,57 +31,6 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
     }
 
     @Override
-    public <R> R aggregateByQueryString(String queryString, Class<R> resultClass, Object... params) {
-        NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
-        final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
-        if (namedSqmQueryMemento != null) {
-            // name query
-            return aggregateByNamedQuery(queryString, resultClass, params);
-        }
-        final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
-        if (namedNativeDescriptor != null) {
-            // native query result class only support entity.
-            return aggregateByNativeQuery(namedNativeDescriptor.getSqlString(), resultClass, params);
-        }
-        // sql
-        return aggregateByNativeQuery(queryString, resultClass, params);
-    }
-
-    @Override
-    public Optional<T> findByQueryString(String queryString, Object... params) {
-        NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
-        final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
-        if (namedSqmQueryMemento != null) {
-            // name query
-            return Optional.ofNullable(findByNamedQuery(queryString, params));
-        }
-        final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
-        if (namedNativeDescriptor != null) {
-            // native query
-            return Optional.ofNullable(findByNamedQuery(queryString, params));
-        }
-        // sql
-        return Optional.ofNullable(findByNativeQuery(queryString, params));
-    }
-
-    @Override
-    public List<T> selectByQueryString(String queryString, Object... params) {
-        NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
-        final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
-        if (namedSqmQueryMemento != null) {
-            // name query
-            return selectByNamedQuery(queryString, params);
-        }
-        final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
-        if (namedNativeDescriptor != null) {
-            // native query
-            return selectByNamedQuery(queryString, params);
-        }
-        // sql
-        return selectByNativeQuery(queryString, params);
-    }
-
-    @Override
     public Optional<T> find(ID id) {
         return (id != null) ? Optional.ofNullable(getEntityManager().find(getEntityClass(), id)) : Optional.empty();
     }
@@ -105,15 +54,63 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
         }
     }
 
-    public abstract EntityManager getEntityManager();
+    protected abstract EntityManager getEntityManager();
 
     protected Class<T> getEntityClass() {
         return this.entityClass;
     }
 
+    protected <R> R aggregateByQueryString(String queryString, Class<R> resultClass, Object... params) {
+        NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
+        final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
+        if (namedSqmQueryMemento != null) {
+            // name query
+            return aggregateByNamedQuery(queryString, resultClass, params);
+        }
+        final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
+        if (namedNativeDescriptor != null) {
+            // native query result class only support entity.
+            return aggregateByNativeQuery(namedNativeDescriptor.getSqlString(), resultClass, params);
+        }
+        // sql
+        return aggregateByNativeQuery(queryString, resultClass, params);
+    }
+
+    protected Optional<T> findByQueryString(String queryString, Object... params) {
+        NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
+        final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
+        if (namedSqmQueryMemento != null) {
+            // name query
+            return Optional.ofNullable(findByNamedQuery(queryString, params));
+        }
+        final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
+        if (namedNativeDescriptor != null) {
+            // native query
+            return Optional.ofNullable(findByNamedQuery(queryString, params));
+        }
+        // sql
+        return Optional.ofNullable(findByNativeQuery(queryString, params));
+    }
+
+    protected List<T> selectByQueryString(String queryString, Object... params) {
+        NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
+        final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
+        if (namedSqmQueryMemento != null) {
+            // name query
+            return selectByNamedQuery(queryString, params);
+        }
+        final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
+        if (namedNativeDescriptor != null) {
+            // native query
+            return selectByNamedQuery(queryString, params);
+        }
+        // sql
+        return selectByNativeQuery(queryString, params);
+    }
+
     private NamedObjectRepository getNamedObjectRepository() {
         SessionFactoryImplementor sessionFactory = getEntityManager().getEntityManagerFactory()
-                .unwrap(SessionFactoryImplementor.class);
+            .unwrap(SessionFactoryImplementor.class);
         return sessionFactory.getQueryEngine().getNamedObjectRepository();
     }
 
