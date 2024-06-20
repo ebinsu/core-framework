@@ -143,8 +143,8 @@ class HibernateDDDTest {
         transactionManager.commit(status);
 
         status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-        Optional<TestDomain> test = testDomainRepo.findByQueryString("TestDomainFinder.selectByName", "test");
-        List<TestDomain> tests = testDomainRepo.selectByQueryString("TestDomainFinder.selectByName", "test");
+        Optional<TestDomain> test = testDomainRepo.find("TestDomainFinder.selectByName", "test");
+        List<TestDomain> tests = testDomainRepo.select("TestDomainFinder.selectByName", "test");
         transactionManager.commit(status);
         Assertions.assertTrue(test.isPresent());
         Assertions.assertFalse(tests.isEmpty());
@@ -158,8 +158,8 @@ class HibernateDDDTest {
         transactionManager.commit(status);
 
         status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-        Optional<TestDomain> test = testDomainRepo.findByQueryString("TestDomainFinder.selectById", testDomain.getId());
-        List<TestDomain> tests = testDomainRepo.selectByQueryString("TestDomainFinder.selectById", testDomain.getId());
+        Optional<TestDomain> test = testDomainRepo.find("TestDomainFinder.selectById", testDomain.getId());
+        List<TestDomain> tests = testDomainRepo.select("TestDomainFinder.selectById", testDomain.getId());
         transactionManager.commit(status);
         Assertions.assertTrue(test.isPresent());
         Assertions.assertFalse(tests.isEmpty());
@@ -173,8 +173,8 @@ class HibernateDDDTest {
         transactionManager.commit(status);
 
         status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-        Optional<TestDomain> test = testDomainRepo.findByQueryString("select * from test where id = ?1", testDomain.getId());
-        List<TestDomain> tests = testDomainRepo.selectByQueryString("select * from test where id = ?1", testDomain.getId());
+        Optional<TestDomain> test = testDomainRepo.find("select * from test where id = ?1", testDomain.getId());
+        List<TestDomain> tests = testDomainRepo.select("select * from test where id = ?1", testDomain.getId());
         transactionManager.commit(status);
         Assertions.assertTrue(test.isPresent());
         Assertions.assertFalse(tests.isEmpty());

@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -39,6 +40,21 @@ public abstract class AbstractMongodbRepository<T extends AbstractAggregateRoot<
     @Override
     public Optional<T> find(ID id) {
         return Optional.ofNullable(getMongoOperations().findOne(query(where("_id").is(id)), entityClass));
+    }
+
+    @Override
+    public Optional<T> find(String queryString, Object... params) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<T> select(String queryString, Object... params) {
+        return List.of();
+    }
+
+    @Override
+    public <R> R aggregateByQueryString(String queryString, Class<R> resultClass, Object... params) {
+        return null;
     }
 
     protected abstract MongoOperations getMongoOperations();
