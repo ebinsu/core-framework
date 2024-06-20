@@ -32,7 +32,7 @@ public class KafkaTest {
         demoMessage.id = "1";
         messagePublisher.publish("tp1", null, demoMessage);
         Thread.sleep(10000L);
-        Optional<TestDomain> test = testDomainRepo.findByQueryString("TestDomainFinder.selectByName", "DemoMessage");
+        Optional<TestDomain> test = testDomainRepo.find("TestDomainFinder.selectByName", "DemoMessage");
         Assertions.assertTrue(test.isPresent());
     }
 }

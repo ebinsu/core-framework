@@ -36,6 +36,23 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
     }
 
     @Override
+    public Optional<T> find(String queryString, Object... params) {
+        NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
+        final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
+        if (namedSqmQueryMemento != null) {
+            // name query
+            return Optional.ofNullable(findByNamedQuery(queryString, params));
+        }
+        final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
+        if (namedNativeDescriptor != null) {
+            // native query
+            return Optional.ofNullable(findByNamedQuery(queryString, params));
+        }
+        // sql
+        return Optional.ofNullable(findByNativeQuery(queryString, params));
+    }
+
+    @Override
     public void persist(T entity) {
         if (entity != null) {
             getEntityManager().persist(entity);
@@ -69,23 +86,6 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
         }
         // sql
         return selectByNativeQuery(queryString, params);
-    }
-
-    @Override
-    public Optional<T> find(String queryString, Object... params) {
-        NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
-        final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
-        if (namedSqmQueryMemento != null) {
-            // name query
-            return Optional.ofNullable(findByNamedQuery(queryString, params));
-        }
-        final NamedNativeQueryMemento namedNativeDescriptor = namedObjectRepository.getNativeQueryMemento(queryString);
-        if (namedNativeDescriptor != null) {
-            // native query
-            return Optional.ofNullable(findByNamedQuery(queryString, params));
-        }
-        // sql
-        return Optional.ofNullable(findByNativeQuery(queryString, params));
     }
 
     @Override
