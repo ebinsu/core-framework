@@ -3,6 +3,7 @@ package core.framework.jpa.common.support;
 import core.framework.ddd.AbstractDomainEvent;
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
+import core.framework.ddd.DomainEventStore;
 import core.framework.exception.marker.ErrorCodeMarker;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * @author ebin
  */
-public final class DomainEventStoreImpl implements core.framework.ddd.DomainEventStore {
+public final class DomainEventStoreImpl implements DomainEventStore {
     public static final DomainEventStoreImpl INSTANCE = new DomainEventStoreImpl();
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainEventStoreImpl.class);
 
