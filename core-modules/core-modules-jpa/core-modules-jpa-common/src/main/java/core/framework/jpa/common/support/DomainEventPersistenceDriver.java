@@ -7,7 +7,7 @@ import jakarta.persistence.EntityManager;
  * @author ebin
  */
 public interface DomainEventPersistenceDriver {
-    void persist(AggregateRoot<?, ?> aggregateRoot, EntityManager entityManager);
+    void persist(AggregateRoot aggregateRoot, EntityManager entityManager);
 
     String getPersistenceUnitName();
 }

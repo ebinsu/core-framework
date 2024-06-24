@@ -5,14 +5,10 @@ import java.util.List;
 /**
  * @author ebin
  */
-public interface AggregateRoot<T extends AggregateRoot<T, ID>, ID> extends Entity<T, ID> {
-    DomainEvent<T, ID> registerEvent(DomainEvent<T, ID> event);
+public interface AggregateRoot extends Entity {
+    void registerEvent(DomainEvent event);
 
-    List<DomainEvent<T, ID>> getDomainEvents();
+    List<DomainEvent> getDomainEvents();
 
     void clearDomainEvents();
-
-    default void prepareDispatchDomainEvent() {
-        getDomainEvents().forEach(e -> e.prepareDispatch((T) this));
-    }
 }

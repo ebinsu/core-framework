@@ -45,7 +45,7 @@ class CommandTest {
     void testCommand() {
         commandBus.dispatch(new TestCommand());
         TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
-        AssignIdDomain assignIdDomain = new AssignIdDomain();
+        AssignIdDomain assignIdDomain = new AssignIdDomain(2L);
         entityManager.find(AssignIdDomain.class, 1L);
         transactionManager.commit(status);
         Assertions.assertNotNull(assignIdDomain);

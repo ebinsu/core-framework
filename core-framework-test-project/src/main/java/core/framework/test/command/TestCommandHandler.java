@@ -18,7 +18,7 @@ public class TestCommandHandler {
     @Transactional
     @CommandHandler
     public void handle(TestCommand testCommand) {
-        AssignIdDomain assignIdDomain = new AssignIdDomain();
+        AssignIdDomain assignIdDomain = new AssignIdDomain(1L);
         assignIdDomain.abc = 1L;
         entityManager.persist(assignIdDomain);
     }

@@ -1,8 +1,8 @@
 package core.framework.jpa.common.support;
 
+import core.framework.ddd.AbstractDomainEvent;
 import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.DomainEvent;
-import core.framework.ddd.support.AbstractDomainEvent;
 import core.framework.exception.marker.ErrorCodeMarker;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -51,17 +52,20 @@ public final class DomainEventStoreImpl implements core.framework.ddd.DomainEven
     }
 
     @Override
-    public void persist(AggregateRoot<?, ?> aggregateRoot) {
-        aggregateRoot.prepareDispatchDomainEvent();
-        List<? extends DomainEvent<?, ?>> domainEvents = aggregateRoot.getDomainEvents();
+    public void persist(AggregateRoot aggregateRoot) {
+        if (Objects.isNull(aggregateRoot.getId())) {
+            throw new Error("The aggregateRoot is incomplete because the id is null.");
+        }
+        List<DomainEvent> domainEvents = aggregateRoot.getDomainEvents();
         if (domainEvents.isEmpty()) {
             return;
         }
         String persistenceUnitName = aggregateRootPersistenceType.get(aggregateRoot.getClass());
         if (persistenceUnitName != null) {
             EntityManager entityManager = entityManagers.get(persistenceUnitName);
-            for (DomainEvent<?, ?> domainEvent : domainEvents) {
-                if (domainEvent instanceof AbstractDomainEvent) {
+            for (DomainEvent domainEvent : domainEvents) {
+                if (domainEvent instanceof AbstractDomainEvent ade) {
+                    ade.setAggregateRootMetadata(aggregateRoot);
                     DomainEventPersistenceDriver domainEventPersistenceDriver = persistenceDrivers.get(persistenceUnitName);
                     if (domainEventPersistenceDriver == null) {
                         LOGGER.warn(new ErrorCodeMarker("PERSISTENCE_DRIVER_NOT_FOUND"), "Domain event persistence driver not found, skip persistence domain event.");

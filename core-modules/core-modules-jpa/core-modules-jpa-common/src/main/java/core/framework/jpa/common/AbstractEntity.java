@@ -1,6 +1,5 @@
 package core.framework.jpa.common;
 
-import core.framework.ddd.AggregateRoot;
 import core.framework.ddd.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -12,7 +11,7 @@ import java.time.ZonedDateTime;
  * @author ebin
  */
 @MappedSuperclass
-public abstract class AbstractEntity<A extends AggregateRoot<A, ?>, ID> implements Entity<A, ID> {
+public abstract class AbstractEntity implements Entity {
     @NotNull
     @Column(name = "created_time")
     private ZonedDateTime createdTime;

@@ -13,13 +13,16 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "test_entity")
-public class TestEntity extends AbstractEntity<TestDomain, String> {
+public class TestEntity extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private String id;
 
     private String name;
+
+    private TestEntity() {
+    }
 
     public TestEntity(String name) {
         super("");

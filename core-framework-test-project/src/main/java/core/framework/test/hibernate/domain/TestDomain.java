@@ -19,7 +19,7 @@ import java.math.BigDecimal;
  */
 @AggregateRoot
 @Table(name = "test")
-public class TestDomain extends AbstractAggregateRoot<TestDomain, Long> {
+public class TestDomain extends AbstractAggregateRoot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -10,6 +10,7 @@ import org.hibernate.query.named.NamedObjectRepository;
 import org.hibernate.query.sql.spi.NamedNativeQueryMemento;
 import org.hibernate.query.sqm.spi.NamedSqmQueryMemento;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.stream.IntStream;
 /**
  * @author ebin
  */
-public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, ID>, ID> implements Repository<T, ID> {
+public abstract class AbstractJPARepository<T extends AbstractAggregateRoot> implements Repository<T> {
     private static final int START_INDEX = 0;
     private static final int HINT_FETCH_SIZE = 1;
 
@@ -31,7 +32,7 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot<T, I
     }
 
     @Override
-    public Optional<T> find(ID id) {
+    public Optional<T> find(Serializable id) {
         return (id != null) ? Optional.ofNullable(getEntityManager().find(getEntityClass(), id)) : Optional.empty();
     }
 

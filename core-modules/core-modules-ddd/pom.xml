@@ -21,6 +21,10 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
+            <groupId>core-framework</groupId>
+            <artifactId>core-modules-json</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <scope>compile</scope>

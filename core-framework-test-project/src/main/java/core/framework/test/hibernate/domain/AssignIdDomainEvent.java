@@ -1,11 +1,13 @@
 package core.framework.test.hibernate.domain;
 
 
-import core.framework.ddd.support.AbstractDomainEvent;
+import core.framework.ddd.AbstractDomainEvent;
 
 /**
  * @author ebin
  */
-public class AssignIdDomainEvent extends AbstractDomainEvent<AssignIdDomain, Long> {
+public class AssignIdDomainEvent extends AbstractDomainEvent {
 
+    public AssignIdDomainEvent(AssignIdDomain aggregateRoot) {
+    }
 }

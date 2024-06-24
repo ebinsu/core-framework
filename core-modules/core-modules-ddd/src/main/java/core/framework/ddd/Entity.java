@@ -1,11 +1,14 @@
 package core.framework.ddd;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 /**
  * @author ebin
  */
-public interface Entity<T extends AggregateRoot<T, ?>, ID> extends Identifiable<ID> {
+public interface Entity {
+    Serializable getId();
+
     ZonedDateTime getCreatedTime();
 
     ZonedDateTime getUpdatedTime();

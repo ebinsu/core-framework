@@ -7,7 +7,7 @@ import core.framework.ddd.support.InvocableDomainEventHandlerMethod;
  * @author ebin
  */
 public interface DomainEventBus {
-    <T extends AggregateRoot<T, ?>> void dispatch(DomainEvent<T, ?> domainEvent, Trigger trigger);
+    void dispatch(DomainEvent domainEvent, Trigger trigger);
 
     void subscribe(InvocableDomainEventHandlerMethod invocableQueryHandlerMethod);
 }

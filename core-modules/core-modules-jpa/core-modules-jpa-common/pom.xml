@@ -30,10 +30,6 @@
         </dependency>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId>core-modules-json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>core-framework</groupId>
             <artifactId>core-modules-shared</artifactId>
         </dependency>
     </dependencies>

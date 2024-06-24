@@ -49,10 +49,10 @@ public class DomainEventTracking {
     private DomainEventTracking() {
     }
 
-    public DomainEventTracking(AggregateRoot<?, ?> aggregateRoot, DomainEvent<?, ?> event) {
+    public DomainEventTracking(AggregateRoot aggregateRoot, DomainEvent event) {
         this.eventName = event.getClass().getName();
-        this.aggregateRootClass = event.getAggregateRootClass().getTypeName();
-        this.aggregateRootId = String.valueOf(event.getAggregateRootId());
+        this.aggregateRootClass = event.getAggregateRootMetadata().getType();
+        this.aggregateRootId = event.getAggregateRootMetadata().getId().toString();
         this.createdTime = ZonedDateTime.now();
         this.domainEventSnapshot = JSON.toJSON(event);
         this.aggregateRootSnapshot = JSON.toJSON(aggregateRoot);

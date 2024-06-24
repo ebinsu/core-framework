@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
  */
 @AggregateRoot
 @Table(name = "test_2")
-public class TestDomain2 extends AbstractAggregateRoot<TestDomain2, Long> {
+public class TestDomain2 extends AbstractAggregateRoot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

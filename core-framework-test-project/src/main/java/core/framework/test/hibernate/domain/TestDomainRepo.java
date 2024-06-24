@@ -10,7 +10,7 @@ import jakarta.persistence.PersistenceContext;
  * @author ebin
  */
 @org.springframework.stereotype.Repository
-public class TestDomainRepo extends AbstractJPARepository<TestDomain, Long> implements Repository<TestDomain, Long> {
+public class TestDomainRepo extends AbstractJPARepository<TestDomain> implements Repository<TestDomain> {
     @PersistenceContext(unitName = HibernateConfiguration.PERSISTENCE_UNIT_INFO_NAME)
     EntityManager entityManager;
 
