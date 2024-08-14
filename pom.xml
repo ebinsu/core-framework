@@ -12,7 +12,5 @@
         <module>core-dependencies</module>
         <module>core-parent</module>
         <module>core-modules</module>
-<!--        <module>core-framework-test-project</module>-->
-<!--        <module>core-framework-mongo-test-project</module>-->
     </modules>
 </project>

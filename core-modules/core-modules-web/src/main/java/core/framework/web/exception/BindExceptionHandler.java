@@ -9,26 +9,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static core.framework.web.exception.DefaultHandlerExceptionResolver.ERROR_CODE_ATTRIBUTE;
-
 /**
  * @author ebin
  */
 public class BindExceptionHandler implements ExceptionHandler {
+    public static final String ERROR_CODE = "VALIDATION_ERROR";
+
     @Override
     public ExceptionResponse getResponseMessage(HttpServletRequest request, Exception ex) {
         StringBuilder errorMsg = new StringBuilder();
         if (ex instanceof BindException exception) {
-            Map<String, List<FieldError>> errorMap = exception.getFieldErrors().stream().collect(Collectors.groupingBy(k -> k.getField()));
+            Map<String, List<FieldError>> errorMap = exception.getFieldErrors().stream().collect(Collectors.groupingBy(FieldError::getField));
             errorMap.forEach((filed, errors) ->
-                    errorMsg.append(filed)
-                            .append(
-                                    errors.stream()
-                                            .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                                            .collect(Collectors.joining(","))
-                            )
-                            .append(';'));
-            return responseMessage(errorMsg.toString(), (String) request.getAttribute(ERROR_CODE_ATTRIBUTE));
+                errorMsg.append(filed)
+                    .append(
+                        errors.stream()
+                            .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                            .collect(Collectors.joining(","))
+                    )
+                    .append(';'));
+            return responseMessage(errorMsg.toString(), ERROR_CODE);
         } else {
             throw new UnsupportedOperationException();
         }

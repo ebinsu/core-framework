@@ -1,8 +1,6 @@
 package core.framework.web.exception;
 
-import core.framework.exception.ErrorCodeRuntimeException;
 import core.framework.exception.marker.ErrorCodeMarker;
-import core.framework.json.JSON;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -20,9 +18,6 @@ import java.util.List;
  * @author ebin
  */
 public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionResolver {
-    public static final String ERROR_CODE_ATTRIBUTE = DefaultHandlerExceptionResolver.class.getName() + ".ERROR.CODE";
-    public static final String ERROR_MESSAGE_ATTRIBUTE = DefaultHandlerExceptionResolver.class.getName() + ".ERROR.MESSAGE";
-    public static final String INTERNAL_ERROR = "INTERNAL_ERROR";
     private final Logger logger = LoggerFactory.getLogger(DefaultHandlerExceptionResolver.class);
     private final MappingJackson2JsonView jsonView;
     private final List<ExceptionHandler> exceptionHandlers = new ArrayList<>();
@@ -31,7 +26,6 @@ public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionRes
     public DefaultHandlerExceptionResolver() {
         this.jsonView = new MappingJackson2JsonView();
         this.jsonView.setExtractValueFromSingleKeyModel(true);
-        addDefaultExceptionHandler();
     }
 
     public void addExceptionHandler(ExceptionHandler exceptionHandler) {
@@ -49,29 +43,13 @@ public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionRes
             mv.setStatus(responseStatus.value());
         }
 
-        if (ex instanceof ErrorCodeRuntimeException e) {
-            request.setAttribute(ERROR_CODE_ATTRIBUTE, e.errorCode());
-        } else {
-            request.setAttribute(ERROR_CODE_ATTRIBUTE, INTERNAL_ERROR);
-        }
-        request.setAttribute(ERROR_MESSAGE_ATTRIBUTE, ex.getMessage());
-
         ExceptionHandler exceptionHandler = exceptionHandlers.stream()
             .filter(f -> f.support(ex)).findFirst()
             .orElse(defaultExceptionHandler);
         ExceptionResponse responseMessage = exceptionHandler.getResponseMessage(request, ex);
-        mv.addObject("exception", responseMessage);
+        mv.addObject("responseBody", responseMessage);
         mv.setView(jsonView);
-        logger.error(new ErrorCodeMarker(request.getAttribute(ERROR_CODE_ATTRIBUTE).toString()), "response: " + JSON.toJSON(responseMessage));
+        logger.error(new ErrorCodeMarker(responseMessage.errorCode()), responseMessage.message(), ex);
         return mv;
-    }
-
-    @Override
-    protected void logException(Exception ex, HttpServletRequest request) {
-        logger.error(new ErrorCodeMarker(request.getAttribute(ERROR_CODE_ATTRIBUTE).toString()), ex.getMessage(), ex);
-    }
-
-    private void addDefaultExceptionHandler() {
-        this.exceptionHandlers.add(new ErrorCodeRuntimeExceptionHandler());
     }
 }
