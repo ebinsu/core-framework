@@ -5,6 +5,6 @@ import io.undertow.security.idm.Credential;
 /**
  * @author ebin
  */
-public record CodeCredential(String code) implements Credential {
+public record StringCredential(String credentialStr) implements Credential {
 
 }

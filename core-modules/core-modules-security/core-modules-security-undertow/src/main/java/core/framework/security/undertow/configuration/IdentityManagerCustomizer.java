@@ -1,6 +1,7 @@
 package core.framework.security.undertow.configuration;
 
-import io.undertow.security.idm.IdentityManager;
+import core.framework.security.undertow.security.AuthenticationRepository;
+import core.framework.security.undertow.security.IdentityManagerImpl;
 import io.undertow.servlet.api.DeploymentInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
@@ -10,10 +11,11 @@ import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCust
  */
 public class IdentityManagerCustomizer implements UndertowDeploymentInfoCustomizer {
     @Autowired
-    private IdentityManager identityManager;
+    private AuthenticationRepository repository;
 
     @Override
     public void customize(DeploymentInfo deploymentInfo) {
+        IdentityManagerImpl identityManager = new IdentityManagerImpl(repository);
         deploymentInfo.setIdentityManager(identityManager);
     }
 }

@@ -38,7 +38,7 @@ public class EmailCodeAuthMechanism extends AbstractAJAXAuthMechanism {
         if (!(EmailValidator.getInstance().isValid(request.email) && StringUtils.hasLength(request.code) && request.code.length() == 6)) {
             throw new RequestValidFailedException();
         }
-        Account account = identityManager.verify(request.email, new CodeCredential(request.code));
+        Account account = identityManager.verify(request.email, new StringCredential(request.code));
         if (account == null) {
             securityContext.authenticationFailed(MESSAGES.authenticationFailed(request.email), EmailCodeAuthMechanism.NAME);
             return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
