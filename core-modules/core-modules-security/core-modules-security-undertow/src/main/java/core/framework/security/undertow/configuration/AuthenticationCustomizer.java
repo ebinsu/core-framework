@@ -1,8 +1,10 @@
-package core.framework.security.undertow.authentication;
+package core.framework.security.undertow.configuration;
 
 import core.framework.security.common.AuthenticationType;
 import core.framework.security.common.configuration.SecurityProperties;
 import core.framework.security.common.configuration.SecuritySessionProperties;
+import core.framework.security.undertow.authentication.mailecode.EmailCodeAuthMechanism;
+import core.framework.security.undertow.authentication.namepwd.UsernamePasswordAuthMechanism;
 import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.AuthMethodConfig;
 import io.undertow.servlet.api.DeploymentInfo;
@@ -33,8 +35,8 @@ public class AuthenticationCustomizer implements UndertowDeploymentInfoCustomize
         deploymentInfo.setLoginConfig(loginConfig);
         AuthenticationType authType = securityAuthProperties.getLoginRequest().getAuthenticationType();
         Map<String, String> authProperties = Map.of(
-                AUTHENTICATION_METHOD, securityAuthProperties.getLoginRequest().getMethod(),
-                AUTHENTICATION_URL, securityAuthProperties.getLoginRequest().getUrl()
+            AUTHENTICATION_METHOD, securityAuthProperties.getLoginRequest().getMethod(),
+            AUTHENTICATION_URL, securityAuthProperties.getLoginRequest().getUrl()
         );
         if (AuthenticationType.EMAIL_CODE == authType) {
             loginConfig.addFirstAuthMethod(new AuthMethodConfig(EmailCodeAuthMechanism.NAME, authProperties));
@@ -56,7 +58,5 @@ public class AuthenticationCustomizer implements UndertowDeploymentInfoCustomize
 
             deploymentInfo.setServletSessionConfig(servletSessionConfig);
         }
-        deploymentInfo.addOuterHandlerChainWrapper(new SkipSecurityContextHandlerWrapper());
-        deploymentInfo.addInnerHandlerChainWrapper(new ResetSkipSecurityContextHandlerWrapper());
     }
 }

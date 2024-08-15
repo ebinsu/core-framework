@@ -1,7 +1,6 @@
 package core.framework.security.undertow.configuration;
 
-import core.framework.security.undertow.session.SessionRedisTemplateSupplier;
-import core.framework.security.undertow.session.RedisSessionManagerCustomizer;
+import core.framework.security.undertow.session.redis.SessionRedisTemplateSupplier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;

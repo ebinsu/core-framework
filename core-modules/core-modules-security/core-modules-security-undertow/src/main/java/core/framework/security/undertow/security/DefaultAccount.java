@@ -1,4 +1,4 @@
-package core.framework.security.undertow.identity;
+package core.framework.security.undertow.security;
 
 import com.sun.security.auth.UserPrincipal;
 import io.undertow.security.idm.Account;

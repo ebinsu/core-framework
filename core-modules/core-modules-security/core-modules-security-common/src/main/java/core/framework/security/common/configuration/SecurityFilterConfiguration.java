@@ -1,7 +1,7 @@
 package core.framework.security.common.configuration;
 
 
-import core.framework.security.common.SecurityContextV2;
+import core.framework.security.common.SecurityContext;
 import core.framework.security.common.filter.AuthenticationFilterChain;
 import core.framework.security.common.filter.AuthorizationFilterChain;
 import core.framework.security.common.filter.AuthorizationPermissionSupplier;
@@ -31,12 +31,12 @@ public class SecurityFilterConfiguration {
     }
 
     @Bean
-    public SecurityContextV2 securityContext() {
-        return new SecurityContextV2();
+    public SecurityContext securityContext() {
+        return new SecurityContext();
     }
 
     @Bean
-    public FilterChainProxy securityFilter(AuthorizationPermissionSupplier authorizationPermissionSupplier, SecurityContextV2 securityContext) {
+    public FilterChainProxy securityFilter(AuthorizationPermissionSupplier authorizationPermissionSupplier, SecurityContext securityContext) {
         FilterChainProxy filterChainProxy = new FilterChainProxy();
         filterChainProxy.addSecurityFilterChain(new AuthenticationFilterChain(securityProperties.getLoginRequest().getMethod(), securityProperties.getLoginRequest().getUrl()));
         filterChainProxy.addSecurityFilterChain(new LogoutFilterChain(securityProperties.getLogoutRequest().getMethod(), securityProperties.getLogoutRequest().getUrl()));

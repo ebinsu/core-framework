@@ -1,8 +1,10 @@
-package core.framework.security.undertow.authentication;
+package core.framework.security.undertow.authentication.mailecode;
 
 import core.framework.json.JSON;
 import core.framework.security.common.AuthenticationType;
-import core.framework.security.undertow.UndertowSessionConst;
+import core.framework.security.undertow.authentication.AbstractAJAXAuthMechanism;
+import core.framework.security.undertow.configuration.AuthenticationCustomizer;
+import core.framework.security.undertow.authentication.RequestValidFailedException;
 import io.undertow.security.api.AuthenticationMechanism;
 import io.undertow.security.api.AuthenticationMechanismFactory;
 import io.undertow.security.api.SecurityContext;
@@ -10,7 +12,6 @@ import io.undertow.security.idm.Account;
 import io.undertow.security.idm.IdentityManager;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.form.FormParserFactory;
-import io.undertow.servlet.handlers.ServletRequestContext;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.util.StringUtils;
 
@@ -43,7 +44,6 @@ public class EmailCodeAuthMechanism extends AbstractAJAXAuthMechanism {
             return AuthenticationMechanismOutcome.NOT_AUTHENTICATED;
         } else {
             securityContext.authenticationComplete(account, EmailCodeAuthMechanism.NAME, true);
-            exchange.getAttachment(ServletRequestContext.ATTACHMENT_KEY).getSession().setAttribute(UndertowSessionConst.ACCOUNT, account);
             return AuthenticationMechanismOutcome.AUTHENTICATED;
         }
     }

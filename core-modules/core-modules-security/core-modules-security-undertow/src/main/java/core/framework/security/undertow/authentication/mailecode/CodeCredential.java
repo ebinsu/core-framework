@@ -1,4 +1,4 @@
-package core.framework.security.undertow.authentication;
+package core.framework.security.undertow.authentication.mailecode;
 
 import io.undertow.security.idm.Credential;
 

@@ -1,4 +1,4 @@
-package core.framework.security.undertow.identity;
+package core.framework.security.undertow.configuration;
 
 import io.undertow.security.idm.IdentityManager;
 import io.undertow.servlet.api.DeploymentInfo;

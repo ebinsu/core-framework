@@ -20,7 +20,6 @@ import java.nio.ByteBuffer;
  * @author ebin
  */
 public abstract class AbstractAJAXAuthMechanism implements AuthenticationMechanism {
-    public static final String SESSION_ACCOUNT_NAME = "account";
     private final Logger logger = LoggerFactory.getLogger(AbstractAJAXAuthMechanism.class);
 
     private final String method;
@@ -33,9 +32,6 @@ public abstract class AbstractAJAXAuthMechanism implements AuthenticationMechani
 
     @Override
     public AuthenticationMechanismOutcome authenticate(HttpServerExchange exchange, SecurityContext securityContext) {
-        if (exchange.getAttachment(SkipSecurityContext.ATTACHMENT_KEY) != null) {
-            return AuthenticationMechanismOutcome.NOT_ATTEMPTED;
-        }
         if (!(exchange.getRequestMethod().equalToString(method) && exchange.getRequestPath().equals(uri))) {
             return AuthenticationMechanismOutcome.NOT_ATTEMPTED;
         }

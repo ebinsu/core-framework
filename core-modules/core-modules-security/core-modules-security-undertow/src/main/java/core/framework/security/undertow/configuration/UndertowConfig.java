@@ -1,10 +1,7 @@
 package core.framework.security.undertow.configuration;
 
+import core.framework.security.common.configuration.SecurityProperties;
 import core.framework.security.common.filter.AuthorizationPermissionSupplier;
-import core.framework.security.undertow.authentication.AuthenticationCustomizer;
-import core.framework.security.undertow.authorization.AccountAuthorizationPermissionSupplier;
-import core.framework.security.undertow.identity.IdentityManagerCustomizer;
-import core.framework.security.undertow.session.SessionConfigCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -33,6 +30,11 @@ public class UndertowConfig {
     @Primary
     public AuthorizationPermissionSupplier accountAuthorizationPermissionSupplier() {
         return new AccountAuthorizationPermissionSupplier();
+    }
+
+    @Bean
+    public SecurityContextDeploymentInfoCustomizer securityContextDeploymentInfoCustomizer(SecurityProperties securityProperties) {
+        return new SecurityContextDeploymentInfoCustomizer(securityProperties.getSession());
     }
 }
 

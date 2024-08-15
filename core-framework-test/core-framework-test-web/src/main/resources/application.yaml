@@ -1,0 +1,10 @@
+spring:
+  security:
+    login-request:
+      authentication-type: "USERNAME_PASSWORD"
+      url: "/security/login"
+    logout-request:
+      url: "/security/logout"
+    exclude-patterns:
+      - "/test/*"
+    security-type: INTERCEPTOR

@@ -1,5 +1,6 @@
-package core.framework.security.undertow.session;
+package core.framework.security.undertow.session.redis;
 
+import core.framework.security.undertow.session.HttpHeaderSessionConfig;
 import io.undertow.server.session.SessionConfig;
 import io.undertow.servlet.api.Deployment;
 import io.undertow.servlet.api.SessionConfigWrapper;

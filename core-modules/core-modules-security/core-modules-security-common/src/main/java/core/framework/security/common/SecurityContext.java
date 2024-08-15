@@ -1,37 +1,66 @@
 package core.framework.security.common;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import core.framework.security.common.annotation.Anonymous;
+import core.framework.security.common.annotation.PermissionsRequired;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerExecutionChain;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
 import java.util.Set;
 
 /**
  * @author ebin
  */
-public final class SecurityContext {
-    private static final Set<String> ANONYMOUS = new HashSet<>();
-    private static final Map<String, String> PERMISSION_MAPPING = new HashMap<>();
+public class SecurityContext {
+    @Autowired
+    private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-    private SecurityContext() {
+    public boolean isAnonymous(HttpServletRequest request) {
+        try {
+            HandlerExecutionChain chain = requestMappingHandlerMapping.getHandler(request);
+            if (chain != null) {
+                HandlerMethod handler = (HandlerMethod) chain.getHandler();
+                return doValidAnonymous(handler);
+            }
+        } catch (Exception ignored) {
+
+        }
+        return false;
     }
 
-    public static boolean isAnonymous(String httpMethod, String path) {
-        return ANONYMOUS.contains(httpMethod + "-" + path);
+    public boolean hasPermission(HttpServletRequest request, Set<String> permissions) {
+        try {
+            HandlerExecutionChain chain = requestMappingHandlerMapping.getHandler(request);
+            if (chain != null) {
+                HandlerMethod handler = (HandlerMethod) chain.getHandler();
+                return doValidPermission(handler, permissions);
+            } else {
+                return true;
+            }
+        } catch (Exception ignored) {
+
+        }
+        return false;
     }
 
-    public static boolean hasPermission(String httpMethod, String path, Set<String> permissions) {
-        String necessaryPermission = PERMISSION_MAPPING.get(httpMethod + "-" + path);
-        if (necessaryPermission != null) {
-            return permissions.contains(necessaryPermission);
+    private boolean doValidPermission(HandlerMethod handler, Set<String> permissions) {
+        PermissionsRequired annotation = handler.getMethod().getAnnotation(PermissionsRequired.class);
+        if (annotation == null) {
+            annotation = handler.getBean().getClass().getAnnotation(PermissionsRequired.class);
+        }
+        if (annotation != null) {
+            return permissions.contains(annotation.value());
         }
         return true;
     }
 
-    static void addAnonymous(String anonymousEndpoint) {
-        ANONYMOUS.add(anonymousEndpoint);
-    }
-
-    static void addPermission(String endpoint, String permission) {
-        PERMISSION_MAPPING.put(endpoint, permission);
+    private boolean doValidAnonymous(HandlerMethod handler) {
+        Anonymous anonymous = handler.getMethod().getAnnotation(Anonymous.class);
+        if (anonymous == null) {
+            anonymous = handler.getBean().getClass().getAnnotation(Anonymous.class);
+        }
+        return anonymous != null;
     }
 }

@@ -17,7 +17,7 @@ public class SecurityProperties {
     private SecurityLoginRequestProperties loginRequest = new SecurityLoginRequestProperties();
     private SecurityLogoutRequestProperties logoutRequest = new SecurityLogoutRequestProperties();
 
-    private SecuritySessionProperties session;
+    private SecuritySessionProperties session = new SecuritySessionProperties();
 
     private SecurityType securityType = SecurityType.INTERCEPTOR;
 

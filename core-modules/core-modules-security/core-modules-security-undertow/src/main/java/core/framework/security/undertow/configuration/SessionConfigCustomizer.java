@@ -1,5 +1,6 @@
-package core.framework.security.undertow.session;
+package core.framework.security.undertow.configuration;
 
+import core.framework.security.undertow.session.redis.HttpHeaderSessionConfigWrapper;
 import io.undertow.servlet.api.DeploymentInfo;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
 

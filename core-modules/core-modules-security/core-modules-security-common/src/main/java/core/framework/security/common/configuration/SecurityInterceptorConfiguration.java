@@ -36,16 +36,16 @@ public class SecurityInterceptorConfiguration extends WebMvcConfigurationSupport
     @Bean
     public SecurityWebMvcEndpointHandlerMapping.ServletWebOperation loginOperation() {
         return new LoginOperation(
-                securityProperties.getLoginRequest().getUrl(),
-                RequestMethod.valueOf(securityProperties.getLoginRequest().getMethod())
+            securityProperties.getLoginRequest().getUrl(),
+            RequestMethod.valueOf(securityProperties.getLoginRequest().getMethod())
         );
     }
 
     @Bean
     public SecurityWebMvcEndpointHandlerMapping.ServletWebOperation logoutOperation() {
         return new LogoutOperation(
-                securityProperties.getLogoutRequest().getUrl(),
-                RequestMethod.valueOf(securityProperties.getLogoutRequest().getMethod())
+            securityProperties.getLogoutRequest().getUrl(),
+            RequestMethod.valueOf(securityProperties.getLogoutRequest().getMethod())
         );
     }
 
@@ -68,5 +68,4 @@ public class SecurityInterceptorConfiguration extends WebMvcConfigurationSupport
     protected void addCorsMappings(CorsRegistry registry) {
         webMvcConfigurers.forEach(webMvcConfigurer -> webMvcConfigurer.addCorsMappings(registry));
     }
-
 }

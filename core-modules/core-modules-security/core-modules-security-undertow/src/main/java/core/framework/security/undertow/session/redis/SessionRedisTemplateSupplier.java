@@ -1,4 +1,4 @@
-package core.framework.security.undertow.session;
+package core.framework.security.undertow.session.redis;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 

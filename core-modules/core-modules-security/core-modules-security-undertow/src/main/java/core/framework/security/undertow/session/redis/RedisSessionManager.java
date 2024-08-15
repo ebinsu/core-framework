@@ -1,8 +1,8 @@
-package core.framework.security.undertow.session;
+package core.framework.security.undertow.session.redis;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import core.framework.json.JSON;
-import core.framework.security.undertow.identity.DefaultAccount;
+import core.framework.security.undertow.security.DefaultAccount;
 import io.undertow.UndertowLogger;
 import io.undertow.security.api.AuthenticatedSessionManager;
 import io.undertow.server.HttpServerExchange;

@@ -1,7 +1,7 @@
 package core.framework.security.common.filter;
 
 import core.framework.json.JSON;
-import core.framework.security.common.SecurityContextV2;
+import core.framework.security.common.SecurityContext;
 import core.framework.web.exception.ExceptionResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,9 +20,9 @@ import java.util.Set;
  */
 public class AuthorizationFilter extends OncePerRequestFilter {
     private final AuthorizationPermissionSupplier permissionSupplier;
-    private final SecurityContextV2 securityContext;
+    private final SecurityContext securityContext;
 
-    public AuthorizationFilter(AuthorizationPermissionSupplier permissionSupplier, SecurityContextV2 securityContext) {
+    public AuthorizationFilter(AuthorizationPermissionSupplier permissionSupplier, SecurityContext securityContext) {
         this.permissionSupplier = permissionSupplier;
         this.securityContext = securityContext;
     }
