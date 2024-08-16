@@ -1,5 +1,7 @@
 package core.framework.security.undertow;
 
+import io.undertow.server.session.SessionConfig;
+import io.undertow.server.session.SessionManager;
 import io.undertow.servlet.ServletExtension;
 import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.spec.ServletContextImpl;
@@ -18,7 +20,11 @@ public class ServletContextHolder implements ServletExtension {
         }
     }
 
-    public static ServletContextImpl servletContext() {
-        return servletContext;
+    public static SessionManager getSessionManager() {
+        return servletContext.getDeployment().getSessionManager();
+    }
+
+    public static SessionConfig getSessionConfig() {
+        return servletContext.getSessionConfig();
     }
 }
