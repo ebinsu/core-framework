@@ -1,9 +1,9 @@
 package core.framework.jpa.hibernate.support;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.hibernate.boot.model.internal.JPAXMLOverriddenAnnotationReader;
+import org.hibernate.boot.model.internal.XMLContext;
 import org.hibernate.boot.spi.BootstrapContext;
-import org.hibernate.cfg.annotations.reflection.internal.JPAXMLOverriddenAnnotationReader;
-import org.hibernate.cfg.annotations.reflection.internal.XMLContext;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;

@@ -1,4 +1,4 @@
-package core.framework.security.common.utils;
+package core.framework.shared.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

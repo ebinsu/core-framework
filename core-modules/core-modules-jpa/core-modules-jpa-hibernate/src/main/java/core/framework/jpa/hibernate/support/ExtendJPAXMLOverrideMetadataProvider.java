@@ -1,8 +1,8 @@
 package core.framework.jpa.hibernate.support;
 
 import org.hibernate.annotations.common.reflection.AnnotationReader;
+import org.hibernate.boot.model.internal.JPAXMLOverriddenMetadataProvider;
 import org.hibernate.boot.spi.BootstrapContext;
-import org.hibernate.cfg.annotations.reflection.internal.JPAXMLOverriddenMetadataProvider;
 
 import java.lang.reflect.AnnotatedElement;
 import java.util.HashMap;

@@ -27,6 +27,8 @@
         <revision>1.1.3${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
+        <version.jandex>2.4.2.Final</version.jandex>
+        <version.mysql-connector-j>9.0.0</version.mysql-connector-j>
         <version.commons-validator>1.7</version.commons-validator>
         <version.commons-io>2.11.0</version.commons-io>
         <version.commons-lang3>3.12.0</version.commons-lang3>
@@ -34,12 +36,12 @@
         <version.mybatis>3.5.13</version.mybatis>
         <version.bson>4.10.2</version.bson>
         <version.logstash-logback-encoder>7.0.1</version.logstash-logback-encoder>
-        <version.hibernate-commons>6.0.2.Final</version.hibernate-commons>
+        <version.hibernate-commons>7.0.1.Final</version.hibernate-commons>
         <version.jandex>2.4.2.Final</version.jandex>
         <version.ognl>3.4.2</version.ognl>
         <version.flapdoodle-embed-mongo>4.9.3</version.flapdoodle-embed-mongo>
         <version.mongodb-driver-legacy>4.11.0</version.mongodb-driver-legacy>
-        <version.mongodb-driver-sync>4.8.0</version.mongodb-driver-sync>
+        <version.mongodb-driver-sync>5.1.3</version.mongodb-driver-sync>
 
         <version.flatten-maven-plugin>1.2.2</version.flatten-maven-plugin>
         <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
@@ -159,6 +161,16 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jandex</artifactId>
+                <version>${version.jandex}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${version.mysql-connector-j}</version>
+            </dependency>
             <dependency>
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>

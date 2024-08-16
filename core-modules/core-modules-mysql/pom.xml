@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+        <dependency>
             <groupId>core-framework</groupId>
             <artifactId>core-modules-exception</artifactId>
         </dependency>
