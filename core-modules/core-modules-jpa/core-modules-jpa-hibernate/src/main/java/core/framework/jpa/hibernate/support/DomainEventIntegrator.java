@@ -19,6 +19,9 @@ public class DomainEventIntegrator implements Integrator {
                           SessionFactoryImplementor sessionFactory) {
         SessionFactoryServiceRegistry serviceRegistry = (SessionFactoryServiceRegistry) sessionFactory.getServiceRegistry();
         EventListenerRegistry eventListenerRegistry = serviceRegistry.getService(EventListenerRegistry.class);
+        if (eventListenerRegistry == null) {
+            return;
+        }
 
         eventListenerRegistry.appendListeners(EventType.FLUSH_ENTITY, HibernatePreCommitEventDispatcher.class);
 

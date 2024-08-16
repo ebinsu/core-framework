@@ -10,16 +10,16 @@ import jakarta.servlet.ServletContext;
  * @author ebin
  */
 public class DeploymentHolder implements ServletExtension {
-    private static Deployment DEPLOYMENT;
+    private static Deployment deployment;
 
     @Override
     public void handleDeployment(DeploymentInfo deploymentInfo, ServletContext servletContext) {
-        if (DEPLOYMENT == null && servletContext instanceof ServletContextImpl impl) {
-            DEPLOYMENT = impl.getDeployment();
+        if (deployment == null && servletContext instanceof ServletContextImpl impl) {
+            deployment = impl.getDeployment();
         }
     }
 
     public static Deployment get() {
-        return DEPLOYMENT;
+        return deployment;
     }
 }
