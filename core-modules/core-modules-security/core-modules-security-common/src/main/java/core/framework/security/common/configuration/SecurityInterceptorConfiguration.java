@@ -27,11 +27,13 @@ import java.util.List;
 @ConditionalOnProperty(prefix = "spring.security", name = "security-type", havingValue = "INTERCEPTOR")
 @Import(SecurityWebMvcConfigurer.class)
 public class SecurityInterceptorConfiguration extends WebMvcConfigurationSupport {
-    @Autowired
-    private SecurityProperties securityProperties;
+    private final SecurityProperties securityProperties;
+    private final List<WebMvcConfigurer> webMvcConfigurers;
 
-    @Autowired
-    private List<WebMvcConfigurer> webMvcConfigurers;
+    public SecurityInterceptorConfiguration(SecurityProperties securityProperties, List<WebMvcConfigurer> webMvcConfigurers) {
+        this.securityProperties = securityProperties;
+        this.webMvcConfigurers = webMvcConfigurers;
+    }
 
     @Bean
     public SecurityWebMvcEndpointHandlerMapping.ServletWebOperation loginOperation() {

@@ -2,9 +2,11 @@ package core.framework.security.undertow.configuration;
 
 import core.framework.security.common.configuration.SecurityProperties;
 import core.framework.security.common.filter.AuthorizationPermissionSupplier;
+import core.framework.security.undertow.security.AuthenticationRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
 
 /**
  * @author ebin
@@ -12,13 +14,14 @@ import org.springframework.context.annotation.Primary;
 @Configuration
 public class UndertowConfig {
     @Bean
-    public AuthenticationCustomizer ajaxAuthCustomizer() {
-        return new AuthenticationCustomizer();
+    public AuthenticationCustomizer ajaxAuthCustomizer(Environment environment, SecurityProperties securityAuthProperties) {
+        String applicationName = environment.getProperty("spring.application.name");
+        return new AuthenticationCustomizer(applicationName, securityAuthProperties);
     }
 
     @Bean
-    public IdentityManagerCustomizer identityManagerCustomizer() {
-        return new IdentityManagerCustomizer();
+    public IdentityManagerCustomizer identityManagerCustomizer(AuthenticationRepository repository) {
+        return new IdentityManagerCustomizer(repository);
     }
 
     @Bean
@@ -33,8 +36,8 @@ public class UndertowConfig {
     }
 
     @Bean
-    public SecurityContextDeploymentInfoCustomizer securityContextDeploymentInfoCustomizer(SecurityProperties securityProperties) {
-        return new SecurityContextDeploymentInfoCustomizer(securityProperties.getSession());
+    public SecurityContextDeploymentInfoCustomizer securityContextDeploymentInfoCustomizer() {
+        return new SecurityContextDeploymentInfoCustomizer();
     }
 }
 

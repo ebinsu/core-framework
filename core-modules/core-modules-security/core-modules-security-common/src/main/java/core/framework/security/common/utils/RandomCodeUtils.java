@@ -13,11 +13,11 @@ public final class RandomCodeUtils {
 
     public static String next() {
         return StringUtils.leftPad(
-                String.valueOf(
-                        ThreadLocalRandom.current().nextInt(999999)
-                ),
-                6,
-                "0"
+            String.valueOf(
+                ThreadLocalRandom.current().nextInt(999999)
+            ),
+            6,
+            "0"
         );
     }
 }

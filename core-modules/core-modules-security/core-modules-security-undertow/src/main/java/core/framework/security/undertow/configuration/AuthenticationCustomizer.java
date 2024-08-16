@@ -10,9 +10,7 @@ import io.undertow.servlet.api.AuthMethodConfig;
 import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.LoginConfig;
 import io.undertow.servlet.api.ServletSessionConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
-import org.springframework.core.env.Environment;
 
 import java.util.Map;
 
@@ -23,15 +21,17 @@ public class AuthenticationCustomizer implements UndertowDeploymentInfoCustomize
     public static final String AUTHENTICATION_METHOD = "AUTHENTICATION_METHOD";
     public static final String AUTHENTICATION_URL = "AUTHENTICATION_URL";
 
-    @Autowired
-    private Environment environment;
+    private final String applicationName;
+    private final SecurityProperties securityAuthProperties;
 
-    @Autowired
-    private SecurityProperties securityAuthProperties;
+    public AuthenticationCustomizer(String applicationName, SecurityProperties securityAuthProperties) {
+        this.applicationName = applicationName;
+        this.securityAuthProperties = securityAuthProperties;
+    }
 
     @Override
     public void customize(DeploymentInfo deploymentInfo) {
-        LoginConfig loginConfig = Servlets.loginConfig(environment.getProperty("spring.application.name"));
+        LoginConfig loginConfig = Servlets.loginConfig(applicationName);
         deploymentInfo.setLoginConfig(loginConfig);
         AuthenticationType authType = securityAuthProperties.getLoginRequest().getAuthenticationType();
         Map<String, String> authProperties = Map.of(

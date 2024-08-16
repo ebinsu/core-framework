@@ -3,7 +3,6 @@ package core.framework.security.common;
 import core.framework.security.common.annotation.Anonymous;
 import core.framework.security.common.annotation.PermissionsRequired;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -14,8 +13,11 @@ import java.util.Set;
  * @author ebin
  */
 public class SecurityContext {
-    @Autowired
-    private RequestMappingHandlerMapping requestMappingHandlerMapping;
+    private final RequestMappingHandlerMapping requestMappingHandlerMapping;
+
+    public SecurityContext(RequestMappingHandlerMapping requestMappingHandlerMapping) {
+        this.requestMappingHandlerMapping = requestMappingHandlerMapping;
+    }
 
     public boolean isAnonymous(HttpServletRequest request) {
         try {

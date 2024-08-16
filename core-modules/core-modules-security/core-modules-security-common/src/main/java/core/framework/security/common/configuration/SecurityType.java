@@ -1,4 +1,4 @@
-package core.framework.security.common;
+package core.framework.security.common.configuration;
 
 /**
  * @author ebin

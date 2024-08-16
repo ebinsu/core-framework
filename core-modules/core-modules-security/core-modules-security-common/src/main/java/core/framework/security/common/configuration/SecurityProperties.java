@@ -1,6 +1,5 @@
 package core.framework.security.common.configuration;
 
-import core.framework.security.common.SecurityType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Collections;
