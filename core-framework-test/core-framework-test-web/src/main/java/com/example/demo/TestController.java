@@ -45,4 +45,14 @@ public class TestController {
         System.out.println(request.getUserPrincipal());
         return Map.of("1", "2");
     }
+
+    @GetMapping("/5")
+    public Map<String, String> current5(HttpServletRequest request) {
+        try {
+            Thread.sleep(11000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return Map.of("1", "2");
+    }
 }
