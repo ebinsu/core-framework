@@ -17,23 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId>core-modules-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>core-framework</groupId>
-            <artifactId>core-modules-security-undertow</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>undertow-websockets-jsr</artifactId>
-                    <groupId>io.undertow</groupId>
-                </exclusion>
-            </exclusions>
+            <artifactId>core-modules-web-undertow</artifactId>
         </dependency>
     </dependencies>
 </project>

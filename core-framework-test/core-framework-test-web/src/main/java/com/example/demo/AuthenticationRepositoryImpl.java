@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import core.framework.security.undertow.security.AuthenticationRepository;
-import core.framework.security.undertow.security.DefaultAccount;
+import com.framework.web.undertow.security.AuthenticationRepository;
+import com.framework.web.undertow.security.DefaultAccount;
 import io.undertow.security.idm.Account;
 import org.springframework.stereotype.Repository;
 

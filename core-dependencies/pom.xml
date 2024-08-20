@@ -29,9 +29,9 @@
 
         <version.jandex>2.4.2.Final</version.jandex>
         <version.mysql-connector-j>9.0.0</version.mysql-connector-j>
-        <version.commons-validator>1.7</version.commons-validator>
-        <version.commons-io>2.11.0</version.commons-io>
-        <version.commons-lang3>3.12.0</version.commons-lang3>
+        <version.commons-validator>1.9.0</version.commons-validator>
+        <version.commons-io>2.16.1</version.commons-io>
+        <version.commons-lang3>3.16.0</version.commons-lang3>
         <version.commons-beanutils>1.9.4</version.commons-beanutils>
         <version.mybatis>3.5.13</version.mybatis>
         <version.bson>4.10.2</version.bson>
@@ -82,22 +82,22 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-security-common</artifactId>
+                <artifactId>core-modules-web</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-security-undertow</artifactId>
+                <artifactId>core-modules-web-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-web-undertow</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
                 <artifactId>core-modules-exception</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>core-framework</groupId>
-                <artifactId>core-modules-security</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -148,11 +148,6 @@
             <dependency>
                 <groupId>core-framework</groupId>
                 <artifactId>core-modules-kafka</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>core-framework</groupId>
-                <artifactId>core-modules-web</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

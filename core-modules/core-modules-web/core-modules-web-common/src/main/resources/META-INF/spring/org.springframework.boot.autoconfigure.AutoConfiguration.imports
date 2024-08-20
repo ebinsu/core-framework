@@ -1,0 +1,4 @@
+core.framework.web.common.configuration.WebMvcConfiguration
+core.framework.web.common.configuration.SecurityConfiguration
+core.framework.web.common.configuration.SecurityFilterConfiguration
+core.framework.web.common.configuration.SecurityInterceptorConfiguration

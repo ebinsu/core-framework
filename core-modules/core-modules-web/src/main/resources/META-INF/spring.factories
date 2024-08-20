@@ -1,1 +1,0 @@
-org.springframework.context.ApplicationListener=core.framework.web.configuration.EnvironmentApplicationListener
