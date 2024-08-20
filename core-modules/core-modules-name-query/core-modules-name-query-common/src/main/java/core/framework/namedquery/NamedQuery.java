@@ -16,7 +16,7 @@ public interface NamedQuery {
 
     boolean containsQueryParameter(String parameterName);
 
-    QueryType getQueryType();
-
     Class<?> getResultClass();
+
+    String getXmlTagName();
 }

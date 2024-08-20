@@ -3,6 +3,7 @@ package core.framework.namedquery.impl;
 import core.framework.namedquery.NamedQueryRepository;
 import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.node.MixedNode;
+import core.framework.namedquery.support.node.NodeBuilderProvider;
 import core.framework.namedquery.support.parser.NamedQueryXMLParser;
 import core.framework.shared.utils.ResourcePatternResolverUtil;
 import org.apache.commons.lang3.tuple.Pair;
@@ -12,6 +13,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,14 +24,15 @@ public class NamedQueryRepositoryInitialize implements ApplicationListener<Conte
     public void onApplicationEvent(ContextRefreshedEvent event) {
         ApplicationContext applicationContext = event.getApplicationContext();
         NamedQueryRepository repository = applicationContext.getBean(NamedQueryRepository.class);
-        List<Resource> resources = null;
+        Collection<NodeBuilderProvider> nodeBuilderProviders = applicationContext.getBeansOfType(NodeBuilderProvider.class).values();
+        List<Resource> resources;
         try {
             resources = ResourcePatternResolverUtil.resolve("**/*Query.xml");
         } catch (IOException e) {
             throw new Error(e);
         }
         NamedQueryXMLParser namedQueryXMLParser = new NamedQueryXMLParser();
-        Pair<List<MixedNode>, List<FragmentNode>> parse = namedQueryXMLParser.parse(resources);
+        Pair<List<MixedNode>, List<FragmentNode>> parse = namedQueryXMLParser.parse(nodeBuilderProviders, resources);
         parse.getLeft().forEach(repository::register);
         parse.getRight().forEach(repository::register);
     }

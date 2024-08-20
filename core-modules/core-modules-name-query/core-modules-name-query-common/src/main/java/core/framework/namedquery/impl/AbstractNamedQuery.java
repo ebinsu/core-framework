@@ -17,12 +17,14 @@ public abstract class AbstractNamedQuery implements NamedQuery {
     protected String query;
     protected Map<String, Object> queryParameter;
     protected Class<?> resultClass;
+    protected String xmlTagName;
 
-    public AbstractNamedQuery(String name, String query, Map<String, Object> queryParameter, Class<?> resultClass) {
+    public AbstractNamedQuery(String xmlTagName, String name, String query, Map<String, Object> queryParameter, Class<?> resultClass) {
         this.name = name;
         this.query = query;
         this.queryParameter = queryParameter;
         this.resultClass = resultClass;
+        this.xmlTagName = xmlTagName;
     }
 
     @Override
@@ -70,5 +72,10 @@ public abstract class AbstractNamedQuery implements NamedQuery {
     @Override
     public Class<?> getResultClass() {
         return this.resultClass;
+    }
+
+    @Override
+    public String getXmlTagName() {
+        return this.xmlTagName;
     }
 }

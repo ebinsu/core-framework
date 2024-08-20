@@ -31,8 +31,8 @@ public class IfNode implements Node {
     public static class Builder implements NodeBuilder {
 
         @Override
-        public Node build(XMLNode nodeToHandle) {
-            List<Node> childrenNodes = ChildrenNodeHelper.build(nodeToHandle);
+        public Node build(String namespace, XMLNode nodeToHandle) {
+            List<Node> childrenNodes = ChildrenNodeHelper.build(namespace, nodeToHandle);
             String test = nodeToHandle.getAttributes().getProperty("test");
             return new IfNode(childrenNodes, test);
         }

@@ -6,7 +6,6 @@ import core.framework.namedquery.NamedQueryExecutor;
 import core.framework.namedquery.NamedQueryRepository;
 import core.framework.namedquery.NamedQueryService;
 import core.framework.namedquery.PagingResult;
-import core.framework.namedquery.QueryType;
 import core.framework.namedquery.configuration.NamedQueryProperties;
 
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NamedQueryServiceImpl implements NamedQueryService {
     private static final String TOTAL_QUERY_NAME_SUFFIX = ".total";
     private final NamedQueryRepository namedQueryRepository;
-    private final Map<QueryType, NamedQueryExecutor> namedQueryExecutors = new ConcurrentHashMap<>();
+    private final Map<String, NamedQueryExecutor> namedQueryExecutors = new ConcurrentHashMap<>();
     private final int defaultMaxReturnSize;
     private final String startParameter;
     private final String limitParameter;
@@ -32,15 +31,15 @@ public class NamedQueryServiceImpl implements NamedQueryService {
         this.limitParameter = properties.getPagingParameter().getLimit();
     }
 
-    public void register(QueryType type, NamedQueryExecutor executor) {
-        namedQueryExecutors.put(type, executor);
+    public void register(String identity, NamedQueryExecutor executor) {
+        namedQueryExecutors.put(identity, executor);
     }
 
     @Override
     public <T> List<T> select(String queryName, Object... parameter) {
         Map<String, Object> param = getParam(parameter);
         NamedQuery namedQuery = namedQueryRepository.get(queryName, param);
-        NamedQueryExecutor namedQueryExecutor = namedQueryExecutors.get(namedQuery.getQueryType());
+        NamedQueryExecutor namedQueryExecutor = namedQueryExecutors.get(namedQuery.getXmlTagName());
         if (namedQueryExecutor == null) {
             throw new RuntimeException("Query type [" + namedQuery.getQuery() + "] executor not found !");
         }
@@ -56,7 +55,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
         if (!namedQuery.containsQueryParameter(startParameter) || !namedQuery.containsQueryParameter(limitParameter)) {
             throw new RuntimeException("Paging query must pass the start and limit parameters !");
         }
-        NamedQueryExecutor namedQueryExecutor = namedQueryExecutors.get(namedQuery.getQueryType());
+        NamedQueryExecutor namedQueryExecutor = namedQueryExecutors.get(namedQuery.getXmlTagName());
         if (namedQueryExecutor == null) {
             throw new RuntimeException("Query type [" + namedQuery.getQuery() + "] executor not found !");
         }
@@ -80,7 +79,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
         Map<String, Object> param = getParam(parameter);
 
         NamedQuery namedQuery = namedQueryRepository.get(queryName, param);
-        NamedQueryExecutor namedQueryExecutor = namedQueryExecutors.get(namedQuery.getQueryType());
+        NamedQueryExecutor namedQueryExecutor = namedQueryExecutors.get(namedQuery.getXmlTagName());
         if (namedQueryExecutor == null) {
             throw new RuntimeException("Query type [" + namedQuery.getQuery() + "] executor not found !");
         }
@@ -88,7 +87,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
         return data.stream().findFirst();
     }
 
-    private static Map<String, Object> getParam(Object[] parameter) {
+    private Map<String, Object> getParam(Object[] parameter) {
         Object param = null;
         if (parameter != null) {
             if (parameter.length == 1) {

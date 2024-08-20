@@ -1,6 +1,8 @@
 package core.framework.namedquery.support.node;
 
 import core.framework.namedquery.support.NamedQueryContext;
+import core.framework.namedquery.support.parser.ChildrenNodeHelper;
+import core.framework.namedquery.support.parser.XMLNode;
 
 import java.util.List;
 
@@ -34,5 +36,15 @@ public class FragmentNode implements Node {
         context.appendQuery(childrenContext.getQuery());
         childrenContext.getParameter().forEach(context::addParameter);
         return true;
+    }
+
+    public static class Builder implements NodeBuilder {
+
+        @Override
+        public Node build(String namespace, XMLNode nodeToHandle) {
+            String id = nodeToHandle.getAttributes().getProperty("id");
+            List<Node> childrenNodes = ChildrenNodeHelper.build(namespace, nodeToHandle);
+            return new FragmentNode(namespace, id, childrenNodes);
+        }
     }
 }

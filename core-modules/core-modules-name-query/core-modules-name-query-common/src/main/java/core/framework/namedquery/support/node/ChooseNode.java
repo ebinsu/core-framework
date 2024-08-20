@@ -35,7 +35,7 @@ public class ChooseNode implements Node {
     public static class Builder implements NodeBuilder {
 
         @Override
-        public Node build(XMLNode nodeToHandle) {
+        public Node build(String namespace, XMLNode nodeToHandle) {
             List<IfNode> ifNodes = new ArrayList<>();
             OtherwiseNode otherwiseNode = null;
             List<XMLNode> children = nodeToHandle.getChildren();
@@ -43,9 +43,9 @@ public class ChooseNode implements Node {
                 String nodeName = child.getName();
                 NodeBuilder nodeBuilder = nodeToHandle.getResolverContext().getNodeBuilder(nodeName);
                 if (nodeBuilder instanceof IfNode.Builder) {
-                    ifNodes.add((IfNode) nodeBuilder.build(child));
+                    ifNodes.add((IfNode) nodeBuilder.build(namespace, child));
                 } else if (nodeBuilder instanceof OtherwiseNode.Builder) {
-                    otherwiseNode = (OtherwiseNode) nodeBuilder.build(child);
+                    otherwiseNode = (OtherwiseNode) nodeBuilder.build(namespace, child);
                 }
             }
             return new ChooseNode(ifNodes, otherwiseNode);

@@ -3,15 +3,15 @@ package core.framework.namedquery.jpa.configuration;
 
 import core.framework.namedquery.NamedQueryExecutor;
 import core.framework.namedquery.NamedQueryExecutorProvider;
-import core.framework.namedquery.QueryType;
 import core.framework.namedquery.configuration.NamedQueryProperties;
 import core.framework.namedquery.jpa.HibernateNamedQueryDatasourceProvider;
 import core.framework.namedquery.jpa.HibernateNamedQueryExecutor;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Map;
 
 /**
  * @author ebin
@@ -28,6 +28,6 @@ public class HibernateNamedQueryServiceConfiguration {
 
     @Bean
     public NamedQueryExecutorProvider hibernateNameQueryExecutorProvider(@Autowired @Qualifier(HIBERNATE_MYSQL_QUERY_EXECUTOR) NamedQueryExecutor hibernateNameQueryExecutor) {
-        return () -> Pair.of(QueryType.SQL, hibernateNameQueryExecutor);
+        return () -> Map.of("sql", hibernateNameQueryExecutor);
     }
 }

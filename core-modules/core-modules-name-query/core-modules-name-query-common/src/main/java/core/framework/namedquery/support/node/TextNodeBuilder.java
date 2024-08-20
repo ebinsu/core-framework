@@ -8,7 +8,7 @@ import core.framework.namedquery.support.parser.XMLNode;
 public class TextNodeBuilder implements NodeBuilder {
 
     @Override
-    public Node build(XMLNode nodeToHandle) {
+    public Node build(String namespace, XMLNode nodeToHandle) {
         String data = nodeToHandle.getBody();
         TextNode textSqlNode = new TextNode(data);
         if (textSqlNode.isDynamic()) {

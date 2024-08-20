@@ -3,12 +3,13 @@ package core.framework.namedquery.support;
 import core.framework.namedquery.support.node.BindNode;
 import core.framework.namedquery.support.node.ChooseNode;
 import core.framework.namedquery.support.node.ForEachNode;
+import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.node.IfNode;
 import core.framework.namedquery.support.node.IncludeNode;
 import core.framework.namedquery.support.node.NodeBuilder;
 import core.framework.namedquery.support.node.OtherwiseNode;
 import core.framework.namedquery.support.node.TextNodeBuilder;
-import core.framework.namedquery.support.node.mongo.FilterNode;
+import core.framework.namedquery.support.node.sql.SqlNode;
 import core.framework.namedquery.support.node.sql.WhereNode;
 
 import javax.xml.xpath.XPath;
@@ -36,7 +37,8 @@ public class ResolverContext {
         nodeBuilders.put("include", new IncludeNode.Builder());
         nodeBuilders.put("foreach", new ForEachNode.Builder());
         nodeBuilders.put("where", new WhereNode.Builder());
-        nodeBuilders.put("filter", new FilterNode.Builder());
+        nodeBuilders.put("sql", new SqlNode.Builder());
+        nodeBuilders.put("fragment", new FragmentNode.Builder());
     }
 
     public XPath getXpath() {
@@ -45,5 +47,9 @@ public class ResolverContext {
 
     public NodeBuilder getNodeBuilder(String name) {
         return nodeBuilders.get(name);
+    }
+
+    public void register(String name, NodeBuilder builder) {
+        this.nodeBuilders.put(name, builder);
     }
 }

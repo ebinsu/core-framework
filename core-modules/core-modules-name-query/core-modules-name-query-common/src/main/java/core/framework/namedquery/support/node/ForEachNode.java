@@ -67,7 +67,7 @@ public class ForEachNode implements Node {
     public static class Builder implements NodeBuilder {
 
         @Override
-        public Node build(XMLNode nodeToHandle) {
+        public Node build(String namespace, XMLNode nodeToHandle) {
             String collection = nodeToHandle.getAttributes().getProperty("collection");
             String open = nodeToHandle.getAttributes().getProperty("open");
             String close = nodeToHandle.getAttributes().getProperty("close");

@@ -26,7 +26,7 @@ public class BindNode implements Node {
     public static class Builder implements NodeBuilder {
 
         @Override
-        public Node build(XMLNode nodeToHandle) {
+        public Node build(String namespace, XMLNode nodeToHandle) {
             String name = nodeToHandle.getAttributes().getProperty("name");
             String expression = nodeToHandle.getAttributes().getProperty("value");
             return new BindNode(name, expression);

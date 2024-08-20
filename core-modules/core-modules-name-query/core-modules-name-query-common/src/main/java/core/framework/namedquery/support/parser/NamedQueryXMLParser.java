@@ -3,8 +3,8 @@ package core.framework.namedquery.support.parser;
 import core.framework.namedquery.support.ResolverContext;
 import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.node.MixedNode;
-import core.framework.namedquery.support.node.mongo.MongoNode;
-import core.framework.namedquery.support.node.sql.SqlNode;
+import core.framework.namedquery.support.node.NodeBuilder;
+import core.framework.namedquery.support.node.NodeBuilderProvider;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.core.io.Resource;
 import org.w3c.dom.Document;
@@ -21,16 +21,19 @@ import javax.xml.xpath.XPathConstants;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author ebin
  */
 public class NamedQueryXMLParser {
 
-    public Pair<List<MixedNode>, List<FragmentNode>> parse(List<Resource> resources) {
+    public Pair<List<MixedNode>, List<FragmentNode>> parse(Collection<NodeBuilderProvider> nodeBuilderProviders,
+                                                           List<Resource> resources) {
         ResolverContext resolverContext = new ResolverContext();
+        nodeBuilderProviders.forEach(provider -> provider.get().forEach(resolverContext::register));
+
         List<MixedNode> nodes = new ArrayList<>();
         List<FragmentNode> fragmentNodes = new ArrayList<>();
         for (Resource resource : resources) {
@@ -44,27 +47,14 @@ public class NamedQueryXMLParser {
             if (namedQueryXMLNode != null) {
                 String namespace = namedQueryXMLNode.getAttributes().getProperty("namespace");
                 for (XMLNode child : namedQueryXMLNode.getChildren()) {
-                    MixedNode node;
                     String name = child.getName();
-                    Class<?> resultClass;
-                    String id = child.getAttributes().getProperty("id");
-                    if ("fragment".equals(name)) {
-                        fragmentNodes.add(new FragmentNode(namespace, id, ChildrenNodeHelper.build(child)));
-                        continue;
+                    NodeBuilder nodeBuilder = resolverContext.getNodeBuilder(name);
+                    core.framework.namedquery.support.node.Node node = nodeBuilder.build(namespace, child);
+                    if (node instanceof MixedNode mixedNode) {
+                        nodes.add(mixedNode);
+                    } else if (node instanceof FragmentNode fragmentNode) {
+                        fragmentNodes.add(fragmentNode);
                     }
-                    try {
-                        resultClass = Class.forName(child.getAttributes().getProperty("result-class"));
-                    } catch (ClassNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                    if ("sql".equals(name)) {
-                        node = new SqlNode(namespace, id, resultClass, ChildrenNodeHelper.build(child));
-                    } else {
-                        MongoNode.ReadPreference readPreference = Optional.ofNullable(child.getAttributes().getProperty("read-preference"))
-                            .map(MongoNode.ReadPreference::valueOf).orElse(MongoNode.ReadPreference.SECONDARY_PREFERRED);
-                        node = new MongoNode(namespace, id, resultClass, ChildrenNodeHelper.build(child), readPreference);
-                    }
-                    nodes.add(node);
                 }
             }
         }

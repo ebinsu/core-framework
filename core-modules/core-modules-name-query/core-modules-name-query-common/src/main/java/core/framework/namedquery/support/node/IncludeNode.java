@@ -31,7 +31,7 @@ public class IncludeNode implements Node {
 
     public static class Builder implements NodeBuilder {
         @Override
-        public Node build(XMLNode nodeToHandle) {
+        public Node build(String namespace, XMLNode nodeToHandle) {
             String refId = nodeToHandle.getAttributes().getProperty("ref-id");
             return new IncludeNode(refId);
         }

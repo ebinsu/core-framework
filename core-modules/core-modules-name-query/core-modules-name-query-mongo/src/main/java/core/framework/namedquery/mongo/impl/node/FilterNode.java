@@ -1,4 +1,4 @@
-package core.framework.namedquery.support.node.mongo;
+package core.framework.namedquery.mongo.impl.node;
 
 import core.framework.namedquery.support.node.Node;
 import core.framework.namedquery.support.node.NodeBuilder;
@@ -27,8 +27,8 @@ public class FilterNode extends TrimNode {
     public static class Builder implements NodeBuilder {
 
         @Override
-        public Node build(XMLNode nodeToHandle) {
-            List<Node> childrenNodes = ChildrenNodeHelper.build(nodeToHandle);
+        public Node build(String namespace, XMLNode nodeToHandle) {
+            List<Node> childrenNodes = ChildrenNodeHelper.build(namespace, nodeToHandle);
             return new FilterNode(childrenNodes);
         }
     }

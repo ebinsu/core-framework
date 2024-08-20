@@ -6,5 +6,5 @@ import core.framework.namedquery.support.parser.XMLNode;
  * @author ebin
  */
 public interface NodeBuilder {
-    Node build(XMLNode nodeToHandle);
+    Node build(String namespace, XMLNode nodeToHandle);
 }

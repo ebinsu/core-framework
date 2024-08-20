@@ -1,13 +1,14 @@
 package core.framework.namedquery.impl;
 
 import core.framework.namedquery.NamedQuery;
+import core.framework.namedquery.NamedQueryBuilder;
 import core.framework.namedquery.NamedQueryRepository;
 import core.framework.namedquery.support.NamedQueryContext;
 import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.node.MixedNode;
-import core.framework.namedquery.support.node.mongo.MongoNode;
-import core.framework.namedquery.support.node.sql.SqlNode;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,6 +19,11 @@ public class NamedQueryRepositoryImpl implements NamedQueryRepository {
 
     private final Map<String, MixedNode> nodes = new ConcurrentHashMap<>();
     private final Map<String, FragmentNode> fragmentNodes = new ConcurrentHashMap<>();
+    private final List<NamedQueryBuilder> namedQueryBuilders = new ArrayList<>();
+
+    public NamedQueryRepositoryImpl() {
+        namedQueryBuilders.add(new SqlNamedQueryBuilder());
+    }
 
     @Override
     public NamedQuery get(String queryName, Map<String, Object> parameter) {
@@ -27,13 +33,10 @@ public class NamedQueryRepositoryImpl implements NamedQueryRepository {
         }
         NamedQueryContext context = new NamedQueryContext(mixedNode.getNamespace(), parameter, fragmentNodes);
         mixedNode.apply(context);
-        if (mixedNode instanceof SqlNode) {
-            return new SqlNamedQueryImpl(queryName, context.getQuery(), context.getParameter(), mixedNode.getResultClass());
-        } else if (mixedNode instanceof MongoNode mongoNode) {
-            return new MongoNamedQueryImpl(queryName, context.getQuery(), context.getParameter(), mixedNode.getResultClass(), mongoNode.getReadPreference().value);
-        } else {
-            throw new UnsupportedOperationException();
-        }
+        return namedQueryBuilders.stream().filter(builder -> builder.support(mixedNode))
+            .findFirst()
+            .map(builder -> builder.build(queryName, context, mixedNode))
+            .orElseThrow(UnsupportedOperationException::new);
     }
 
     @Override
@@ -54,5 +57,9 @@ public class NamedQueryRepositoryImpl implements NamedQueryRepository {
             }
             fragmentNodes.put(node.getId(), node);
         }
+    }
+
+    public void addNamedQueryBuilder(NamedQueryBuilder namedQueryBuilder) {
+        namedQueryBuilders.add(namedQueryBuilder);
     }
 }

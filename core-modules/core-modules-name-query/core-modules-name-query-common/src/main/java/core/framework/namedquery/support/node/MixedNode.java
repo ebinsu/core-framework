@@ -1,6 +1,5 @@
 package core.framework.namedquery.support.node;
 
-import core.framework.namedquery.QueryType;
 import core.framework.namedquery.support.NamedQueryContext;
 
 import java.util.List;
@@ -12,14 +11,14 @@ public class MixedNode implements Node {
     public static final String ID_SEPARATOR = ".";
     private final String namespace;
     private final String id;
-    private final QueryType queryType;
     private final List<Node> nodes;
     private final Class<?> resultClass;
+    private final String xmlTagName;
 
-    public MixedNode(String namespace, String id, QueryType queryType, Class<?> resultClass, List<Node> nodes) {
+    public MixedNode(String xmlTag, String namespace, String id, Class<?> resultClass, List<Node> nodes) {
+        this.xmlTagName = xmlTag;
         this.namespace = namespace;
         this.id = namespace + ID_SEPARATOR + id;
-        this.queryType = queryType;
         this.nodes = nodes;
         this.resultClass = resultClass;
     }
@@ -42,11 +41,11 @@ public class MixedNode implements Node {
         return id;
     }
 
-    public QueryType getQueryType() {
-        return queryType;
-    }
-
     public List<Node> getNodes() {
         return nodes;
+    }
+
+    public String getXmlTagName() {
+        return xmlTagName;
     }
 }

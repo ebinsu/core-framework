@@ -1,7 +1,6 @@
 package core.framework.namedquery.mongo;
 
 import com.mongodb.ReadPreference;
-import core.framework.namedquery.MongoNamedQuery;
 import core.framework.namedquery.NamedQuery;
 import core.framework.namedquery.NamedQueryExecutor;
 import core.framework.namedquery.support.parser.GenericTokenParser;

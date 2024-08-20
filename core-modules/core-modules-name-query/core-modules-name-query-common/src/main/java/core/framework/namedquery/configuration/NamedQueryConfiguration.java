@@ -1,6 +1,8 @@
 package core.framework.namedquery.configuration;
 
 
+import core.framework.namedquery.NamedQueryBuilderProvider;
+import core.framework.namedquery.NamedQueryExecutor;
 import core.framework.namedquery.NamedQueryExecutorProvider;
 import core.framework.namedquery.NamedQueryRepository;
 import core.framework.namedquery.NamedQueryService;
@@ -13,6 +15,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+
+import java.util.Map;
 
 /**
  * @author ebin
@@ -27,8 +31,10 @@ public class NamedQueryConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public NamedQueryRepository nameQueryRepository() {
-        return new NamedQueryRepositoryImpl();
+    public NamedQueryRepository nameQueryRepository(ObjectProvider<NamedQueryBuilderProvider> providers) {
+        NamedQueryRepositoryImpl namedQueryRepository = new NamedQueryRepositoryImpl();
+        providers.orderedStream().forEach(provider -> provider.get().forEach(namedQueryRepository::addNamedQueryBuilder));
+        return namedQueryRepository;
     }
 
     @Bean
@@ -37,7 +43,10 @@ public class NamedQueryConfiguration {
                                               ObjectProvider<NamedQueryExecutorProvider> providers,
                                               NamedQueryProperties properties) {
         NamedQueryServiceImpl nameQueryService = new NamedQueryServiceImpl(nameQueryRepository, properties);
-        providers.orderedStream().forEach(provider -> nameQueryService.register(provider.get().getLeft(), provider.get().getRight()));
+        providers.orderedStream().forEach(provider -> {
+            Map<String, NamedQueryExecutor> map = provider.get();
+            map.forEach(nameQueryService::register);
+        });
         return nameQueryService;
     }
 }

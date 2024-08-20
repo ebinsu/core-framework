@@ -1,4 +1,6 @@
-package core.framework.namedquery;
+package core.framework.namedquery.mongo;
+
+import core.framework.namedquery.NamedQuery;
 
 /**
  * @author ebin
