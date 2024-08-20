@@ -3,11 +3,13 @@ package core.framework.ddd.configuration;
 import core.framework.ddd.DomainEventBus;
 import core.framework.ddd.support.DomainEventBusHolder;
 import core.framework.ddd.support.DomainEventBusImpl;
+import core.framework.shared.async.ExtendThreadPoolTaskExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
@@ -27,11 +29,11 @@ public class DomainEventDispatcherConfiguration {
     }
 
     @Bean(name = DOMAIN_EVENT_TASK_EXECUTOR_NAME)
-    public ThreadPoolTaskExecutor domainEventTaskExecutor() {
-        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+    public Executor domainEventTaskExecutor() {
+        ExtendThreadPoolTaskExecutor taskExecutor = new ExtendThreadPoolTaskExecutor();
         taskExecutor.setThreadPriority(Thread.MAX_PRIORITY);
-        taskExecutor.setThreadGroupName("DomainEventThreadGroup");
-        taskExecutor.setThreadNamePrefix("DomainEventThread");
+        taskExecutor.setThreadGroupName("domain-event-thread-executor");
+        taskExecutor.setThreadNamePrefix("domain-event-thread");
         taskExecutor.setCorePoolSize(Runtime.getRuntime().availableProcessors() + 1);
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
