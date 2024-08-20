@@ -1,4 +1,4 @@
-package core.framework.namedquery.jpa;
+package core.framework.namedquery.jpa.impl;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.Converter;

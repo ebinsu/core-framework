@@ -1,4 +1,4 @@
-package core.framework.namedquery.jpa;
+package core.framework.namedquery.jpa.impl;
 
 import core.framework.namedquery.NamedQuery;
 import core.framework.namedquery.NamedQueryExecutor;
@@ -46,8 +46,9 @@ public class HibernateNamedQueryExecutor implements NamedQueryExecutor {
         if (param.isEmpty()) {
             param.putAll(namedQuery.getQueryParameters());
         }
-        LOGGER.info("Named query: [{}], query string: [{}]", namedQuery.getName(), queryString);
-        LOGGER.info("Query parameter: [{}]", param);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Named query: [{}], query string: [{}], Query parameter: [{}]", namedQuery.getName(), queryString, param);
+        }
         Query query = this.createQuery(queryString, namedQuery.getResultClass(), param);
         if (maxReturnRows != null) {
             query.setMaxResults(maxReturnRows);

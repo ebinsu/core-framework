@@ -5,7 +5,10 @@ import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.node.MixedNode;
 import core.framework.namedquery.support.node.NodeBuilder;
 import core.framework.namedquery.support.node.NodeBuilderProvider;
+import core.framework.shared.utils.StopWatch;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -28,9 +31,11 @@ import java.util.List;
  * @author ebin
  */
 public class NamedQueryXMLParser {
+    private static final Logger LOGGER = LoggerFactory.getLogger(NamedQueryXMLParser.class);
 
     public Pair<List<MixedNode>, List<FragmentNode>> parse(Collection<NodeBuilderProvider> nodeBuilderProviders,
                                                            List<Resource> resources) {
+        StopWatch stopWatch = new StopWatch();
         ResolverContext resolverContext = new ResolverContext();
         nodeBuilderProviders.forEach(provider -> provider.get().forEach(resolverContext::register));
 
@@ -58,7 +63,12 @@ public class NamedQueryXMLParser {
                 }
             }
         }
-        return Pair.of(nodes, fragmentNodes);
+        Pair<List<MixedNode>, List<FragmentNode>> result = Pair.of(nodes, fragmentNodes);
+        long elapsed = stopWatch.elapsed();
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("parse named query, elapsed {}", elapsed);
+        }
+        return result;
     }
 
     public XMLNode evalNode(Object root, String expression, ResolverContext resolverContext) {

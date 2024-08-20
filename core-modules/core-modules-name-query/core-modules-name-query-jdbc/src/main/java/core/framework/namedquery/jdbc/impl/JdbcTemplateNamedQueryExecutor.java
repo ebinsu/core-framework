@@ -1,4 +1,4 @@
-package core.framework.namedquery.jdbc;
+package core.framework.namedquery.jdbc.impl;
 
 import core.framework.namedquery.NamedQuery;
 import core.framework.namedquery.NamedQueryExecutor;

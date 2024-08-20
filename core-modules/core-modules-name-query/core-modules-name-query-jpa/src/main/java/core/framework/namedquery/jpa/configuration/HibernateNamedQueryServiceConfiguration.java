@@ -5,7 +5,7 @@ import core.framework.namedquery.NamedQueryExecutor;
 import core.framework.namedquery.NamedQueryExecutorProvider;
 import core.framework.namedquery.configuration.NamedQueryProperties;
 import core.framework.namedquery.jpa.HibernateNamedQueryDatasourceProvider;
-import core.framework.namedquery.jpa.HibernateNamedQueryExecutor;
+import core.framework.namedquery.jpa.impl.HibernateNamedQueryExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

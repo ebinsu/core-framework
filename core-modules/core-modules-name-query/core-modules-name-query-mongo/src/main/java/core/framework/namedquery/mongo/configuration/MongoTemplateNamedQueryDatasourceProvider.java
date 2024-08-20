@@ -1,4 +1,4 @@
-package core.framework.namedquery.mongo;
+package core.framework.namedquery.mongo.configuration;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 

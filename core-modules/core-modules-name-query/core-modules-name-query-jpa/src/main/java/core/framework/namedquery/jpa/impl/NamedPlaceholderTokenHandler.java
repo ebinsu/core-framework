@@ -1,4 +1,4 @@
-package core.framework.namedquery.jpa;
+package core.framework.namedquery.jpa.impl;
 
 import core.framework.namedquery.support.parser.TokenHandler;
 

@@ -2,12 +2,12 @@ package core.framework.namedquery.jdbc.configuration;
 
 import core.framework.namedquery.NamedQueryExecutorProvider;
 import core.framework.namedquery.configuration.NamedQueryProperties;
-import core.framework.namedquery.jdbc.JdbcTemplateNamedQueryExecutor;
+import core.framework.namedquery.jdbc.JdbcNamedQueryDatasourceProvider;
+import core.framework.namedquery.jdbc.impl.JdbcTemplateNamedQueryExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
 import java.util.Map;
 
 /**
@@ -17,10 +17,9 @@ import java.util.Map;
 public class JdbcTemplateNamedQueryServiceConfiguration {
 
     @Bean
-    public JdbcTemplateNamedQueryExecutor jdbcTemplateNamedQueryExecutor(DataSource dataSource,
+    public JdbcTemplateNamedQueryExecutor jdbcTemplateNamedQueryExecutor(JdbcNamedQueryDatasourceProvider jdbcNamedQueryDatasourceProvider,
                                                                          NamedQueryProperties namedQueryProperties) {
-        //todo datasource
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(jdbcNamedQueryDatasourceProvider.get());
         return new JdbcTemplateNamedQueryExecutor(jdbcTemplate, namedQueryProperties.getBatchSize());
     }
 

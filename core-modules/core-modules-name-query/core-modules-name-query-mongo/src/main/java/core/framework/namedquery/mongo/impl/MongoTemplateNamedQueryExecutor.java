@@ -1,8 +1,10 @@
-package core.framework.namedquery.mongo;
+package core.framework.namedquery.mongo.impl;
 
 import com.mongodb.ReadPreference;
 import core.framework.namedquery.NamedQuery;
 import core.framework.namedquery.NamedQueryExecutor;
+import core.framework.namedquery.mongo.DocumentToBeanTransformer;
+import core.framework.namedquery.mongo.MongoNamedQuery;
 import core.framework.namedquery.support.parser.GenericTokenParser;
 import core.framework.namedquery.support.parser.IndexPlaceholderTokenHandler;
 import org.apache.commons.lang3.tuple.Pair;
