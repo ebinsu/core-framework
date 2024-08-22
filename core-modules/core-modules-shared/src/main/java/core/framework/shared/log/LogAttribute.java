@@ -13,14 +13,17 @@ import java.util.stream.Stream;
 /**
  * @author ebin
  */
-public class LogAttribute {
+public final class LogAttribute {
     private static final Logger LOGGER = LoggerFactory.getLogger(LogAttribute.class);
+    private static final ThreadLocal<Map<String, String>> ATTRIBUTE_MAP = ThreadLocal.withInitial(HashMap::new);
     private static final String NULL_STRING = "null";
     private static final String KEYWORD = "=";
-    private static final ThreadLocal<Map<String, String>> readWriteThreadLocalMap = ThreadLocal.withInitial(HashMap::new);
+
+    private LogAttribute() {
+    }
 
     public static void info(String key, Object... values) {
-        Map<String, String> stringStringMap = readWriteThreadLocalMap.get();
+        Map<String, String> stringStringMap = ATTRIBUTE_MAP.get();
         String value = stringStringMap.get(key);
         if (StringUtils.isEmpty(value)) {
             value = valuesString(values);
@@ -34,8 +37,13 @@ public class LogAttribute {
         LOGGER.info(new LogAttributeMarker(), "{} = {}", key, value);
     }
 
+    public static String get(String key) {
+        Map<String, String> stringStringMap = ATTRIBUTE_MAP.get();
+        return stringStringMap.get(key);
+    }
+
     public static void end() {
-        readWriteThreadLocalMap.remove();
+        ATTRIBUTE_MAP.remove();
     }
 
     private static String valuesString(Object... values) {
