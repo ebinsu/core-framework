@@ -1,6 +1,7 @@
 package core.framework.shared.async;
 
 import core.framework.exception.marker.ErrorCodeMarker;
+import core.framework.shared.log.LogAttribute;
 import core.framework.shared.utils.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,8 @@ class CallableAdaptor<T> implements Callable<T> {
         StopWatch stopWatch = new StopWatch();
         T result = target.call();
         long elapsed = stopWatch.elapsed();
+        LogAttribute.info("elapsed", elapsed);
+        LogAttribute.end();
         if (elapsed > MAX_PROCESS_TIME_IN_NANO) {
             LOGGER.warn(new ErrorCodeMarker("SLOW_PROCESS"), "async task took longer than of max process time, maxProcessTime={}, elapsed={}", Duration.ofNanos(MAX_PROCESS_TIME_IN_NANO), Duration.ofNanos(elapsed));
         }

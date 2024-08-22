@@ -6,9 +6,9 @@ import io.undertow.server.HttpHandler;
 /**
  * @author ebin
  */
-public class PerformanceStatHandlerWrapper implements HandlerWrapper {
+public class LogAttributeHandlerWrapper implements HandlerWrapper {
     @Override
     public HttpHandler wrap(HttpHandler handler) {
-        return new PerformanceStatHttpHandler(handler);
+        return new LogAttributeHttpHandler(handler);
     }
 }

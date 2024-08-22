@@ -23,6 +23,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPathConstants;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -65,9 +66,7 @@ public class NamedQueryXMLParser {
         }
         Pair<List<MixedNode>, List<FragmentNode>> result = Pair.of(nodes, fragmentNodes);
         long elapsed = stopWatch.elapsed();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("parse named query, elapsed {}", elapsed);
-        }
+        LOGGER.info(" Finished parse named query in {} ms.", Duration.ofNanos(elapsed));
         return result;
     }
 

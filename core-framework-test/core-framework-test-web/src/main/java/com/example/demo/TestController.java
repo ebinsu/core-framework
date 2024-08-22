@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import core.framework.shared.log.LogAttribute;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,14 @@ public class TestController {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        return Map.of("1", "2");
+    }
+
+    @GetMapping("/6")
+    public Map<String, String> current6() {
+        LogAttribute.info("1", "1");
+        LogAttribute.info("1", "2");
+        LogAttribute.info("1", "3");
         return Map.of("1", "2");
     }
 }
