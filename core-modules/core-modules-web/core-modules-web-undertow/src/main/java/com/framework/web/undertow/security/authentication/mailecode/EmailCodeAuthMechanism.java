@@ -12,7 +12,8 @@ import io.undertow.security.idm.Account;
 import io.undertow.security.idm.IdentityManager;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.form.FormParserFactory;
-import org.apache.commons.validator.routines.EmailValidator;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
@@ -35,7 +36,7 @@ public class EmailCodeAuthMechanism extends AbstractAJAXAuthMechanism {
     @Override
     protected AuthenticationMechanismOutcome doAuthenticate(HttpServerExchange exchange, SecurityContext securityContext, byte[] requestBody) {
         EmailCodeAuthRequest request = JSON.fromJSON(EmailCodeAuthRequest.class, requestBody);
-        if (!(EmailValidator.getInstance().isValid(request.email) && StringUtils.hasLength(request.code) && request.code.length() == 6)) {
+        if (!(isValidEmail(request.email) && StringUtils.hasLength(request.code) && request.code.length() == 6)) {
             throw new RequestValidFailedException();
         }
         Account account = identityManager.verify(request.email, new StringCredential(request.code));
@@ -46,6 +47,17 @@ public class EmailCodeAuthMechanism extends AbstractAJAXAuthMechanism {
             securityContext.authenticationComplete(account, EmailCodeAuthMechanism.NAME, true);
             return AuthenticationMechanismOutcome.AUTHENTICATED;
         }
+    }
+
+    public static boolean isValidEmail(String email) {
+        boolean valid = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException e) {
+            valid = false;
+        }
+        return valid;
     }
 
     public static class EmailCodeAuthRequest {
