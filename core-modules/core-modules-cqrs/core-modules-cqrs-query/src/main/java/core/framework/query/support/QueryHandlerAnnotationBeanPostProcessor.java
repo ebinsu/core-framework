@@ -46,10 +46,10 @@ public class QueryHandlerAnnotationBeanPostProcessor implements BeanPostProcesso
             Class<?> targetClass = AopUtils.getTargetClass(bean);
 
             Map<Method, Set<QueryHandler>> annotatedMethods = MethodIntrospector.selectMethods(targetClass,
-                    (MethodIntrospector.MetadataLookup<Set<QueryHandler>>) method -> {
-                        Set<QueryHandler> listenerMethods = findQueryHandlerAnnotations(method);
-                        return listenerMethods.isEmpty() ? null : listenerMethods;
-                    });
+                (MethodIntrospector.MetadataLookup<Set<QueryHandler>>) method -> {
+                    Set<QueryHandler> listenerMethods = findQueryHandlerAnnotations(method);
+                    return listenerMethods.isEmpty() ? null : listenerMethods;
+                });
 
             if (annotatedMethods.isEmpty()) {
                 this.nonAnnotatedClasses.add(bean.getClass());
@@ -70,19 +70,19 @@ public class QueryHandlerAnnotationBeanPostProcessor implements BeanPostProcesso
     public void afterSingletonsInstantiated() {
         if (this.queryBus == null) {
             this.queryBus = this.beanFactory.getBean(QueryBus.class);
+            if (queryBus instanceof QueryBusImpl impl) {
+                invocableQueryHandlerMethods.forEach(impl::subscribe);
+            }
         }
-        invocableQueryHandlerMethods.forEach(methods -> {
-            queryBus.subscribe(methods);
-        });
     }
 
     protected void processQueryHandler(Method method, Object bean) {
         Method methodToUse = checkProxy(method, bean);
         if (methodToUse.getParameterCount() > 1) {
             throw new IllegalStateException(String.format(
-                    "@QueryHandler method '%s' found on bean target class '%s', "
-                            + "but parameter count not equal 1.'", method.getName(),
-                    method.getDeclaringClass().getSimpleName()));
+                "@QueryHandler method '%s' found on bean target class '%s', "
+                    + "but parameter count not equal 1.'", method.getName(),
+                method.getDeclaringClass().getSimpleName()));
         }
         InvocableQueryHandlerMethod invocableCommandHandlerMethod = new InvocableQueryHandlerMethod(bean, methodToUse);
         invocableQueryHandlerMethods.add(invocableCommandHandlerMethod);
@@ -106,12 +106,12 @@ public class QueryHandlerAnnotationBeanPostProcessor implements BeanPostProcesso
                 ReflectionUtils.handleReflectionException(ex);
             } catch (NoSuchMethodException ex) {
                 throw new IllegalStateException(String.format(
-                        "@QueryHandler method '%s' found on bean target class '%s', "
-                                + "but not found in any interface(s) for bean JDK proxy. Either "
-                                + "pull the method up to an interface or switch to subclass (CGLIB) "
-                                + "proxies by setting proxy-target-class/proxyTargetClass "
-                                + "attribute to 'true'", method.getName(),
-                        method.getDeclaringClass().getSimpleName()), ex);
+                    "@QueryHandler method '%s' found on bean target class '%s', "
+                        + "but not found in any interface(s) for bean JDK proxy. Either "
+                        + "pull the method up to an interface or switch to subclass (CGLIB) "
+                        + "proxies by setting proxy-target-class/proxyTargetClass "
+                        + "attribute to 'true'", method.getName(),
+                    method.getDeclaringClass().getSimpleName()), ex);
             }
         }
         return method;

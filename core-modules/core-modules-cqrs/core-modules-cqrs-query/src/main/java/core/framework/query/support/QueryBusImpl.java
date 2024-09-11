@@ -25,8 +25,7 @@ public class QueryBusImpl implements QueryBus {
         }
     }
 
-    @Override
-    public void subscribe(InvocableQueryHandlerMethod invocableQueryHandlerMethod) {
+    protected void subscribe(InvocableQueryHandlerMethod invocableQueryHandlerMethod) {
         synchronized (this) {
             queryHandlerMethods.put(invocableQueryHandlerMethod.getQueryName(), invocableQueryHandlerMethod);
         }

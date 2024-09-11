@@ -45,10 +45,10 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
             Class<?> targetClass = AopUtils.getTargetClass(bean);
 
             Map<Method, Set<CommandHandler>> annotatedMethods = MethodIntrospector.selectMethods(targetClass,
-                    (MethodIntrospector.MetadataLookup<Set<CommandHandler>>) method -> {
-                        Set<CommandHandler> listenerMethods = findCommandHandlerAnnotations(method);
-                        return listenerMethods.isEmpty() ? null : listenerMethods;
-                    });
+                (MethodIntrospector.MetadataLookup<Set<CommandHandler>>) method -> {
+                    Set<CommandHandler> listenerMethods = findCommandHandlerAnnotations(method);
+                    return listenerMethods.isEmpty() ? null : listenerMethods;
+                });
 
             if (annotatedMethods.isEmpty()) {
                 this.nonAnnotatedClasses.add(bean.getClass());
@@ -69,19 +69,19 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
     public void afterSingletonsInstantiated() {
         if (this.commandBus == null) {
             this.commandBus = this.beanFactory.getBean(CommandBus.class);
+            if (this.commandBus instanceof CommandBusImpl impl) {
+                invocableCommandHandlerMethods.forEach(impl::subscribe);
+            }
         }
-        invocableCommandHandlerMethods.forEach(methods -> {
-            commandBus.subscribe(methods);
-        });
     }
 
     protected void processCommandHandler(Method method, Object bean) {
         Method methodToUse = checkProxy(method, bean);
         if (methodToUse.getParameterCount() > 1) {
             throw new IllegalStateException(String.format(
-                    "@CommandHandler method '%s' found on bean target class '%s', "
-                            + "but parameter count not equal 1.'", method.getName(),
-                    method.getDeclaringClass().getSimpleName()));
+                "@CommandHandler method '%s' found on bean target class '%s', "
+                    + "but parameter count not equal 1.'", method.getName(),
+                method.getDeclaringClass().getSimpleName()));
         }
         InvocableCommandHandlerMethod invocableCommandHandlerMethod = new InvocableCommandHandlerMethod(bean, methodToUse);
         invocableCommandHandlerMethods.add(invocableCommandHandlerMethod);
@@ -105,12 +105,12 @@ public class CommandHandlerAnnotationBeanPostProcessor implements BeanPostProces
                 ReflectionUtils.handleReflectionException(ex);
             } catch (NoSuchMethodException ex) {
                 throw new IllegalStateException(String.format(
-                        "@CommandHandler method '%s' found on bean target class '%s', "
-                                + "but not found in any interface(s) for bean JDK proxy. Either "
-                                + "pull the method up to an interface or switch to subclass (CGLIB) "
-                                + "proxies by setting proxy-target-class/proxyTargetClass "
-                                + "attribute to 'true'", method.getName(),
-                        method.getDeclaringClass().getSimpleName()), ex);
+                    "@CommandHandler method '%s' found on bean target class '%s', "
+                        + "but not found in any interface(s) for bean JDK proxy. Either "
+                        + "pull the method up to an interface or switch to subclass (CGLIB) "
+                        + "proxies by setting proxy-target-class/proxyTargetClass "
+                        + "attribute to 'true'", method.getName(),
+                    method.getDeclaringClass().getSimpleName()), ex);
             }
         }
         return method;

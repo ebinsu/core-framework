@@ -41,8 +41,7 @@ public class CommandBusImpl implements CommandBus {
         }
     }
 
-    @Override
-    public void subscribe(InvocableCommandHandlerMethod invocableCommandHandlerMethod) {
+    protected void subscribe(InvocableCommandHandlerMethod invocableCommandHandlerMethod) {
         synchronized (this) {
             commandHandlerMethods.put(invocableCommandHandlerMethod.getCommandName(), invocableCommandHandlerMethod);
         }

@@ -19,5 +19,11 @@
             <groupId>core-framework</groupId>
             <artifactId>core-modules-web-undertow</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>core-framework</groupId>
+            <artifactId>core-modules-cqrs-starter</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

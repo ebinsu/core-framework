@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.2</version>
+        <version>3.3.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -55,6 +55,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-cqrs-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
                 <artifactId>core-modules-name-query</artifactId>
