@@ -34,6 +34,7 @@
             </exclusions>
         </dependency>
 
+        <!-- org.hibernate.tool.hbm2ddl.SchemaUpdate is part of the hibernate-ant module -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-ant</artifactId>
