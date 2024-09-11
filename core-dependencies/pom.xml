@@ -24,7 +24,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.1.5${changelist}</revision>
+        <revision>1.1.6${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.mysql-connector-j>9.0.0</version.mysql-connector-j>
@@ -36,7 +36,7 @@
         <version.bson>4.10.2</version.bson>
         <version.logstash-logback-encoder>7.0.1</version.logstash-logback-encoder>
         <version.hibernate-commons>7.0.1.Final</version.hibernate-commons>
-        <version.jandex>2.4.2.Final</version.jandex>
+        <version.jandex>3.2.2</version.jandex>
         <version.ognl>3.4.2</version.ognl>
         <version.flapdoodle-embed-mongo>4.9.3</version.flapdoodle-embed-mongo>
         <version.mongodb-driver-legacy>4.11.0</version.mongodb-driver-legacy>
@@ -58,6 +58,11 @@
             <dependency>
                 <groupId>core-framework</groupId>
                 <artifactId>core-modules-cqrs-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-jpa-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

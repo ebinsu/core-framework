@@ -15,5 +15,6 @@
 
     <modules>
         <module>core-modules-cqrs-starter</module>
+        <module>core-modules-jpa-starter</module>
     </modules>
 </project>
