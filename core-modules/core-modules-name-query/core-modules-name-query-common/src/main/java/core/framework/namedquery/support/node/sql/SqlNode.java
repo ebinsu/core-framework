@@ -5,8 +5,10 @@ import core.framework.namedquery.support.node.Node;
 import core.framework.namedquery.support.node.NodeBuilder;
 import core.framework.namedquery.support.parser.ChildrenNodeHelper;
 import core.framework.namedquery.support.parser.XMLNode;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ebin
@@ -22,11 +24,16 @@ public class SqlNode extends MixedNode {
         @Override
         public Node build(String namespace, XMLNode nodeToHandle) {
             String id = nodeToHandle.getAttributes().getProperty("id");
+            String resultClassStr = nodeToHandle.getAttributes().getProperty("result-class");
             Class<?> resultClass;
-            try {
-                resultClass = Class.forName(nodeToHandle.getAttributes().getProperty("result-class"));
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+            if (StringUtils.isEmpty(resultClassStr)) {
+                resultClass = Map.class;
+            } else {
+                try {
+                    resultClass = Class.forName(resultClassStr);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
             return new SqlNode(nodeToHandle.getName(), namespace, id, resultClass, ChildrenNodeHelper.build(namespace, nodeToHandle));
         }
