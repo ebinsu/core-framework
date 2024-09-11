@@ -35,6 +35,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-ant</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>core-framework</groupId>
             <artifactId>core-modules-jpa-common</artifactId>
         </dependency>
