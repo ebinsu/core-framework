@@ -1,2 +1,3 @@
 com.framework.web.undertow.configuration.UndertowConfig
+com.framework.web.undertow.configuration.UndertowSecurityConfig
 com.framework.web.undertow.configuration.RedisSessionManagerConfiguration

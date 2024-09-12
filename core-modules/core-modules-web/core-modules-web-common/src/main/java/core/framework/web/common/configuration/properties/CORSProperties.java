@@ -1,4 +1,4 @@
-package core.framework.web.common.configuration;
+package core.framework.web.common.configuration.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

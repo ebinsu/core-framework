@@ -1,6 +1,7 @@
 package core.framework.web.common.configuration;
 
 
+import core.framework.web.common.configuration.properties.SecurityProperties;
 import core.framework.web.common.security.SecurityContext;
 import core.framework.web.common.security.filter.AuthenticationFilterChain;
 import core.framework.web.common.security.filter.AuthorizationFilterChain;

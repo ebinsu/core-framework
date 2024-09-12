@@ -1,5 +1,6 @@
 package core.framework.web.common.configuration;
 
+import core.framework.web.common.configuration.properties.SecurityProperties;
 import core.framework.web.common.security.interceptor.SecurityHandlerInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;

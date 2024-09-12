@@ -1,4 +1,4 @@
-package core.framework.web.common.configuration;
+package core.framework.web.common.configuration.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -10,6 +10,7 @@ import java.util.List;
  */
 @ConfigurationProperties(prefix = "spring.security")
 public class SecurityProperties {
+    private boolean enable;
     private List<String> patterns = List.of();
     private List<String> excludePatterns = List.of();
 
@@ -66,5 +67,13 @@ public class SecurityProperties {
 
     public void setSecurityType(SecurityType securityType) {
         this.securityType = securityType;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }

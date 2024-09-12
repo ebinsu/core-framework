@@ -1,5 +1,6 @@
 package core.framework.web.common.configuration;
 
+import core.framework.web.common.configuration.properties.CORSProperties;
 import core.framework.web.common.exception.DefaultHandlerExceptionResolver;
 import core.framework.web.common.exception.ExceptionHandlerCustomizer;
 import org.springframework.beans.factory.ObjectProvider;

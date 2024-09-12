@@ -1,6 +1,7 @@
 package core.framework.web.common.configuration;
 
 
+import core.framework.web.common.configuration.properties.SecurityProperties;
 import core.framework.web.common.security.interceptor.LoginOperation;
 import core.framework.web.common.security.interceptor.LogoutOperation;
 import core.framework.web.common.security.interceptor.SecurityWebMvcEndpointHandlerMapping;

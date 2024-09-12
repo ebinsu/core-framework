@@ -15,6 +15,7 @@ public class EnvironmentApplicationListener implements ApplicationListener<Appli
     @Override
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
         Properties props = new Properties();
+        props.put("spring.main.banner-mode", "off");
         props.put("server.shutdown", "graceful");
         props.put("management.health.defaults.enabled", false);
         props.put("management.endpoint.health.probes.enabled", true);

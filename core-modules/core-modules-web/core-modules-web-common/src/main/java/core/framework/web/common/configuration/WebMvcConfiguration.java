@@ -2,6 +2,7 @@ package core.framework.web.common.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.framework.json.JSONMapper;
+import core.framework.web.common.configuration.properties.CORSProperties;
 import core.framework.web.common.exception.BindExceptionHandler;
 import core.framework.web.common.exception.ConstraintViolationExceptionHandler;
 import core.framework.web.common.exception.ErrorCodeRuntimeExceptionHandler;

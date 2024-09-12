@@ -2,8 +2,8 @@ package com.framework.web.undertow.configuration;
 
 import com.framework.web.undertow.security.authentication.mailecode.EmailCodeAuthMechanism;
 import com.framework.web.undertow.security.authentication.namepwd.UsernamePasswordAuthMechanism;
-import core.framework.web.common.configuration.SecurityProperties;
-import core.framework.web.common.configuration.SecuritySessionProperties;
+import core.framework.web.common.configuration.properties.SecurityProperties;
+import core.framework.web.common.configuration.properties.SecuritySessionProperties;
 import core.framework.web.common.security.AuthenticationType;
 import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.AuthMethodConfig;
