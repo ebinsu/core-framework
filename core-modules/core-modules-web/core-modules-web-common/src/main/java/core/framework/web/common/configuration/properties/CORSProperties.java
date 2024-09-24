@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author ebin
  */
-@ConfigurationProperties(prefix = "spring.web.cors")
+@ConfigurationProperties(prefix = "core.web.cors")
 public class CORSProperties {
     public List<CORSMapping> mappings;
 

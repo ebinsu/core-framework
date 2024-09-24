@@ -1,3 +1,0 @@
-org.springframework.context.ApplicationListener=core.framework.jpa.common.configuration.EnvironmentApplicationListener
-
-org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=core.framework.jpa.common.configuration.ExcludeAutoConfigurationImportFilter

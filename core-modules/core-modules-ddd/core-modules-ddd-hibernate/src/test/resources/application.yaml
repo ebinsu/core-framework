@@ -1,0 +1,5 @@
+core:
+  hibernate:
+    packages-to-scan: "*"
+    hbm2ddl: "create"
+    show-sql: true

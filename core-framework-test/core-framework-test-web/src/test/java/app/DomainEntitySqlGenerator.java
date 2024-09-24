@@ -1,7 +1,7 @@
 package app;
 
-import core.framework.jpa.hibernate.DomainEventTracking;
-import core.framework.jpa.hibernate.support.DDDPersistenceManagedTypesScanner;
+import core.framework.ddd.hibernate.DomainEventTracking;
+import core.framework.ddd.hibernate.internal.extend.DDDPersistenceManagedTypesScanner;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Environment;

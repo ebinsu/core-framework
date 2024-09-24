@@ -11,6 +11,13 @@
 
     <artifactId>core-modules-ddd</artifactId>
 
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>core-modules-ddd-api</module>
+        <module>core-modules-ddd-hibernate</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>core-framework</groupId>

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author ebin
  */
-@ConfigurationProperties(prefix = "spring.security")
+@ConfigurationProperties(prefix = "core.security")
 public class SecurityProperties {
     private boolean enable;
     private List<String> patterns = List.of();

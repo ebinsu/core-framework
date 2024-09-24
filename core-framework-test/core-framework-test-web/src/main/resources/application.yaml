@@ -1,17 +1,18 @@
 spring:
-#  security:
-#    login-request:
-#      authentication-type: "USERNAME_PASSWORD"
-#      url: "/security/login"
-#    logout-request:
-#      url: "/security/logout"
-#    exclude-patterns:
-#      - "/test/*"
-#    security-type: INTERCEPTOR
-  jpa:
-    hibernate:
-      packages-to-scan: app.*
   datasource:
     url: jdbc:mysql://172.24.110.87:30001/mall?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: ebinsu12345!
+
+core:
+  hibernate:
+    packages-to-scan: app.*
+  security:
+    login-request:
+      authentication-type: "USERNAME_PASSWORD"
+      url: "/security/login"
+    logout-request:
+      url: "/security/logout"
+    exclude-patterns:
+      - "/test/*"
+    security-type: INTERCEPTOR

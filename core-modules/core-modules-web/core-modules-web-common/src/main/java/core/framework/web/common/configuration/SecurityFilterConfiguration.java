@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * @author ebin
  */
 @Configuration
-@ConditionalOnProperty(prefix = "spring.security", name = "security-type", havingValue = "FILTER")
+@ConditionalOnProperty(prefix = "core.security", name = "security-type", havingValue = "FILTER")
 public class SecurityFilterConfiguration {
     @Bean
     @ConditionalOnBean(CorsConfigurationSource.class)

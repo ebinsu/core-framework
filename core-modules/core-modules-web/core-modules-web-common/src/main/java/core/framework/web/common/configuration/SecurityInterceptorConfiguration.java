@@ -25,7 +25,7 @@ import java.util.List;
  * @author ebin
  */
 @Configuration()
-@ConditionalOnProperty(prefix = "spring.security", name = "security-type", havingValue = "INTERCEPTOR")
+@ConditionalOnProperty(prefix = "core.security", name = "security-type", havingValue = "INTERCEPTOR")
 @Import(SecurityWebMvcConfigurer.class)
 public class SecurityInterceptorConfiguration extends WebMvcConfigurationSupport {
     private final SecurityProperties securityProperties;

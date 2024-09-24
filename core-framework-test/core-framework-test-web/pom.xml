@@ -25,10 +25,15 @@
             <artifactId>core-modules-cqrs-starter</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>core-framework</groupId>-->
-<!--            <artifactId>core-modules-jpa-starter</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>core-framework</groupId>
+            <artifactId>core-modules-ddd-hibernate</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>core-framework</groupId>
+            <artifactId>core-modules-mysql</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.hibernate.orm</groupId>
