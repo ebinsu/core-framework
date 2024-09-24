@@ -15,7 +15,7 @@ import java.util.Optional;
  * @author ebin
  */
 @Configuration
-@ConditionalOnProperty(prefix = "core.security", name = "enable")
+@ConditionalOnProperty(prefix = "core.security", name = "security-type")
 public class UndertowSecurityConfig {
     @Bean
     public AuthenticationCustomizer ajaxAuthCustomizer(Environment environment,
