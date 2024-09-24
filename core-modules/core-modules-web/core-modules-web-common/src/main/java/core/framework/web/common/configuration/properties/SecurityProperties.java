@@ -19,7 +19,7 @@ public class SecurityProperties {
 
     private SecuritySessionProperties session = new SecuritySessionProperties();
 
-    private SecurityType securityType = SecurityType.INTERCEPTOR;
+    private SecurityType securityType;
 
     public List<String> getPatterns() {
         return Collections.unmodifiableList(patterns);

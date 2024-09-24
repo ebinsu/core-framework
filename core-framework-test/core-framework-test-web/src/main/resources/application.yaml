@@ -7,6 +7,8 @@ spring:
 core:
   hibernate:
     packages-to-scan: app.*
+    hbm2ddl: "create"
+    show-sql: true
   security:
     login-request:
       authentication-type: "USERNAME_PASSWORD"

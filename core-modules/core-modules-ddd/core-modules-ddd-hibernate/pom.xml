@@ -7,7 +7,7 @@
     <parent>
         <groupId>core-framework</groupId>
         <artifactId>core-modules-ddd</artifactId>
-        <version>1.1.8-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>core-modules-ddd-hibernate</artifactId>

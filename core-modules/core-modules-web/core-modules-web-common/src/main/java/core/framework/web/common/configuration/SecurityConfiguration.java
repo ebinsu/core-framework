@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(SecurityProperties.class)
-@ConditionalOnProperty(prefix = "core.security", name = "enable")
+@ConditionalOnProperty(prefix = "core.security", name = "security-type")
 public class SecurityConfiguration {
     @Bean
     @ConditionalOnMissingBean
