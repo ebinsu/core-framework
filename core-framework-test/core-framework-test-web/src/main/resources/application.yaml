@@ -16,5 +16,5 @@ core:
     logout-request:
       url: "/security/logout"
     exclude-patterns:
-      - "/test/*"
+      - "/*"
     security-type: INTERCEPTOR
