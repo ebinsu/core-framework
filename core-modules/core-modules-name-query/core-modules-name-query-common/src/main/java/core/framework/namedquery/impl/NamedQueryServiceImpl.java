@@ -141,7 +141,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
             }
             return (Map<String, Object>) map;
         } else {
-            Map<String, Object> map = JSONMapper.OBJECT_MAPPER.convertValue(parameter, Map.class);
+            Map<String, Object> map = JSONMapper.OBJECT_MAPPER.convertValue(param, Map.class);
             if (map.size() >= MAX_PARAM_LENGTH) {
                 throw new UnsupportedOperationException("To many query parameter !");
             }
