@@ -19,4 +19,6 @@ public interface NamedQuery {
     Class<?> getResultClass();
 
     String getXmlTagName();
+
+    void setResultClass(Class<?> resultClass);
 }

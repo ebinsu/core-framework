@@ -78,4 +78,9 @@ public abstract class AbstractNamedQuery implements NamedQuery {
     public String getXmlTagName() {
         return this.xmlTagName;
     }
+
+    @Override
+    public void setResultClass(Class<?> resultClass) {
+        this.resultClass = resultClass;
+    }
 }

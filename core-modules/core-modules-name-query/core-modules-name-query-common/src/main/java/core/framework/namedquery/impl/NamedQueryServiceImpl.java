@@ -83,6 +83,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
             throw new RuntimeException("Query type [" + namedQuery.getQuery() + "] executor not found !");
         }
         NamedQuery totalNamedQuery = namedQueryRepository.get(queryName + TOTAL_QUERY_NAME_SUFFIX, param);
+        totalNamedQuery.setResultClass(Long.class);
         List<T> data = namedQueryExecutor.execute(namedQuery, Integer.parseInt(namedQuery.getQueryParameter(limitParameter).toString()));
         List<Long> totalNamedQueryResult = namedQueryExecutor.execute(totalNamedQuery, 1);
         Long total = totalNamedQueryResult.stream().findFirst().orElse(0L);
