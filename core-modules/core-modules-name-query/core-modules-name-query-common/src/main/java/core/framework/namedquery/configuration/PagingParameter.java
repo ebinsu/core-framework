@@ -5,7 +5,7 @@ package core.framework.namedquery.configuration;
  */
 public class PagingParameter {
     private String start = "start";
-    private String limit = " limit";
+    private String limit = "limit";
 
     public String getStart() {
         return start;
