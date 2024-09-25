@@ -18,6 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -61,5 +62,16 @@ public class QueryServiceTest {
         transactionManager.commit(status);
         PagingResult<Map> result = namedQueryService.paging("test.1", 0, 2, testQuery);
         Assertions.assertFalse(result.data().isEmpty());
+    }
+
+    @Test
+    public void test3() {
+        TestQuery testQuery = new TestQuery();
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        entityManager.persist(new TestEntity("test3-1"));
+        entityManager.persist(new TestEntity("test3-2"));
+        transactionManager.commit(status);
+        List<String> result = namedQueryService.select("test.2", testQuery);
+        Assertions.assertFalse(result.isEmpty());
     }
 }

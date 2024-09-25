@@ -19,4 +19,8 @@
         SELECT count(*) FROM test
         <include ref-id="f1"/>
     </sql>
+
+    <sql id="2" result-class="java.lang.String">
+        SELECT name FROM test
+    </sql>
 </named-queries>
