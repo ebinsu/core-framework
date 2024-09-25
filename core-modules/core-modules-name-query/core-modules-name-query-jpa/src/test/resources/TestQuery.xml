@@ -11,7 +11,12 @@
     </fragment>
 
     <sql id="1" result-class="java.util.Map">
-        SELECT id as "id",name as "name"  FROM test
+        SELECT id as "id",name as "name" FROM test
+        <include ref-id="f1"/>
+    </sql>
+
+    <sql id="1.total">
+        SELECT count(*) FROM test
         <include ref-id="f1"/>
     </sql>
 </named-queries>

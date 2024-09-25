@@ -1,6 +1,7 @@
 package core.framework.namedquery.jpa;
 
 import core.framework.namedquery.NamedQueryService;
+import core.framework.namedquery.PagingResult;
 import core.framework.namedquery.configuration.NamedQueryConfiguration;
 import core.framework.namedquery.jpa.configuration.HibernateNamedQueryServiceConfiguration;
 import jakarta.persistence.EntityManager;
@@ -49,5 +50,16 @@ public class QueryServiceTest {
         Map<String, Object> map = get.get();
         Assertions.assertNotNull(map.get("id"));
         Assertions.assertNotNull(map.get("name"));
+    }
+
+    @Test
+    public void test2() {
+        TestQuery testQuery = new TestQuery();
+        testQuery.name = "bbb";
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        entityManager.persist(new TestEntity("bbb"));
+        transactionManager.commit(status);
+        PagingResult<Map> result = namedQueryService.paging("test.1", 0, 2, testQuery);
+        Assertions.assertFalse(result.data().isEmpty());
     }
 }

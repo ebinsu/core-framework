@@ -2,6 +2,7 @@ package core.framework.namedquery.jpa.impl;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.Converter;
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.hibernate.query.TupleTransformer;
@@ -25,10 +26,13 @@ public class ReflectToBeanTransformer implements TupleTransformer<Object> {
     private final Map<String, ImmutablePair<Class<?>, Converter>> constructorParameters = new LinkedHashMap<>();
     private final Map<String, ImmutableTriple<Field, Class<?>, Converter>> fields = new LinkedHashMap<>();
     private boolean isMap;
+    private boolean isPrimitive;
 
     public ReflectToBeanTransformer(Class<?> resultClass) {
         this.resultClass = resultClass;
-        if (resultClass.isAssignableFrom(Map.class)) {
+        if (resultClass.isAssignableFrom(String.class) || ClassUtils.isPrimitiveOrWrapper(resultClass)) {
+            isPrimitive = true;
+        } else if (resultClass.isAssignableFrom(Map.class)) {
             isMap = true;
         } else if (this.resultClass.isRecord()) {
             this.constructor = resultClass.getDeclaredConstructors()[0];
@@ -58,7 +62,9 @@ public class ReflectToBeanTransformer implements TupleTransformer<Object> {
 
     @Override
     public Object transformTuple(Object[] tuple, String[] aliases) {
-        if (isMap) {
+        if (isPrimitive) {
+            return tuple[0];
+        } else if (isMap) {
             Map<String, Object> result = new HashMap<>();
             IntStream.range(0, aliases.length)
                 .forEach(tupleIndex -> result.put(aliases[tupleIndex], tuple[tupleIndex]));

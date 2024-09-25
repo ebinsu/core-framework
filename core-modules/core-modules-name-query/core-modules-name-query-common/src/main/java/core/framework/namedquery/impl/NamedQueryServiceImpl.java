@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -95,9 +96,9 @@ public class NamedQueryServiceImpl implements NamedQueryService {
     }
 
     @Override
-    public <T> PagingResult<T> paging(String queryName, int start, int limit, Object... parameter) {
+    public <T> PagingResult<T> paging(String queryName, int start, int limit, Object parameter) {
         StopWatch stopWatch = new StopWatch();
-        Map<String, Object> param = getParameterMap(parameter);
+        Map<String, Object> param = getParameterMap(new Object[]{parameter});
         param.put(startParameter, start);
         param.put(limitParameter, limit);
         PagingResult<T> result = paging(queryName, param);
@@ -134,13 +135,15 @@ public class NamedQueryServiceImpl implements NamedQueryService {
             }
         }
         if (param == null) {
-            return Map.of();
+            return new HashMap<>();
         }
         if (param instanceof Map<?, ?> map) {
             if (map.size() >= MAX_PARAM_LENGTH) {
                 throw new UnsupportedOperationException("To many query parameter !");
             }
-            return (Map<String, Object>) map;
+            Map<String, Object> stringObjectHashMap = new HashMap<>();
+            map.forEach((key, value) -> stringObjectHashMap.put(Optional.ofNullable(key).map(Object::toString).orElse(null), value));
+            return stringObjectHashMap;
         } else {
             Map<String, Object> map = JSONMapper.OBJECT_MAPPER.convertValue(param, Map.class);
             if (map.size() >= MAX_PARAM_LENGTH) {
