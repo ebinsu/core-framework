@@ -13,12 +13,12 @@
 <!ELEMENT sql (#PCDATA | include | foreach | choose | if | bind | where)*>
 <!ATTLIST sql
         id CDATA #REQUIRED
-        result-class CDATA>
+        result-class CDATA #IMPLIED>
 
 <!ELEMENT mongo (#PCDATA | include | foreach | choose | if | bind | filter)*>
 <!ATTLIST mongo
         id CDATA #REQUIRED
-        result-class CDATA>
+        result-class CDATA #IMPLIED>
 
 <!ELEMENT where (#PCDATA | include | where | foreach | choose | if | bind)*>
 <!ELEMENT filter (#PCDATA | include | foreach | choose | if | bind)*>
