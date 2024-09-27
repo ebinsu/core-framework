@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE named-queries SYSTEM "src/main/resources/namedquery.dtd">
+
+<named-queries namespace="BOMerchandise1">
+    <fragment id="listWhere">
+        <where>
+            <if test="name!=null">
+                m.name like :name
+            </if>
+        </where>
+    </fragment>
+
+    <sql id="list">
+        select
+        id,
+        name,
+        price,
+        main_image_key mainImageKey,
+        description,
+        publish
+        from
+        merchandise m
+        <include ref-id="listWhere"/>
+    </sql>
+
+    <sql id="list.total">
+        select
+        count(*) total
+        from
+        merchandise m
+        <include ref-id="listWhere"/>
+    </sql>
+
+    <sql id="get">
+        select
+        id,
+        name,
+        price,
+        main_image_key mainImageKey,
+        description,
+        publish
+        from
+        merchandise m
+        where m.id = :id
+    </sql>
+
+    <sql id="getDetailImages" result-class="java.lang.String">
+        select
+        image_key
+        from
+        merchandise_detail_image_keys m
+        where m.merchandise_id = :id
+    </sql>
+
+</named-queries>
+

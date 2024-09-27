@@ -5,6 +5,8 @@ spring:
     password: ebinsu12345!
 
 core:
+  named-query:
+    hot-reload: true
   hibernate:
     packages-to-scan: app.*
     hbm2ddl: "create"

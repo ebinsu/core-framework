@@ -4,11 +4,7 @@ import core.framework.namedquery.support.ResolverContext;
 import core.framework.namedquery.support.node.FragmentNode;
 import core.framework.namedquery.support.node.MixedNode;
 import core.framework.namedquery.support.node.NodeBuilder;
-import core.framework.namedquery.support.node.NodeBuilderProvider;
-import core.framework.shared.utils.StopWatch;
 import org.apache.commons.lang3.tuple.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -23,54 +19,44 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPathConstants;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * @author ebin
  */
-public class NamedQueryXMLParser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(NamedQueryXMLParser.class);
+public final class NamedQueryXMLParser {
 
-    public Pair<List<MixedNode>, List<FragmentNode>> parse(Collection<NodeBuilderProvider> nodeBuilderProviders,
-                                                           List<Resource> resources) {
-        StopWatch stopWatch = new StopWatch();
-        ResolverContext resolverContext = new ResolverContext();
-        nodeBuilderProviders.forEach(provider -> provider.get().forEach(resolverContext::register));
+    private NamedQueryXMLParser() {
+    }
 
+    public static Pair<List<MixedNode>, List<FragmentNode>> parse(ResolverContext resolverContext, Resource resource) {
         List<MixedNode> nodes = new ArrayList<>();
         List<FragmentNode> fragmentNodes = new ArrayList<>();
-        for (Resource resource : resources) {
-            Document document;
-            try (InputStream inputStream = resource.getInputStream()) {
-                document = createDocument(new InputSource(inputStream));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            XMLNode namedQueryXMLNode = evalNode(document, "/named-queries", resolverContext);
-            if (namedQueryXMLNode != null) {
-                String namespace = namedQueryXMLNode.getAttributes().getProperty("namespace");
-                for (XMLNode child : namedQueryXMLNode.getChildren()) {
-                    String name = child.getName();
-                    NodeBuilder nodeBuilder = resolverContext.getNodeBuilder(name);
-                    core.framework.namedquery.support.node.Node node = nodeBuilder.build(namespace, child);
-                    if (node instanceof MixedNode mixedNode) {
-                        nodes.add(mixedNode);
-                    } else if (node instanceof FragmentNode fragmentNode) {
-                        fragmentNodes.add(fragmentNode);
-                    }
+        Document document;
+        try (InputStream inputStream = resource.getInputStream()) {
+            document = createDocument(new InputSource(inputStream));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        XMLNode namedQueryXMLNode = evalNode(document, "/named-queries", resolverContext);
+        if (namedQueryXMLNode != null) {
+            String namespace = namedQueryXMLNode.getAttributes().getProperty("namespace");
+            for (XMLNode child : namedQueryXMLNode.getChildren()) {
+                String name = child.getName();
+                NodeBuilder nodeBuilder = resolverContext.getNodeBuilder(name);
+                core.framework.namedquery.support.node.Node node = nodeBuilder.build(namespace, child);
+                if (node instanceof MixedNode mixedNode) {
+                    nodes.add(mixedNode);
+                } else if (node instanceof FragmentNode fragmentNode) {
+                    fragmentNodes.add(fragmentNode);
                 }
             }
         }
-        Pair<List<MixedNode>, List<FragmentNode>> result = Pair.of(nodes, fragmentNodes);
-        long elapsed = stopWatch.elapsed();
-        LOGGER.info(" Finished parse named query in {} ms.", Duration.ofNanos(elapsed));
-        return result;
+        return Pair.of(nodes, fragmentNodes);
     }
 
-    public XMLNode evalNode(Object root, String expression, ResolverContext resolverContext) {
+    private static XMLNode evalNode(Object root, String expression, ResolverContext resolverContext) {
         Node node = (Node) evaluate(expression, root, resolverContext);
         if (node == null) {
             return null;
@@ -78,7 +64,7 @@ public class NamedQueryXMLParser {
         return new XMLNode(resolverContext, node);
     }
 
-    private Object evaluate(String expression, Object root, ResolverContext resolverContext) {
+    private static Object evaluate(String expression, Object root, ResolverContext resolverContext) {
         try {
             return resolverContext.getXpath().evaluate(expression, root, XPathConstants.NODE);
         } catch (Exception e) {
@@ -86,7 +72,7 @@ public class NamedQueryXMLParser {
         }
     }
 
-    private Document createDocument(InputSource inputSource) {
+    private static Document createDocument(InputSource inputSource) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);

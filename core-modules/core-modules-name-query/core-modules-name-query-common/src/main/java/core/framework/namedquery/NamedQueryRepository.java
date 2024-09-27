@@ -14,4 +14,8 @@ public interface NamedQueryRepository {
     void register(MixedNode node);
 
     void register(FragmentNode node);
+
+    void remove(MixedNode node);
+
+    void remove(FragmentNode node);
 }

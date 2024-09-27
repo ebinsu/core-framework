@@ -36,6 +36,11 @@
         </dependency>
 
         <dependency>
+            <groupId>core-framework</groupId>
+            <artifactId>core-modules-name-query-jpa</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-ant</artifactId>
             <scope>test</scope>

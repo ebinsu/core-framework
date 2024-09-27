@@ -10,6 +10,7 @@ public class NamedQueryProperties {
     private Integer defaultMaxReturnSize = 256;
     private Integer batchSize = 128;
     private PagingParameter pagingParameter = new PagingParameter();
+    private Boolean hotReload = Boolean.FALSE;
 
     public Integer getBatchSize() {
         return batchSize;
@@ -33,5 +34,13 @@ public class NamedQueryProperties {
 
     public void setPagingParameter(PagingParameter pagingParameter) {
         this.pagingParameter = pagingParameter;
+    }
+
+    public Boolean getHotReload() {
+        return hotReload;
+    }
+
+    public void setHotReload(Boolean hotReload) {
+        this.hotReload = hotReload;
     }
 }
