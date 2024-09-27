@@ -78,6 +78,10 @@ public class NamedQueryResourceWatchService implements DisposableBean, Initializ
                 if (watchEventKind == StandardWatchEventKinds.ENTRY_MODIFY) {
                     resourceHolders.stream().filter(f -> f.getFileName().equals(fileName)).findFirst().ifPresent(resourceHolder -> {
                         File file = resourceHolder.getFile();
+                        // When you edit the content of a file through an editor,
+                        // it'll modify both date (or other metadata) and content.
+                        // WatcherServices reports events twice because the underlying file is updated twice.
+                        // Once for the content and once for the file modified time.
                         if (resourceHolder.isModified(file)) {
                             StopWatch stopWatch = new StopWatch();
                             LOGGER.info("Name query {} will perform hot loading.", resourceHolder.getFileName());
