@@ -1,7 +1,7 @@
 package core.framework.ddd.hibernate;
 
 import core.framework.ddd.api.DomainEvent;
-import core.framework.ddd.hibernate.internal.event.DomainEventBusHolder;
+import core.framework.ddd.common.event.DomainEventBusHolder;
 import org.hibernate.event.spi.PostCommitDeleteEventListener;
 import org.hibernate.event.spi.PostCommitInsertEventListener;
 import org.hibernate.event.spi.PostCommitUpdateEventListener;

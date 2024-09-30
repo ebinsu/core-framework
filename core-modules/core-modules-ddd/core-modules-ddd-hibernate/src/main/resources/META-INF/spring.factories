@@ -1,3 +1,1 @@
 org.springframework.context.ApplicationListener=core.framework.ddd.hibernate.configuration.EnvironmentApplicationListener
-
-org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=core.framework.ddd.hibernate.configuration.ExcludeAutoConfigurationImportFilter

@@ -72,7 +72,17 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
+                <artifactId>core-modules-ddd-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
                 <artifactId>core-modules-ddd-hibernate</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core-framework</groupId>
+                <artifactId>core-modules-ddd-mongodb</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

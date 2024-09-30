@@ -1,1 +1,1 @@
-core.framework.ddd.hibernate.internal.event.DomainEventIntegrator
+core.framework.ddd.hibernate.internal.DomainEventIntegrator

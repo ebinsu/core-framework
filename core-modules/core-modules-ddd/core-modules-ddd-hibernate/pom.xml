@@ -15,17 +15,12 @@
     <dependencies>
         <dependency>
             <groupId>core-framework</groupId>
-            <artifactId>core-modules-ddd-api</artifactId>
+            <artifactId>core-modules-ddd-common</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>core-framework</groupId>
-            <artifactId>core-modules-shared</artifactId>
         </dependency>
 
         <dependency>

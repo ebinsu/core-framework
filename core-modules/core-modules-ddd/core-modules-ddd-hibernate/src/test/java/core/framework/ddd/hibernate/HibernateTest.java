@@ -1,6 +1,6 @@
 package core.framework.ddd.hibernate;
 
-import core.framework.ddd.hibernate.configuration.DomainEventDispatcherConfiguration;
+import core.framework.ddd.common.configuration.DomainEventDispatcherConfiguration;
 import core.framework.ddd.hibernate.configuration.HibernateConfiguration;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
