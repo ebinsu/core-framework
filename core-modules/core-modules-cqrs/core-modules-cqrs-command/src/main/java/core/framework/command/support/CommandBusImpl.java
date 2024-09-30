@@ -10,14 +10,14 @@ import java.util.Map;
  * @author ebin
  */
 public class CommandBusImpl implements CommandBus {
-    private final Map<String, InvocableCommandHandlerMethod> commandHandlerMethods = new HashMap<>();
+    private final Map<Class<?>, InvocableCommandHandlerMethod> commandHandlerMethods = new HashMap<>();
 
     @Override
     public void dispatch(Object command) {
-        String name = command.getClass().getName();
-        InvocableCommandHandlerMethod invocableCommandHandlerMethod = commandHandlerMethods.get(name);
+        Class<?> commandClass = command.getClass();
+        InvocableCommandHandlerMethod invocableCommandHandlerMethod = commandHandlerMethods.get(commandClass);
         if (invocableCommandHandlerMethod == null) {
-            throw new RuntimeException("Command handle not found, Command name :" + name);
+            throw new RuntimeException("Command handle not found, Command name :" + commandClass);
         }
         try {
             invocableCommandHandlerMethod.invoke(command);
@@ -28,10 +28,10 @@ public class CommandBusImpl implements CommandBus {
 
     @Override
     public void dispatch(Object command, CommandCallback callback) {
-        String name = command.getClass().getName();
-        InvocableCommandHandlerMethod invocableCommandHandlerMethod = commandHandlerMethods.get(name);
+        Class<?> commandClass = command.getClass();
+        InvocableCommandHandlerMethod invocableCommandHandlerMethod = commandHandlerMethods.get(commandClass);
         if (invocableCommandHandlerMethod == null) {
-            throw new RuntimeException("Command handle not found, Command name :" + name);
+            throw new RuntimeException("Command handle not found, Command is :" + commandClass);
         }
         try {
             Object result = invocableCommandHandlerMethod.invoke(command);
@@ -43,7 +43,7 @@ public class CommandBusImpl implements CommandBus {
 
     protected void subscribe(InvocableCommandHandlerMethod invocableCommandHandlerMethod) {
         synchronized (this) {
-            commandHandlerMethods.put(invocableCommandHandlerMethod.getCommandName(), invocableCommandHandlerMethod);
+            commandHandlerMethods.put(invocableCommandHandlerMethod.getCommandClass(), invocableCommandHandlerMethod);
         }
     }
 }

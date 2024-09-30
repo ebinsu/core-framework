@@ -26,7 +26,7 @@ public class InvocableCommandHandlerMethod {
     private final Method method;
     private final Method bridgedMethod;
     private final MethodParameter parameters;
-    private final String commandName;
+    private final Class<?> commandClass;
 
     public InvocableCommandHandlerMethod(Object bean, Method method) {
         Assert.notNull(bean, "Bean is required");
@@ -38,7 +38,7 @@ public class InvocableCommandHandlerMethod {
         this.bridgedMethod = BridgeMethodResolver.findBridgedMethod(method);
         ReflectionUtils.makeAccessible(this.bridgedMethod);
         this.parameters = new HandlerMethodParameter(0);
-        this.commandName = this.parameters.getGenericParameterType().getTypeName();
+        this.commandClass = this.parameters.getGenericParameterType().getClass();
     }
 
     @Nullable
@@ -48,7 +48,7 @@ public class InvocableCommandHandlerMethod {
         } catch (IllegalArgumentException ex) {
             assertTargetBean(getBridgedMethod(), getBean(), args);
             String text = (ex.getMessage() == null || ex.getCause() instanceof NullPointerException)
-                    ? "Illegal argument" : ex.getMessage();
+                ? "Illegal argument" : ex.getMessage();
             throw new IllegalStateException(formatInvokeError(text, args), ex);
         } catch (InvocationTargetException ex) {
             // Unwrap for HandlerExceptionResolvers ...
@@ -70,24 +70,24 @@ public class InvocableCommandHandlerMethod {
         Class<?> targetBeanClass = targetBean.getClass();
         if (!methodDeclaringClass.isAssignableFrom(targetBeanClass)) {
             String text = "The mapped handler method class '" + methodDeclaringClass.getName()
-                    + "' is not an instance of the actual bean class '"
-                    + targetBeanClass.getName() + "'. If handler requires proxying "
-                    + "(e.g. due to @Transactional), please use class-based proxying.";
+                + "' is not an instance of the actual bean class '"
+                + targetBeanClass.getName() + "'. If handler requires proxying "
+                + "(e.g. due to @Transactional), please use class-based proxying.";
             throw new IllegalStateException(formatInvokeError(text, args));
         }
     }
 
     protected String formatInvokeError(String text, Object[] args) {
         String formattedArgs = IntStream.range(0, args.length)
-                .mapToObj(i -> args[i] != null
-                        ? "[" + i + "] [type=" + args[i].getClass().getName() + "] [value=" + args[i] + "]"
-                        : "[" + i + "] [null]")
-                .collect(Collectors.joining(",\n", " ", " "));
+            .mapToObj(i -> args[i] != null
+                ? "[" + i + "] [type=" + args[i].getClass().getName() + "] [value=" + args[i] + "]"
+                : "[" + i + "] [null]")
+            .collect(Collectors.joining(",\n", " ", " "));
 
         return text + "\n"
-                + "Endpoint [" + getBeanType().getName() + "]\n"
-                + "Method [" + getBridgedMethod().toGenericString() + "] "
-                + "with argument values:\n" + formattedArgs;
+            + "Endpoint [" + getBeanType().getName() + "]\n"
+            + "Method [" + getBridgedMethod().toGenericString() + "] "
+            + "with argument values:\n" + formattedArgs;
     }
 
 
@@ -124,8 +124,8 @@ public class InvocableCommandHandlerMethod {
         return parameters;
     }
 
-    public String getCommandName() {
-        return commandName;
+    public Class<?> getCommandClass() {
+        return commandClass;
     }
 
     protected class HandlerMethodParameter extends SynthesizingMethodParameter {

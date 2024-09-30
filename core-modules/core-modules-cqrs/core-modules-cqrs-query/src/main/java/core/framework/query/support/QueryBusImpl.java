@@ -9,14 +9,14 @@ import java.util.Map;
  * @author ebin
  */
 public class QueryBusImpl implements QueryBus {
-    private final Map<String, InvocableQueryHandlerMethod> queryHandlerMethods = new HashMap<>();
+    private final Map<Class<?>, InvocableQueryHandlerMethod> queryHandlerMethods = new HashMap<>();
 
     @Override
     public <T> T dispatch(Object query) {
-        String name = query.getClass().getName();
-        InvocableQueryHandlerMethod invocableQueryHandlerMethod = queryHandlerMethods.get(name);
+        Class<?> queryClass = query.getClass();
+        InvocableQueryHandlerMethod invocableQueryHandlerMethod = queryHandlerMethods.get(queryClass);
         if (invocableQueryHandlerMethod == null) {
-            throw new RuntimeException("Query handle not found, Query name :" + name);
+            throw new RuntimeException("Query handle not found, Query is :" + queryClass.getName());
         }
         try {
             return (T) invocableQueryHandlerMethod.invoke(query);
@@ -27,7 +27,7 @@ public class QueryBusImpl implements QueryBus {
 
     protected void subscribe(InvocableQueryHandlerMethod invocableQueryHandlerMethod) {
         synchronized (this) {
-            queryHandlerMethods.put(invocableQueryHandlerMethod.getQueryName(), invocableQueryHandlerMethod);
+            queryHandlerMethods.put(invocableQueryHandlerMethod.getQueryClass(), invocableQueryHandlerMethod);
         }
     }
 }
