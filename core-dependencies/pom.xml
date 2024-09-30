@@ -62,7 +62,7 @@
             </dependency>
             <dependency>
                 <groupId>core-framework</groupId>
-                <artifactId>core-modules-jpa-starter</artifactId>
+                <artifactId>core-modules-hibernate-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
