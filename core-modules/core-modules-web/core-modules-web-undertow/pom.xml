@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>core-framework</groupId>
+        <groupId>core.framework</groupId>
         <artifactId>core-modules-web</artifactId>
         <version>${revision}</version>
     </parent>
@@ -19,7 +19,7 @@
         </dependency>
 
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-web-common</artifactId>
         </dependency>
         <dependency>

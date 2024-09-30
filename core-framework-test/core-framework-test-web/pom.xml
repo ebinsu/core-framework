@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>core-framework</groupId>
+        <groupId>core.framework</groupId>
         <artifactId>core-parent</artifactId>
         <version>${revision}</version>
         <relativePath>../../core-parent</relativePath>
@@ -16,27 +16,27 @@
 
     <dependencies>
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-web-undertow</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-cqrs-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-ddd-hibernate</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-mysql</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-name-query-jpa</artifactId>
         </dependency>
 

@@ -7,17 +7,17 @@
     <artifactId>core-modules-mongodb</artifactId>
     <parent>
         <artifactId>core-modules</artifactId>
-        <groupId>core-framework</groupId>
+        <groupId>core.framework</groupId>
         <version>${revision}</version>
     </parent>
 
     <dependencies>
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-ddd</artifactId>
         </dependency>
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-json</artifactId>
         </dependency>
 

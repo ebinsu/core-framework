@@ -6,7 +6,7 @@
 
     <parent>
         <artifactId>core-modules</artifactId>
-        <groupId>core-framework</groupId>
+        <groupId>core.framework</groupId>
         <version>${revision}</version>
     </parent>
 

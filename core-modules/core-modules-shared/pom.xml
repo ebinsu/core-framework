@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>core-framework</groupId>
+        <groupId>core.framework</groupId>
         <artifactId>core-modules</artifactId>
         <version>${revision}</version>
     </parent>
@@ -18,7 +18,7 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-exception</artifactId>
         </dependency>
         <dependency>

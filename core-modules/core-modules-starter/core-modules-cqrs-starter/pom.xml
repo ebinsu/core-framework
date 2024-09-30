@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>core-framework</groupId>
+        <groupId>core.framework</groupId>
         <artifactId>core-modules-starter</artifactId>
         <version>${revision}</version>
     </parent>
@@ -14,11 +14,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-cqrs-command</artifactId>
         </dependency>
         <dependency>
-            <groupId>core-framework</groupId>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-cqrs-query</artifactId>
         </dependency>
     </dependencies>

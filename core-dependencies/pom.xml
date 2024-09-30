@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>core-framework</groupId>
+    <groupId>core.framework</groupId>
     <artifactId>core-dependencies</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
@@ -56,123 +56,123 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-cqrs-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-hibernate-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-ddd-api</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-ddd-common</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-ddd-hibernate</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-ddd-mongodb</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-name-query</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-name-query-common</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-name-query-jpa</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-name-query-jdbc</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-name-query-mongo</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-web</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-web-common</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-web-undertow</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-exception</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-ddd</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-json</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-mysql</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-shared</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-cqrs</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-cqrs-query</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-cqrs-command</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-kafka</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>core-framework</groupId>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-mongodb</artifactId>
                 <version>${revision}</version>
             </dependency>

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>core-modules</artifactId>
-        <groupId>core-framework</groupId>
+        <groupId>core.framework</groupId>
         <version>${revision}</version>
     </parent>
 
