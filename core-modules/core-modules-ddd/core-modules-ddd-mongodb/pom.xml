@@ -15,12 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>core.framework</groupId>
-            <artifactId>core-modules-ddd-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>core.framework</groupId>
-            <artifactId>core-modules-json</artifactId>
+            <artifactId>core-modules-ddd-common</artifactId>
         </dependency>
 
         <dependency>
@@ -38,6 +33,17 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo.spring30x</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

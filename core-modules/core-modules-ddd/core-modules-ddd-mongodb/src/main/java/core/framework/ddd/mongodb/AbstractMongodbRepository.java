@@ -1,7 +1,7 @@
 package core.framework.ddd.mongodb;
 
 import core.framework.ddd.api.Repository;
-import core.framework.ddd.mongodb.support.ExtendMongoTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 
 import java.io.Serializable;
@@ -18,12 +18,12 @@ import static org.springframework.data.mongodb.core.query.Query.query;
  */
 public abstract class AbstractMongodbRepository<T extends AbstractAggregateRoot> implements Repository<T> {
     private final Class<T> entityClass;
-    private final MongoOperations mongoOperations;
+    @Autowired
+    private MongoOperations mongoOperations;
 
-    public AbstractMongodbRepository(ExtendMongoTemplate mongoTemplate) {
+    public AbstractMongodbRepository() {
         Type actualTypeArgument = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.entityClass = (Class<T>) actualTypeArgument;
-        this.mongoOperations = mongoTemplate;
     }
 
     @Override

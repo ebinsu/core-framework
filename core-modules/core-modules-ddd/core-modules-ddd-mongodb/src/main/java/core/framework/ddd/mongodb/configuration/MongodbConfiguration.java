@@ -2,6 +2,7 @@ package core.framework.ddd.mongodb.configuration;
 
 import com.mongodb.MongoClientSettings;
 import core.framework.bson.ExtendCodecRegistry;
+import core.framework.bson.converter.ExtendConverters;
 import core.framework.ddd.api.DomainEventBus;
 import core.framework.ddd.mongodb.MongodbDomainEventDispatcher;
 import core.framework.ddd.mongodb.MongodbDomainEventStorageImpl;
@@ -12,9 +13,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 
 @Configuration
 public class MongodbConfiguration {
+    @Bean
+    public MongoCustomConversions extendMongoConversions() {
+        return new MongoCustomConversions(ExtendConverters.getConvertersToRegister());
+    }
+
     @Bean
     public ExtendMongoTemplate extendMongoTemplate(MongoDatabaseFactory databaseFactory, MappingMongoConverter converter) {
         return new ExtendMongoTemplate(databaseFactory, converter);
