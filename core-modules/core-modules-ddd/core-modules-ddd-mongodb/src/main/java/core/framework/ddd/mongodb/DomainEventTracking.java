@@ -2,7 +2,6 @@ package core.framework.ddd.mongodb;
 
 import core.framework.ddd.api.AggregateRoot;
 import core.framework.ddd.api.DomainEvent;
-import core.framework.json.JSON;
 import jakarta.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -32,10 +31,10 @@ public class DomainEventTracking {
     private String aggregateRootId;
 
     @Field(name = "aggregate_root_snapshot")
-    private String aggregateRootSnapshot;
+    private AggregateRoot aggregateRootSnapshot;
 
     @Field(name = "domain_event_snapshot")
-    private String domainEventSnapshot;
+    private DomainEvent domainEventSnapshot;
 
     @NotNull
     @Field(name = "created_time")
@@ -49,8 +48,8 @@ public class DomainEventTracking {
         this.aggregateRootClass = event.getAggregateRootMetadata().getType();
         this.aggregateRootId = String.valueOf(event.getAggregateRootMetadata().getId());
         this.createdTime = ZonedDateTime.now();
-        this.domainEventSnapshot = JSON.toJSON(event);
-        this.aggregateRootSnapshot = JSON.toJSON(aggregateRoot);
+        this.domainEventSnapshot = event;
+        this.aggregateRootSnapshot = aggregateRoot;
     }
 
     public ObjectId getId() {
@@ -59,10 +58,6 @@ public class DomainEventTracking {
 
     public ZonedDateTime getCreatedTime() {
         return this.createdTime;
-    }
-
-    public String getDomainEventSnapshot() {
-        return domainEventSnapshot;
     }
 
     public String getAggregateRootClass() {
@@ -77,7 +72,11 @@ public class DomainEventTracking {
         return aggregateRootId;
     }
 
-    public String getAggregateRootSnapshot() {
+    public AggregateRoot getAggregateRootSnapshot() {
         return aggregateRootSnapshot;
+    }
+
+    public DomainEvent getDomainEventSnapshot() {
+        return domainEventSnapshot;
     }
 }

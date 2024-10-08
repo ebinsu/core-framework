@@ -9,7 +9,10 @@ import java.time.ZonedDateTime;
  */
 public abstract non-sealed class AbstractDomainEvent implements DomainEvent {
     private AggregateRootMetadata aggregateRootMetadata;
-    private final ZonedDateTime createdTime = ZonedDateTime.now();
+    private ZonedDateTime createdTime = ZonedDateTime.now();
+
+    protected AbstractDomainEvent() {
+    }
 
     @Override
     public AggregateRootMetadata getAggregateRootMetadata() {
@@ -28,5 +31,9 @@ public abstract non-sealed class AbstractDomainEvent implements DomainEvent {
 
     public void setAggregateRootMetadata(AggregateRoot aggregateRoot) {
         this.aggregateRootMetadata = new AggregateRootMetadata(aggregateRoot);
+    }
+
+    private void setCreatedTime(ZonedDateTime createdTime) {
+        this.createdTime = createdTime;
     }
 }

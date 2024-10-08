@@ -5,9 +5,12 @@ import java.io.Serializable;
 /**
  * @author ebin
  */
-public class AggregateRootMetadata {
-    private final Serializable id;
-    private final String type;
+public class AggregateRootMetadata implements Serializable {
+    private Serializable id;
+    private String type;
+
+    private AggregateRootMetadata() {
+    }
 
     public AggregateRootMetadata(AggregateRoot aggregateRoot) {
         this.id = aggregateRoot.getId();

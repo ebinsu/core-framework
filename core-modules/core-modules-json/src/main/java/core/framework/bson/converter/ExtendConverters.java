@@ -9,6 +9,9 @@ import java.util.List;
  * @author ebin
  */
 public final class ExtendConverters {
+    private ExtendConverters() {
+    }
+
     public static List<Converter<?, ?>> getConvertersToRegister() {
         List<Converter<?, ?>> converters = new ArrayList<>();
         converters.add(DateToZoneDateTimeConverter.INSTANCE);
