@@ -1,8 +1,10 @@
 package core.framework.ddd.mongodb;
 
-import core.framework.ddd.api.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -16,8 +18,9 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 /**
  * @author ebin
  */
-public abstract class AbstractMongodbRepository<T extends AbstractAggregateRoot> implements Repository<T> {
+public abstract class AbstractMongodbRepository<T extends AbstractAggregateRoot> implements MongodbRepository<T> {
     private final Class<T> entityClass;
+
     @Autowired
     private MongoOperations mongoOperations;
 
@@ -47,21 +50,21 @@ public abstract class AbstractMongodbRepository<T extends AbstractAggregateRoot>
     }
 
     @Override
-    public Optional<T> find(String queryString, Object... params) {
-        return Optional.empty();
+    public Optional<T> find(Query query) {
+        return Optional.ofNullable(getMongoOperations().findOne(query, this.entityClass));
     }
 
     @Override
-    public List<T> select(String queryString, Object... params) {
-        return List.of();
+    public List<T> select(Query query) {
+        return getMongoOperations().find(query, this.entityClass);
+    }
+
+    protected <R> AggregationResults<R> aggregate(TypedAggregation<?> aggregation, Class<R> resultClass) {
+        return getMongoOperations().aggregate(aggregation, this.entityClass, resultClass);
     }
 
     @Override
-    public <R> R aggregateByQueryString(String queryString, Class<R> resultClass, Object... params) {
-        return null;
-    }
-
-    private MongoOperations getMongoOperations() {
+    public MongoOperations getMongoOperations() {
         return this.mongoOperations;
     }
 }

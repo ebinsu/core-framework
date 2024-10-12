@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * @author ebin
  */
-public interface Repository<T extends AggregateRoot> {
+public interface Repository<T extends AggregateRoot, Q> {
     void persist(T entity);
 
     T merge(T entity);
@@ -16,9 +16,7 @@ public interface Repository<T extends AggregateRoot> {
 
     Optional<T> find(Serializable id);
 
-    Optional<T> find(String queryString, Object... params);
+    Optional<T> find(Q query);
 
-    List<T> select(String queryString, Object... params);
-
-    <R> R aggregateByQueryString(String queryString, Class<R> resultClass, Object... params);
+    List<T> select(Q query);
 }

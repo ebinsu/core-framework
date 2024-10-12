@@ -5,5 +5,4 @@ package core.framework.ddd.mongodb;
  */
 public class TestEntityRepo extends AbstractMongodbRepository<TestEntity> {
 
-
 }
