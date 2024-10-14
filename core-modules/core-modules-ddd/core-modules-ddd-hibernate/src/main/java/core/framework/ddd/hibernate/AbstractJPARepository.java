@@ -3,6 +3,10 @@ package core.framework.ddd.hibernate;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.jpa.HibernateHints;
 import org.hibernate.query.named.NamedObjectRepository;
@@ -16,6 +20,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
 /**
@@ -58,8 +63,16 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot> imp
     }
 
     @Override
-    public Optional<T> find(Query query) {
-        return Optional.empty();
+    public Optional<T> find(BiFunction<CriteriaBuilder, Root<T>, List<Predicate>> predicateSupplier) {
+        CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<T> root = criteriaQuery.from(entityClass);
+
+        predicateSupplier.apply(criteriaBuilder, root).forEach(criteriaQuery::where);
+
+        TypedQuery<T> query = getEntityManager().createQuery(criteriaQuery);
+        query.setHint(HibernateHints.HINT_FETCH_SIZE, HINT_FETCH_SIZE);
+        return query.getResultList().stream().findFirst();
     }
 
     @Override
@@ -80,8 +93,15 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot> imp
     }
 
     @Override
-    public List<T> select(Query query) {
-        return List.of();
+    public List<T> select(BiFunction<CriteriaBuilder, Root<T>, List<Predicate>> predicateSupplier) {
+        CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<T> root = criteriaQuery.from(entityClass);
+
+        predicateSupplier.apply(criteriaBuilder, root).forEach(criteriaQuery::where);
+
+        TypedQuery<T> query = getEntityManager().createQuery(criteriaQuery);
+        return query.getResultList();
     }
 
     @Override

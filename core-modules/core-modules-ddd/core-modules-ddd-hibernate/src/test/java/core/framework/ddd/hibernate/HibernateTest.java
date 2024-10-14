@@ -16,6 +16,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * @author ebin
@@ -52,5 +53,16 @@ public class HibernateTest {
         Assertions.assertEquals(1, trackingCount.bitCount());
         Assertions.assertTrue(createdEvent.handle);
         Assertions.assertNotNull(createdEvent.getAggregateRootMetadata());
+    }
+
+    @Test
+    public void testQuery() {
+        TransactionStatus status = transactionManager.getTransaction(TransactionDefinition.withDefaults());
+        TestEntity test = new TestEntity("test");
+        testEntityRepo.persist(test);
+        transactionManager.commit(status);
+
+        List<TestEntity> results = testEntityRepo.select((qb, root) -> List.of(qb.equal(root.get("id"), test.getId())));
+        Assertions.assertEquals(1, results.size());
     }
 }
