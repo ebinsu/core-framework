@@ -68,7 +68,7 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot> imp
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
         Root<T> root = criteriaQuery.from(entityClass);
 
-        predicateSupplier.apply(criteriaBuilder, root).forEach(criteriaQuery::where);
+        Optional.ofNullable(predicateSupplier.apply(criteriaBuilder, root)).ifPresent(p -> p.forEach(criteriaQuery::where));
 
         TypedQuery<T> query = getEntityManager().createQuery(criteriaQuery);
         query.setHint(HibernateHints.HINT_FETCH_SIZE, HINT_FETCH_SIZE);
@@ -98,7 +98,7 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot> imp
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
         Root<T> root = criteriaQuery.from(entityClass);
 
-        predicateSupplier.apply(criteriaBuilder, root).forEach(criteriaQuery::where);
+        Optional.ofNullable(predicateSupplier.apply(criteriaBuilder, root)).ifPresent(p -> p.forEach(criteriaQuery::where));
 
         TypedQuery<T> query = getEntityManager().createQuery(criteriaQuery);
         return query.getResultList();
