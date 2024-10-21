@@ -20,11 +20,11 @@ public class ServletContextHolder implements ServletExtension {
         }
     }
 
-    public static SessionManager getSessionManager() {
+    static SessionManager getSessionManager() {
         return servletContext.getDeployment().getSessionManager();
     }
 
-    public static SessionConfig getSessionConfig() {
+    static SessionConfig getSessionConfig() {
         return servletContext.getSessionConfig();
     }
 }
