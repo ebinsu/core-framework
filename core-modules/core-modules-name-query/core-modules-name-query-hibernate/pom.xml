@@ -3,46 +3,36 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>core.framework</groupId>
-        <artifactId>core-parent</artifactId>
+        <artifactId>core-modules-name-query</artifactId>
         <version>${revision}</version>
-        <relativePath>../../core-parent</relativePath>
     </parent>
 
-    <artifactId>core-framework-test-web</artifactId>
-    <version>1.0.0</version>
+    <artifactId>core-modules-name-query-hibernate</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>core.framework</groupId>
-            <artifactId>core-modules-web-undertow</artifactId>
+            <artifactId>core-modules-name-query-common</artifactId>
         </dependency>
-
         <dependency>
             <groupId>core.framework</groupId>
-            <artifactId>core-modules-cqrs-starter</artifactId>
+            <artifactId>core-modules-shared</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>core.framework</groupId>
-            <artifactId>core-modules-ddd-hibernate</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>core.framework</groupId>
-            <artifactId>core-modules-mysql</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>core.framework</groupId>
-            <artifactId>core-modules-name-query-hibernate</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-ant</artifactId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

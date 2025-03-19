@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>core-modules-name-query-common</module>
-        <module>core-modules-name-query-jpa</module>
+        <module>core-modules-name-query-hibernate</module>
         <module>core-modules-name-query-mongo</module>
         <module>core-modules-name-query-jdbc</module>
     </modules>
