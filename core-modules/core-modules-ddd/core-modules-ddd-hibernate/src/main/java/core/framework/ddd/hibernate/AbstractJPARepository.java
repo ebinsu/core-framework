@@ -121,7 +121,7 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot> imp
         return selectByNativeQuery(queryString, params);
     }
 
-    protected <R> R aggregateSingle(String queryString, Class<R> resultClass, Object... params) {
+    public <R> R aggregateSingle(String queryString, Class<R> resultClass, Object... params) {
         NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
         final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
         List<R> results;
@@ -144,7 +144,7 @@ public abstract class AbstractJPARepository<T extends AbstractAggregateRoot> imp
         return results.getFirst();
     }
 
-    protected <R> List<R> aggregate(String queryString, Class<R> resultClass, Object... params) {
+    public <R> List<R> aggregate(String queryString, Class<R> resultClass, Object... params) {
         NamedObjectRepository namedObjectRepository = getNamedObjectRepository();
         final NamedSqmQueryMemento namedSqmQueryMemento = namedObjectRepository.getSqmQueryMemento(queryString);
         if (namedSqmQueryMemento != null) {

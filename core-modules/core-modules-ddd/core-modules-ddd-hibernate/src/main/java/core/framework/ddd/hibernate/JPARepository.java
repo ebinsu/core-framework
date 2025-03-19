@@ -16,4 +16,8 @@ public interface JPARepository<T extends AbstractAggregateRoot> extends Reposito
     Optional<T> find(String queryString, Object... params);
 
     List<T> select(String queryString, Object... params);
+
+    <R> R aggregateSingle(String queryString, Class<R> resultClass, Object... params);
+
+    <R> List<R> aggregate(String queryString, Class<R> resultClass, Object... params);
 }

@@ -1,6 +1,5 @@
 package core.framework.ddd.mongodb;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
@@ -20,9 +19,6 @@ import static org.springframework.data.mongodb.core.query.Query.query;
  */
 public abstract class AbstractMongodbRepository<T extends AbstractAggregateRoot> implements MongodbRepository<T> {
     private final Class<T> entityClass;
-
-    @Autowired
-    private MongoOperations mongoOperations;
 
     public AbstractMongodbRepository() {
         Type actualTypeArgument = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -63,8 +59,5 @@ public abstract class AbstractMongodbRepository<T extends AbstractAggregateRoot>
         return getMongoOperations().aggregate(aggregation, this.entityClass, resultClass);
     }
 
-    @Override
-    public MongoOperations getMongoOperations() {
-        return this.mongoOperations;
-    }
+    protected abstract MongoOperations getMongoOperations();
 }
