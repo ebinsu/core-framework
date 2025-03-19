@@ -13,15 +13,15 @@ import java.util.Locale;
  * @author ebin
  */
 public class NamedQueryEntityResolver implements EntityResolver {
-    private static final String NAME_QUERY_SYSTEM = "namedquery.dtd";
-    private static final String NAME_QUERY_DTD = "core/framework/namedquery/support/namedquery.dtd";
+    private static final String NAME_QUERY_DTD_PREFIX = "name-query";
+    private static final String NAME_QUERY_DTD_FOLDER = "core/framework/namedquery/dtd/";
 
     @Override
     public InputSource resolveEntity(String publicId, String systemId) throws SAXException {
         try {
             if (systemId != null) {
                 String lowerCaseSystemId = systemId.toLowerCase(Locale.ENGLISH);
-                if (lowerCaseSystemId.contains(NAME_QUERY_SYSTEM)) {
+                if (lowerCaseSystemId.contains(NAME_QUERY_DTD_PREFIX)) {
                     return getInputSource(publicId, systemId);
                 }
             }
@@ -34,7 +34,8 @@ public class NamedQueryEntityResolver implements EntityResolver {
     private InputSource getInputSource(String publicId, String systemId) {
         InputSource source = null;
         try {
-            InputStream in = new ClassPathResource(NamedQueryEntityResolver.NAME_QUERY_DTD).getInputStream();
+            String dtdFileName = systemId.substring(systemId.lastIndexOf(NAME_QUERY_DTD_PREFIX));
+            InputStream in = new ClassPathResource(NamedQueryEntityResolver.NAME_QUERY_DTD_FOLDER + dtdFileName).getInputStream();
             source = new InputSource(in);
             source.setPublicId(publicId);
             source.setSystemId(systemId);

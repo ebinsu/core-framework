@@ -1,0 +1,18 @@
+<!ENTITY % common SYSTEM "name-query-common.dtd">
+        %common;
+
+<!ELEMENT named-queries (sql* | fragment*)+>
+<!ATTLIST named-queries
+        namespace CDATA #REQUIRED
+        >
+
+<!ELEMENT fragment (#PCDATA | include | where | foreach | choose | if | bind)*>
+<!ATTLIST fragment
+        id CDATA #REQUIRED
+        >
+
+<!ELEMENT sql (#PCDATA | include | foreach | choose | if | bind | where)*>
+<!ATTLIST sql
+        id CDATA #REQUIRED
+        result-class CDATA #IMPLIED>
+<!ELEMENT where (#PCDATA | include | where | foreach | choose | if | bind)*>

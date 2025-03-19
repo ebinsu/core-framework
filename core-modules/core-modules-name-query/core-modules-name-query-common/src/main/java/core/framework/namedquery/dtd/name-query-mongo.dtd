@@ -1,0 +1,18 @@
+<!ENTITY % common SYSTEM "name-query-common.dtd">
+        %common;
+
+<!ELEMENT named-queries (mongo* | fragment*)+>
+<!ATTLIST named-queries
+        namespace CDATA #REQUIRED
+        >
+
+<!ELEMENT fragment (#PCDATA | include | filter | foreach | choose | if | bind)*>
+<!ATTLIST fragment
+        id CDATA #REQUIRED
+        >
+
+<!ELEMENT mongo (#PCDATA | include | foreach | choose | if | bind | filter)*>
+<!ATTLIST mongo
+        id CDATA #REQUIRED
+        result-class CDATA #IMPLIED>
+<!ELEMENT filter (#PCDATA | include | foreach | choose | if | bind)*>

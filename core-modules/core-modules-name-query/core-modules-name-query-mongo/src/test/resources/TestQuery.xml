@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE named-queries SYSTEM "namedquery.dtd">
+<!DOCTYPE named-queries SYSTEM
+        "C:\workspace\v2\core-framework\core-modules\core-modules-name-query\core-modules-name-query-common\src\main\java\core\framework\namedquery\dtd\name-query-mongo.dtd">
 
 <named-queries namespace="test">
     <mongo id="1" result-class="core.framework.namedquery.mongo.TestDTO">

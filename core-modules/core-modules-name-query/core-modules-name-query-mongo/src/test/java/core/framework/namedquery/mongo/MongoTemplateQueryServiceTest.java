@@ -5,6 +5,7 @@ import core.framework.namedquery.configuration.NamedQueryConfiguration;
 import core.framework.namedquery.mongo.configuration.MongoTemplateQueryServiceConfiguration;
 import de.flapdoodle.embed.mongo.spring.autoconfigure.EmbeddedMongoAutoConfiguration;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
@@ -33,6 +34,11 @@ public class MongoTemplateQueryServiceTest {
     NamedQueryService namedQueryService;
     @Autowired
     MongoTemplate mongoTemplate;
+
+    @BeforeAll
+    public static void before() {
+        System.setProperty("javax.xml.accessExternalDTD", "file");
+    }
 
     @Test
     public void test() {

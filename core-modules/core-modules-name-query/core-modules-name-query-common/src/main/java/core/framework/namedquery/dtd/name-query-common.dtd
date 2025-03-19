@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!ELEMENT bind EMPTY>
+<!ATTLIST bind
+        name CDATA #REQUIRED
+        value CDATA #REQUIRED
+        >
+
+<!ELEMENT include (#PCDATA)*>
+<!ATTLIST include ref-id CDATA #REQUIRED>
+
+<!ELEMENT foreach (#PCDATA)*>
+<!ATTLIST foreach
+        collection CDATA #REQUIRED
+        open CDATA #IMPLIED
+        close CDATA #IMPLIED
+        separator CDATA #IMPLIED
+        >
+
+<!ELEMENT choose (when* , otherwise?)>
+<!ELEMENT when (#PCDATA | include | foreach | choose | if | bind)*>
+<!ATTLIST when test CDATA #REQUIRED>
+<!ELEMENT otherwise (#PCDATA | include | foreach | choose | if | bind)*>
+
+<!ELEMENT if (#PCDATA | include | foreach | choose | if | bind)*>
+<!ATTLIST if test CDATA #REQUIRED>
