@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.3</version>
+        <version>3.4.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -27,7 +27,7 @@
         <revision>1.1.1${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
-        <version.mysql-connector-j>9.0.0</version.mysql-connector-j>
+        <version.mysql-connector-j>9.2.0</version.mysql-connector-j>
         <version.commons-validator>1.9.0</version.commons-validator>
         <version.commons-io>2.16.1</version.commons-io>
         <version.commons-lang3>3.16.0</version.commons-lang3>
@@ -38,7 +38,6 @@
         <version.hibernate-commons>7.0.1.Final</version.hibernate-commons>
         <version.jandex>3.2.2</version.jandex>
         <version.ognl>3.4.2</version.ognl>
-        <version.flapdoodle-embed-mongo>4.9.3</version.flapdoodle-embed-mongo>
         <version.mongodb-driver-legacy>4.11.0</version.mongodb-driver-legacy>
         <version.mongodb-driver-sync>5.1.3</version.mongodb-driver-sync>
 
@@ -252,11 +251,6 @@
                 <groupId>org.mongodb</groupId>
                 <artifactId>mongodb-driver-legacy</artifactId>
                 <version>${version.mongodb-driver-legacy}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.flapdoodle.embed</groupId>
-                <artifactId>de.flapdoodle.embed.mongo.spring30x</artifactId>
-                <version>${version.flapdoodle-embed-mongo}</version>
             </dependency>
             <dependency>
                 <groupId>org.mongodb</groupId>

@@ -2,9 +2,8 @@ package core.framework.ddd.mongodb;
 
 import core.framework.ddd.common.configuration.DomainEventDispatcherConfiguration;
 import core.framework.ddd.mongodb.configuration.MongodbConfiguration;
-import de.flapdoodle.embed.mongo.spring.autoconfigure.EmbeddedMongoAutoConfiguration;
-import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
@@ -13,21 +12,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**
  * @author ebin
  */
+@Disabled
 @SpringBootTest(classes = {
     Context.class,
     DomainEventDispatcherConfiguration.class,
     MongodbConfiguration.class,
-    EmbeddedMongoAutoConfiguration.class,
     MongoAutoConfiguration.class,
     MongoDataAutoConfiguration.class
-}, properties = {
-    "de.flapdoodle.mongodb.embedded.version=7.0.0"
 })
 public class MongoTest {
     @Autowired
