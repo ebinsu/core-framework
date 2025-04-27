@@ -77,7 +77,7 @@
             </dependency>
             <dependency>
                 <groupId>core.framework</groupId>
-                <artifactId>core-modules-hibernate-starter</artifactId>
+                <artifactId>core-modules-hibernate-mysql-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
