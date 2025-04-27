@@ -1,0 +1,2 @@
+core.framework.web.security.undertow.configuration.UndertowSecurityConfiguration
+core.framework.web.security.undertow.configuration.RedisSessionManagerConfiguration

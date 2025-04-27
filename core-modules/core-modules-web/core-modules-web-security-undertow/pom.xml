@@ -10,16 +10,21 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>core-modules-web-undertow</artifactId>
+    <artifactId>core-modules-web-security-undertow</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>core.framework</groupId>
-            <artifactId>core-modules-web-common</artifactId>
+            <artifactId>core-modules-web-security-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>core.framework</groupId>
+            <artifactId>core-modules-web-undertow</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

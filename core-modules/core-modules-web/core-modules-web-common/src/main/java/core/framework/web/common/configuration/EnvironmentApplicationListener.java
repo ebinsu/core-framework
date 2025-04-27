@@ -17,8 +17,6 @@ public class EnvironmentApplicationListener implements ApplicationListener<Appli
         Properties props = new Properties();
         props.put("spring.main.banner-mode", "off");
         props.put("server.shutdown", "graceful");
-        props.put("management.health.defaults.enabled", false);
-        props.put("management.endpoint.health.probes.enabled", true);
         event.getEnvironment().getPropertySources().addFirst(new PropertiesPropertySource("web-override-properties", props));
     }
 }

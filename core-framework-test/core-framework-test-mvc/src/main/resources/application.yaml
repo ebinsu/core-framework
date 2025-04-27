@@ -1,0 +1,7 @@
+core:
+  security:
+    jwt:
+      issuer: 1
+      secret: 82eaf8a5-cec2-4a68-9a93-1880c6cadfb4
+    exclude-patterns:
+      - /test/auth

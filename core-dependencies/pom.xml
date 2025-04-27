@@ -50,10 +50,26 @@
         <version.maven-pmd-plugin>3.20.0</version.maven-pmd-plugin>
         <version.maven-build-cache-extension>1.0.1</version.maven-build-cache-extension>
         <version.jakarta.mail-api>2.1.3</version.jakarta.mail-api>
+        <version.jsonwebtoken>0.12.6</version.jsonwebtoken>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>core.framework</groupId>
+                <artifactId>core-modules-web-security-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core.framework</groupId>
+                <artifactId>core-modules-web-security-jwt</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core.framework</groupId>
+                <artifactId>core-modules-web-security-undertow</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>core.framework</groupId>
                 <artifactId>core-modules-cqrs-starter</artifactId>
@@ -256,6 +272,21 @@
                 <groupId>org.mongodb</groupId>
                 <artifactId>mongodb-driver-sync</artifactId>
                 <version>${version.mongodb-driver-sync}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${version.jsonwebtoken}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${version.jsonwebtoken}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${version.jsonwebtoken}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -10,7 +10,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>core-modules-web-common</artifactId>
+    <artifactId>core-modules-web-security-common</artifactId>
 
     <dependencies>
         <dependency>
@@ -19,23 +19,16 @@
         </dependency>
         <dependency>
             <groupId>core.framework</groupId>
+            <artifactId>core-modules-json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-shared</artifactId>
         </dependency>
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>core.framework</groupId>
-            <artifactId>core-modules-json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,6 +39,7 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

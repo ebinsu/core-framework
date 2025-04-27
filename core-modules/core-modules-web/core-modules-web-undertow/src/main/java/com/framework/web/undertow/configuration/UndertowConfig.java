@@ -1,5 +1,6 @@
 package com.framework.web.undertow.configuration;
 
+import com.framework.web.undertow.ExtendDeploymentInfoCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,14 +9,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class UndertowConfig {
-    @Bean
-    public SessionConfigCustomizer sessionConfigCustomizer() {
-        return new SessionConfigCustomizer();
-    }
 
     @Bean
-    public SecurityContextDeploymentInfoCustomizer securityContextDeploymentInfoCustomizer() {
-        return new SecurityContextDeploymentInfoCustomizer();
+    public ExtendDeploymentInfoCustomizer securityContextDeploymentInfoCustomizer() {
+        return new ExtendDeploymentInfoCustomizer();
     }
 }
 

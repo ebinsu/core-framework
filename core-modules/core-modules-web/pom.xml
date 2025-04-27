@@ -14,5 +14,8 @@
     <modules>
         <module>core-modules-web-common</module>
         <module>core-modules-web-undertow</module>
+        <module>core-modules-web-security-common</module>
+        <module>core-modules-web-security-jwt</module>
+        <module>core-modules-web-security-undertow</module>
     </modules>
 </project>

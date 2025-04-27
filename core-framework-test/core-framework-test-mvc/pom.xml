@@ -8,14 +8,20 @@
         <groupId>core.framework</groupId>
         <artifactId>core-parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../core-parent</relativePath>
+        <relativePath>../../core-parent</relativePath>
     </parent>
 
-    <artifactId>core-framework-test</artifactId>
-    <version>1.0.0</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>core-framework-test-web</module>
-        <module>core-framework-test-mvc</module>
-    </modules>
+    <artifactId>core-framework-test-mvc</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>core.framework</groupId>
+            <artifactId>core-modules-web-undertow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>core.framework</groupId>
+            <artifactId>core-modules-web-security-jwt</artifactId>
+        </dependency>
+
+    </dependencies>
 </project>
