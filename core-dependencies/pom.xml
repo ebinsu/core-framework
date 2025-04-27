@@ -24,7 +24,7 @@
     </distributionManagement>
 
     <properties>
-        <revision>1.1.1${changelist}</revision>
+        <revision>2.0.0${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.mysql-connector-j>9.2.0</version.mysql-connector-j>

@@ -33,8 +33,8 @@ public class SecurityHandlerMethodPreloader implements ApplicationListener<Conte
 
         handlerMethods.forEach(handlerMethod -> {
             Method method = handlerMethod.getMethod();
-            Anonymous AnonymousAnn = AnnotationUtils.findAnnotation(method, Anonymous.class);
-            if (AnonymousAnn != null) {
+            Anonymous anonymousAnn = AnnotationUtils.findAnnotation(method, Anonymous.class);
+            if (anonymousAnn != null) {
                 anonymousMethodCache.add(handlerMethod);
             }
             PermissionsRequired permissionsRequiredAnn = AnnotationUtils.findAnnotation(method, PermissionsRequired.class);
