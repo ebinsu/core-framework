@@ -10,6 +10,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.env.Environment;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author ebin
@@ -36,8 +38,9 @@ public class JWTAuthStrategy implements AuthStrategy {
     private final long expirationSecond;
     private final SecretKey key;
 
-    public JWTAuthStrategy(JWTProperties jwtProperties) {
-        this.issuer = jwtProperties.getIssuer();
+    public JWTAuthStrategy(Environment environment, JWTProperties jwtProperties) {
+        this.issuer = Optional.ofNullable(jwtProperties.getIssuer()).orElse(environment.getProperty("spring.application.name"));
+        assert !StringUtils.isEmpty(this.issuer);
         this.expirationSecond = jwtProperties.getExpirationSecond();
         this.key = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
     }
