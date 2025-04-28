@@ -1,4 +1,4 @@
-"release/*":
+release/*:
   push:
     - name: release-build
       docker:
@@ -21,3 +21,6 @@
             mvn clean install -f core-modules/pom.xml -B
             mkdir -p $ARTIFACTS_DIR/core-modules
             cp -r core-modules/target/* $ARTIFACTS_DIR/core-modules/
+        - name: deploy-to-maven-repository
+          script: |
+            mvn deploy:deploy-file -Dfile=target/your-jar-file.jar -DgroupId=your.group.id -DartifactId=your-artifact-id -Dversion=your-version -DrepositoryId=your-repository-id -Durl=your-repository-url
