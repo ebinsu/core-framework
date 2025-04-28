@@ -7,20 +7,11 @@ release/*:
           - /root/.m2:copy-on-write
       stages:
         - name: build-core-dependencies
-          script: |
-            mvn clean install -f core-dependencies/pom.xml -B
-            mkdir -p $ARTIFACTS_DIR/core-dependencies
-            cp -r core-dependencies/target/* $ARTIFACTS_DIR/core-dependencies/
+          script:
+            mvn clean deploy -s ./settings.xml
         - name: build-core-parent
-          script: |
-            mvn clean install -f core-parent/pom.xml -B
-            mkdir -p $ARTIFACTS_DIR/core-parent
-            cp -r core-parent/target/* $ARTIFACTS_DIR/core-parent/
+          script: 
+            mvn clean deploy -s ./settings.xml
         - name: build-core-modules
-          script: |
-            mvn clean install -f core-modules/pom.xml -B
-            mkdir -p $ARTIFACTS_DIR/core-modules
-            cp -r core-modules/target/* $ARTIFACTS_DIR/core-modules/
-        - name: deploy-to-maven-repository
-          script: |
-            mvn deploy:deploy-file -Dfile=target/your-jar-file.jar -DgroupId=your.group.id -DartifactId=your-artifact-id -Dversion=your-version -DrepositoryId=your-repository-id -Durl=your-repository-url
+          script: 
+            mvn clean deploy -s ./settings.xml
