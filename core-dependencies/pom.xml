@@ -17,9 +17,9 @@
 
     <distributionManagement>
         <repository>
-            <id>ebinsu-ebin-core-core-framework</id>
-            <name>core-framework</name>
-            <url>https://ebinsu-maven.pkg.coding.net/repository/ebin-core/core-framework/</url>
+            <id>ebinsu-core-framework</id>
+            <name>ebinsu-core-framework</name>
+            <url>https://maven.cnb.cool/ebinsu/core-framework/-/packages/</url>
         </repository>
     </distributionManagement>
 
