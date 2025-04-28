@@ -1,0 +1,23 @@
+"release/*":
+  push:
+    - name: release-build
+      docker:
+        image: tencentcom/maven-jdk21
+        volumes:
+          - /root/.m2:copy-on-write
+      stages:
+        - name: build-core-dependencies
+          script: |
+            mvn clean install -f core-dependencies/pom.xml -B
+            mkdir -p $ARTIFACTS_DIR/core-dependencies
+            cp -r core-dependencies/target/* $ARTIFACTS_DIR/core-dependencies/
+        - name: build-core-parent
+          script: |
+            mvn clean install -f core-parent/pom.xml -B
+            mkdir -p $ARTIFACTS_DIR/core-parent
+            cp -r core-parent/target/* $ARTIFACTS_DIR/core-parent/
+        - name: build-core-modules
+          script: |
+            mvn clean install -f core-modules/pom.xml -B
+            mkdir -p $ARTIFACTS_DIR/core-modules
+            cp -r core-modules/target/* $ARTIFACTS_DIR/core-modules/
