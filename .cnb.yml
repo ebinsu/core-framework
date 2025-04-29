@@ -1,4 +1,4 @@
-release/*:
+master:
   push:
     - name: release-build
       docker:
