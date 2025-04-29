@@ -7,11 +7,14 @@ master:
           - /root/.m2:copy-on-write
       stages:
         - name: build-core-dependencies
-          script:
-            mvn clean deploy -s ./settings.xml
+          script: |
+            - cd core-dependencies
+            - mvn clean deploy -s ./settings.xml
         - name: build-core-parent
-          script: 
-            mvn clean deploy -s ./settings.xml
+          script:  |
+            - cd core-parent
+            - mvn clean deploy -s ./settings.xml
         - name: build-core-modules
-          script: 
-            mvn clean deploy -s ./settings.xml
+          script: |
+            - cd core-modules
+            - mvn clean deploy -s ./settings.xml
