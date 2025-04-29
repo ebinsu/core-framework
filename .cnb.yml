@@ -2,9 +2,9 @@ master:
   push:
     - name: release-build
       docker:
-        image: tencentcom/maven-jdk21
+        image: openjdk:21-slim
         volumes:
-          - /root/.m2:copy-on-write
+          - /root/.m2/:/root/.m2/
       stages:
         - name: build-core-dependencies
           script:
