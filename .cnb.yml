@@ -2,7 +2,7 @@ master:
   push:
     - name: release-build
       docker:
-        image: tencentcom/maven-jdk21
+        image: eclipse-temurin:21-jdk-jammy
         volumes:
           - /root/.m2:copy-on-write
       stages:
