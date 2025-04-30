@@ -17,14 +17,13 @@
 
     <distributionManagement>
         <repository>
-            <id>ebinsu-core-framework</id>
-            <name>ebinsu-core-framework</name>
-            <url>https://maven.cnb.cool/ebinsu/core-framework/-/packages/</url>
+            <id>repo-frufq</id>
+            <url>https://packages.aliyun.com/6810844781f0d609ac6a2c51/maven/repo-frufq</url>
         </repository>
     </distributionManagement>
 
     <properties>
-        <revision>2.0.0${changelist}</revision>
+        <revision>1.0.0${changelist}</revision>
         <changelist>-SNAPSHOT</changelist>
 
         <version.mysql-connector-j>9.2.0</version.mysql-connector-j>
