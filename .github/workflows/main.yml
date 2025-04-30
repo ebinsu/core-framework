@@ -10,8 +10,8 @@ jobs:
       custom_script: |
         cd core-dependencies
         mvn clean deploy
-        cd core-parent
+        cd ../core-parent
         mvn clean deploy
-        cd core-modules
+        cd ../core-modules
         mvn clean deploy
     secrets: inherit
