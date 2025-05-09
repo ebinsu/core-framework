@@ -4,7 +4,6 @@ import core.framework.web.common.configuration.properties.CORSProperties;
 import core.framework.web.common.exception.DefaultHandlerExceptionResolver;
 import core.framework.web.common.exception.ExceptionHandlerCustomizer;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -14,11 +13,12 @@ import java.util.List;
 
 @Configuration
 public class DefaultWebMvcConfigurer implements WebMvcConfigurer {
-    @Autowired
-    private CORSProperties corsProperties;
+    private final CORSProperties corsProperties;
     private final ObjectProvider<ExceptionHandlerCustomizer> exceptionHandlerCustomizers;
 
-    public DefaultWebMvcConfigurer(ObjectProvider<ExceptionHandlerCustomizer> exceptionHandlerCustomizers) {
+    public DefaultWebMvcConfigurer(CORSProperties corsProperties,
+                                   ObjectProvider<ExceptionHandlerCustomizer> exceptionHandlerCustomizers) {
+        this.corsProperties = corsProperties;
         this.exceptionHandlerCustomizers = exceptionHandlerCustomizers;
     }
 
@@ -35,10 +35,10 @@ public class DefaultWebMvcConfigurer implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         if (corsProperties.getMappings() != null) {
             corsProperties.getMappings().forEach(corsMapping ->
-                    registry.addMapping(corsMapping.getMapping())
-                            .allowedOrigins(corsMapping.getAllowedOrigins().toArray(new String[]{}))
-                            .allowedMethods(corsMapping.getAllowedMethods().toArray(new String[]{}))
-                            .allowCredentials(corsMapping.isAllowCredentials())
+                registry.addMapping(corsMapping.getMapping())
+                    .allowedOrigins(corsMapping.getAllowedOrigins().toArray(new String[]{}))
+                    .allowedMethods(corsMapping.getAllowedMethods().toArray(new String[]{}))
+                    .allowCredentials(corsMapping.isAllowCredentials())
             );
         }
     }

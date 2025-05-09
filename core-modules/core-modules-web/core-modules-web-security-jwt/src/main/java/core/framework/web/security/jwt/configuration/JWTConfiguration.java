@@ -1,8 +1,12 @@
 package core.framework.web.security.jwt.configuration;
 
-import core.framework.web.security.AuthStrategy;
-import core.framework.web.security.jwt.JWTAuthStrategy;
+import core.framework.web.security.CurrentUserIdentityResolver;
+import core.framework.web.security.CurrentUserRepository;
+import core.framework.web.security.CurrentUserVerifyCustomize;
+import core.framework.web.security.jwt.JWTCurrentUserIdentityResolver;
+import core.framework.web.security.jwt.JWTCurrentUserRepository;
 import core.framework.web.security.jwt.configuration.properties.JWTProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +25,13 @@ public class JWTConfiguration {
     }
 
     @Bean
-    public AuthStrategy jwtPrincipalStorage(Environment environment) {
-        return new JWTAuthStrategy(environment, jwtProperties);
+    public CurrentUserIdentityResolver jwtCurrentUserIdentityResolver() {
+        return new JWTCurrentUserIdentityResolver();
+    }
+
+    @Bean
+    public CurrentUserRepository jwtCurrentUserRepository(@Autowired Environment environment,
+                                                          @Autowired(required = false) CurrentUserVerifyCustomize currentUserVerifyCustomizes) {
+        return new JWTCurrentUserRepository(environment, jwtProperties, currentUserVerifyCustomizes);
     }
 }

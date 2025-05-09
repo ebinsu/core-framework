@@ -1,9 +1,9 @@
 package core.framework.web.security;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -11,31 +11,27 @@ import java.util.Set;
 /**
  * @author ebin
  */
-public class PrincipalDetail {
+public class CurrentUser {
     private final String id;
     private final String name;
     private final String displayName;
     private final Set<String> permissionCodes;
 
-    private final String clientIP;
-    private final Map<String, Object> attributes;
+    private final Map<String, String> attributes;
 
-    public PrincipalDetail(String id, String name, String displayName, List<String> permissionCodes, String clientIP) {
+    public CurrentUser(String id, String name, String displayName, Collection<String> permissionCodes) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
         this.permissionCodes = Optional.ofNullable(permissionCodes).map(HashSet::new).orElse(new HashSet<>());
-        this.clientIP = clientIP;
         this.attributes = new HashMap<>();
     }
 
-
-    public PrincipalDetail(String id, String name, String displayName, Set<String> permissionCodes, String clientIP) {
+    public CurrentUser(String id, String name, String displayName, Set<String> permissionCodes) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
         this.permissionCodes = permissionCodes;
-        this.clientIP = clientIP;
         this.attributes = new HashMap<>();
     }
 
@@ -55,20 +51,16 @@ public class PrincipalDetail {
         return Collections.unmodifiableSet(permissionCodes);
     }
 
-    public Map<String, Object> getAttributes() {
+    public Map<String, String> getAttributes() {
         return Collections.unmodifiableMap(attributes);
     }
 
-    public String getClientIP() {
-        return clientIP;
-    }
-
-    public Object getAttribute(String attrName) {
+    public String getAttribute(String attrName) {
         return attributes.get(attrName);
     }
 
-    public void addAttribute(String attrName, Object attr) {
-        attributes.put(attrName, attrName);
+    public void addAttribute(String attrName, String attr) {
+        attributes.put(attrName, attr);
     }
 
     public boolean hasPermission(Set<String> requirePermissions) {
@@ -77,5 +69,9 @@ public class PrincipalDetail {
         } else {
             return requirePermissions.stream().anyMatch(getPermissionCodes()::contains);
         }
+    }
+
+    public void putAttributes(Map<String, String> attributes) {
+        this.attributes.putAll(attributes);
     }
 }

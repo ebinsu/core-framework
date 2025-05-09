@@ -22,6 +22,9 @@
             <groupId>core.framework</groupId>
             <artifactId>core-modules-web-security-jwt</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>core.framework</groupId>
+            <artifactId>core-modules-web-security-undertow</artifactId>
+        </dependency>
     </dependencies>
 </project>
