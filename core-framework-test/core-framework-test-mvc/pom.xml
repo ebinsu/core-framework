@@ -16,12 +16,25 @@
     <dependencies>
         <dependency>
             <groupId>core.framework</groupId>
+            <artifactId>core-modules-kernel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-web-undertow</artifactId>
         </dependency>
         <dependency>
             <groupId>core.framework</groupId>
             <artifactId>core-modules-web-security-jwt</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-context</artifactId>
+            <version>1.49.0</version> <!-- 与 agent 对应版本，通常与你使用的 agent 的版本一致 -->
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-instrumentation-annotations</artifactId>
+            <version>2.14.0</version>
+        </dependency>
     </dependencies>
 </project>

@@ -6,7 +6,9 @@ import org.springframework.util.concurrent.ListenableFuture;
 import java.time.Duration;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 /**
  * @author ebin
@@ -52,5 +54,24 @@ public class ExtendThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
     @Override
     public <T> ListenableFuture<T> submitListenable(Callable<T> task) {
         return super.submitListenable(new CallableAdaptor<>(task));
+    }
+
+    @Override
+    protected void afterExecute(Runnable task, Throwable ex) {
+        super.afterExecute(task, ex);
+        if (task instanceof FutureTask<?> futureTask) {
+            try {
+                futureTask.get();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            if (ex != null) {
+                logger.error("任务执行后捕获异常", ex);
+            }
+        }
+
     }
 }

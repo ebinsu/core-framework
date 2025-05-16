@@ -15,7 +15,7 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <modules>
-<!--        <module>core-framework-test-web</module>-->
-<!--        <module>core-framework-test-mvc</module>-->
+        <module>core-framework-test-web</module>
+        <module>core-framework-test-mvc</module>
     </modules>
 </project>

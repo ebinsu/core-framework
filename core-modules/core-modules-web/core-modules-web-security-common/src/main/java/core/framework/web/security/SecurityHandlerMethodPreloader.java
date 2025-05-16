@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
  * @author ebin
  */
 public class SecurityHandlerMethodPreloader implements ApplicationListener<ContextRefreshedEvent> {
-    private final Set<HandlerMethod> anonymousMethodCache = new HashSet<>();
-    private final Map<HandlerMethod, Set<String>> permissionsRequiredMethodCache = new HashMap<>();
+    private final Set<String> anonymousMethodCache = new HashSet<>();
+    private final Map<String, Set<String>> permissionsRequiredMethodCache = new HashMap<>();
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -35,20 +35,20 @@ public class SecurityHandlerMethodPreloader implements ApplicationListener<Conte
             Method method = handlerMethod.getMethod();
             Anonymous anonymousAnn = AnnotationUtils.findAnnotation(method, Anonymous.class);
             if (anonymousAnn != null) {
-                anonymousMethodCache.add(handlerMethod);
+                anonymousMethodCache.add(handlerMethod.toString());
             }
             PermissionsRequired permissionsRequiredAnn = AnnotationUtils.findAnnotation(method, PermissionsRequired.class);
             if (permissionsRequiredAnn != null && permissionsRequiredAnn.values().length > 0) {
-                permissionsRequiredMethodCache.put(handlerMethod, Arrays.stream(permissionsRequiredAnn.values()).collect(Collectors.toSet()));
+                permissionsRequiredMethodCache.put(handlerMethod.toString(), Arrays.stream(permissionsRequiredAnn.values()).collect(Collectors.toSet()));
             }
         });
     }
 
     public boolean isMethodAnonymous(HandlerMethod method) {
-        return anonymousMethodCache.contains(method);
+        return anonymousMethodCache.contains(method.toString());
     }
 
     public Set<String> getPermissionsRequired(HandlerMethod method) {
-        return permissionsRequiredMethodCache.get(method);
+        return permissionsRequiredMethodCache.get(method.toString());
     }
 }

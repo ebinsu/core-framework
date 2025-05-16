@@ -1,3 +1,7 @@
+spring:
+  web:
+    resources:
+      add-mappings: false
 core:
   security:
     jwt:

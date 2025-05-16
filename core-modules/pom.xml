@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>core-modules-kernel</module>
         <module>core-modules-exception</module>
         <module>core-modules-ddd</module>
         <module>core-modules-json</module>

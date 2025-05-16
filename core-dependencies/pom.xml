@@ -56,6 +56,11 @@
         <dependencies>
             <dependency>
                 <groupId>core.framework</groupId>
+                <artifactId>core-modules-kernel</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>core.framework</groupId>
                 <artifactId>core-modules-web-security-common</artifactId>
                 <version>${revision}</version>
             </dependency>
