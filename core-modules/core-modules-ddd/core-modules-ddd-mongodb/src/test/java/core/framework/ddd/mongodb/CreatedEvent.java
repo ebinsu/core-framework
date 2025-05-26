@@ -1,6 +1,6 @@
 package core.framework.ddd.mongodb;
 
-import core.framework.ddd.api.AbstractDomainEvent;
+import core.framework.ddd.common.event.AbstractDomainEvent;
 
 /**
  * @author ebin

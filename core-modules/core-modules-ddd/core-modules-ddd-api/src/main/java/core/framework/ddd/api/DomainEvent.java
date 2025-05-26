@@ -5,9 +5,11 @@ import java.time.ZonedDateTime;
 /**
  * @author ebin
  */
-public sealed interface DomainEvent permits AbstractDomainEvent {
+public interface DomainEvent {
     AggregateRootMetadata getAggregateRootMetadata();
 
     ZonedDateTime getCreatedTime();
+
+    String description();
 }
 

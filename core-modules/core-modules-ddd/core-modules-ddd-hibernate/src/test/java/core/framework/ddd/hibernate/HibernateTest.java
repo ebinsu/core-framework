@@ -2,6 +2,7 @@ package core.framework.ddd.hibernate;
 
 import core.framework.ddd.common.configuration.DomainEventDispatcherConfiguration;
 import core.framework.ddd.hibernate.configuration.HibernateConfiguration;
+import core.framework.kernel.configuration.ExecutorConfiguration;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Assertions;
@@ -25,7 +26,8 @@ import java.util.List;
     Context.class,
     HibernateConfiguration.class,
     DomainEventDispatcherConfiguration.class,
-    DataSourceAutoConfiguration.class
+    DataSourceAutoConfiguration.class,
+    ExecutorConfiguration.class
 })
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class HibernateTest {

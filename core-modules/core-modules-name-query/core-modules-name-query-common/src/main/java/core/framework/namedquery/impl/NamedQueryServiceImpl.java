@@ -1,16 +1,16 @@
 package core.framework.namedquery.impl;
 
-import core.framework.exception.marker.ErrorCodeMarker;
 import core.framework.json.JSONMapper;
+import core.framework.kernel.log.marker.ErrorCodeMarker;
 import core.framework.namedquery.NamedQuery;
 import core.framework.namedquery.NamedQueryExecutor;
 import core.framework.namedquery.NamedQueryRepository;
 import core.framework.namedquery.NamedQueryService;
 import core.framework.namedquery.PagingResult;
 import core.framework.namedquery.configuration.NamedQueryProperties;
-import core.framework.shared.utils.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StopWatch;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -48,6 +48,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
     @Override
     public <T> List<T> select(String queryName, Object... parameter) {
         StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         Map<String, Object> param = getParameterMap(parameter);
         NamedQuery namedQuery = namedQueryRepository.get(queryName, param);
         NamedQueryExecutor namedQueryExecutor = namedQueryExecutors.get(namedQuery.getXmlTagName());
@@ -55,7 +56,8 @@ public class NamedQueryServiceImpl implements NamedQueryService {
             throw new RuntimeException("Query type [" + namedQuery.getQuery() + "] executor not found !");
         }
         List<T> result = namedQueryExecutor.execute(namedQuery, defaultMaxReturnSize);
-        long elapsed = stopWatch.elapsed();
+        stopWatch.stop();
+        long elapsed = stopWatch.getTotalTimeNanos();
         track("select", queryName, param, elapsed);
         return result;
     }
@@ -73,6 +75,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
     @Override
     public <T> PagingResult<T> paging(String queryName, Object... parameter) {
         StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         Map<String, Object> param = getParameterMap(parameter);
 
         NamedQuery namedQuery = namedQueryRepository.get(queryName, param);
@@ -90,7 +93,8 @@ public class NamedQueryServiceImpl implements NamedQueryService {
         Long total = totalNamedQueryResult.stream().findFirst().orElse(0L);
         PagingResult<T> result = new PagingResult<>(total, data);
 
-        long elapsed = stopWatch.elapsed();
+        stopWatch.stop();
+        long elapsed = stopWatch.getTotalTimeNanos();
         track("paging", queryName, param, elapsed);
         return result;
     }
@@ -98,12 +102,14 @@ public class NamedQueryServiceImpl implements NamedQueryService {
     @Override
     public <T> PagingResult<T> paging(String queryName, int start, int limit, Object parameter) {
         StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         Map<String, Object> param = getParameterMap(new Object[]{parameter});
         param.put(startParameter, start);
         param.put(limitParameter, limit);
         PagingResult<T> result = paging(queryName, param);
 
-        long elapsed = stopWatch.elapsed();
+        stopWatch.stop();
+        long elapsed = stopWatch.getTotalTimeNanos();
         track("paging", queryName, param, elapsed);
         return result;
     }
@@ -111,6 +117,7 @@ public class NamedQueryServiceImpl implements NamedQueryService {
     @Override
     public <T> Optional<T> get(String queryName, Object... parameter) {
         StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         Map<String, Object> param = getParameterMap(parameter);
 
         NamedQuery namedQuery = namedQueryRepository.get(queryName, param);
@@ -120,7 +127,8 @@ public class NamedQueryServiceImpl implements NamedQueryService {
         }
         List<T> data = namedQueryExecutor.execute(namedQuery, 1);
         Optional<T> result = data.stream().findFirst();
-        long elapsed = stopWatch.elapsed();
+        stopWatch.stop();
+        long elapsed = stopWatch.getTotalTimeNanos();
         track("get", queryName, param, elapsed);
         return result;
     }

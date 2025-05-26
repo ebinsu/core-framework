@@ -50,6 +50,7 @@
         <version.maven-build-cache-extension>1.0.1</version.maven-build-cache-extension>
         <version.jakarta.mail-api>2.1.3</version.jakarta.mail-api>
         <version.jsonwebtoken>0.12.6</version.jsonwebtoken>
+        <version.guava>33.4.8-jre</version.guava>
     </properties>
 
     <dependencyManagement>
@@ -146,11 +147,6 @@
             </dependency>
             <dependency>
                 <groupId>core.framework</groupId>
-                <artifactId>core-modules-exception</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>core.framework</groupId>
                 <artifactId>core-modules-ddd</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -162,12 +158,6 @@
             <dependency>
                 <groupId>core.framework</groupId>
                 <artifactId>core-modules-mysql</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>core.framework</groupId>
-                <artifactId>core-modules-shared</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -291,6 +281,11 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-jackson</artifactId>
                 <version>${version.jsonwebtoken}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${version.guava}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

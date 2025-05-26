@@ -1,13 +1,13 @@
 package core.framework.namedquery.impl;
 
+import core.framework.kernel.utils.ResourcePatternResolverUtil;
 import core.framework.namedquery.support.NamedQueryResourceHolder;
 import core.framework.namedquery.support.ResolverContext;
-import core.framework.shared.utils.ResourcePatternResolverUtil;
-import core.framework.shared.utils.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
+import org.springframework.util.StopWatch;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -33,6 +33,7 @@ public class NamedQueryResourceFinder implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         List<Resource> resources;
         try {
             resources = ResourcePatternResolverUtil.resolve("**/*Query.xml");
@@ -40,7 +41,8 @@ public class NamedQueryResourceFinder implements InitializingBean {
             throw new Error(e);
         }
         this.namedQueryResourceHolders = resources.stream().map(resource -> new NamedQueryResourceHolder(this.resolverContext, resource)).toList();
-        long elapsed = stopWatch.elapsed();
+        stopWatch.stop();
+        long elapsed = stopWatch.getTotalTimeNanos();
         LOGGER.info("Finished find {} named query resource in {} ms.", resources.size(), Duration.ofNanos(elapsed));
     }
 }

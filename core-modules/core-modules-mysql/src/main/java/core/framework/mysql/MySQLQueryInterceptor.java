@@ -6,7 +6,7 @@ import com.mysql.cj.interceptors.QueryInterceptor;
 import com.mysql.cj.log.Log;
 import com.mysql.cj.protocol.Resultset;
 import com.mysql.cj.protocol.ServerSession;
-import core.framework.exception.marker.ErrorCodeMarker;
+import core.framework.kernel.log.marker.ErrorCodeMarker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

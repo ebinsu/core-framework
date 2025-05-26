@@ -1,7 +1,7 @@
 package app.controller;
 
 import app.service.TestService;
-import core.framework.exception.ErrorCodeRuntimeException;
+import core.framework.kernel.exception.ErrorCodeRuntimeException;
 import core.framework.web.security.AuthStrategy;
 import core.framework.web.security.PrincipalDetail;
 import core.framework.web.security.annotation.Anonymous;

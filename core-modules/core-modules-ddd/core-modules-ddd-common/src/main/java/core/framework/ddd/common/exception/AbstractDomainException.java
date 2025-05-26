@@ -1,4 +1,6 @@
-package core.framework.kernel.exception;
+package core.framework.ddd.common.exception;
+
+import core.framework.kernel.exception.ErrorCodeRuntimeException;
 
 /**
  * @author ebin

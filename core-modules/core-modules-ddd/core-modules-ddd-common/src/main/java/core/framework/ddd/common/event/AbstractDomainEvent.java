@@ -1,5 +1,9 @@
-package core.framework.ddd.api;
+package core.framework.ddd.common.event;
 
+import com.google.common.base.CaseFormat;
+import core.framework.ddd.api.AggregateRoot;
+import core.framework.ddd.api.AggregateRootMetadata;
+import core.framework.ddd.api.DomainEvent;
 import core.framework.json.JSON;
 
 import java.time.ZonedDateTime;
@@ -7,9 +11,9 @@ import java.time.ZonedDateTime;
 /**
  * @author ebin
  */
-public abstract non-sealed class AbstractDomainEvent implements DomainEvent {
+public abstract class AbstractDomainEvent implements DomainEvent {
+    private final ZonedDateTime createdTime = ZonedDateTime.now();
     private AggregateRootMetadata aggregateRootMetadata;
-    private ZonedDateTime createdTime = ZonedDateTime.now();
 
     protected AbstractDomainEvent() {
     }
@@ -33,7 +37,8 @@ public abstract non-sealed class AbstractDomainEvent implements DomainEvent {
         this.aggregateRootMetadata = new AggregateRootMetadata(aggregateRoot);
     }
 
-    private void setCreatedTime(ZonedDateTime createdTime) {
-        this.createdTime = createdTime;
+    @Override
+    public String description() {
+        return "handle-" + CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_HYPHEN, this.getClass().getSimpleName());
     }
 }

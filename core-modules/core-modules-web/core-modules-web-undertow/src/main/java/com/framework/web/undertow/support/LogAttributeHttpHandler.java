@@ -1,13 +1,13 @@
 package com.framework.web.undertow.support;
 
-import core.framework.exception.marker.ErrorCodeMarker;
-import core.framework.shared.log.LogAttribute;
-import core.framework.shared.utils.StopWatch;
+import core.framework.kernel.log.marker.ErrorCodeMarker;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HttpString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.springframework.util.StopWatch;
 
 import java.time.Duration;
 
@@ -28,12 +28,13 @@ public class LogAttributeHttpHandler implements HttpHandler {
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         long maxProcessTimeInNano = maxProcessTime(exchange.getRequestHeaders().getFirst(HEADER_TIMEOUT));
         long httpDelay = System.nanoTime() - exchange.getRequestStartTime();
-        LogAttribute.info("http_delay", httpDelay);
+        MDC.put("http_delay", String.valueOf(httpDelay));
         StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         next.handleRequest(exchange);
-        long elapsed = stopWatch.elapsed();
-        LogAttribute.info("elapsed", elapsed);
-        LogAttribute.end();
+        stopWatch.stop();
+        long elapsed = stopWatch.getTotalTimeNanos();
+        MDC.put("elapsed", String.valueOf(elapsed));
         if (maxProcessTimeInNano > 0 && elapsed > maxProcessTimeInNano) {
             LOGGER.warn(new ErrorCodeMarker("SLOW_PROCESS"), "http request took longer than of max process time, maxProcessTime={}, elapsed={}", Duration.ofNanos(maxProcessTimeInNano), Duration.ofNanos(elapsed));
         }

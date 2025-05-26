@@ -1,6 +1,6 @@
 package core.framework.web.common.exception;
 
-import core.framework.exception.ErrorCodeRuntimeException;
+import core.framework.kernel.exception.ErrorCodeRuntimeException;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**

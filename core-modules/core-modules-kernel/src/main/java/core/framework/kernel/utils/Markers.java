@@ -7,6 +7,9 @@ import org.slf4j.Marker;
  * @author ebin
  */
 public final class Markers {
+    private Markers() {
+    }
+
     public static Marker errorCode(String code) {
         return new ErrorCodeMarker(code);
     }

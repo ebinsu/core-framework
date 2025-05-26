@@ -1,14 +1,14 @@
 package core.framework.ddd.hibernate.configuration;
 
 import core.framework.ddd.hibernate.DomainEventTracking;
-import core.framework.shared.utils.ResourcePatternResolverUtil;
-import core.framework.shared.utils.StopWatch;
+import core.framework.kernel.utils.ResourcePatternResolverUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.orm.jpa.persistenceunit.MutablePersistenceUnitInfo;
 import org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor;
 import org.springframework.util.ClassUtils;
+import org.springframework.util.StopWatch;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -32,6 +32,7 @@ public class PersistenceUnitCustomizer implements PersistenceUnitPostProcessor {
 
     private void scanFinder(MutablePersistenceUnitInfo pui) {
         StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         List<String> managedPackages = pui.getManagedPackages();
         scanPackages(managedPackages, pui);
 
@@ -44,7 +45,8 @@ public class PersistenceUnitCustomizer implements PersistenceUnitPostProcessor {
             }
         }).collect(Collectors.toSet());
         scanPackages(packages, pui);
-        long elapsed = stopWatch.elapsed();
+        stopWatch.stop();
+        long elapsed = stopWatch.getTotalTimeNanos();
         LOGGER.info("Finished scan finder.xml in {} ms.", Duration.ofNanos(elapsed));
     }
 

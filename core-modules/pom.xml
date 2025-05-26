@@ -15,11 +15,10 @@
 
     <modules>
         <module>core-modules-kernel</module>
-        <module>core-modules-exception</module>
+<!--        <module>core-modules-exception</module>-->
         <module>core-modules-ddd</module>
         <module>core-modules-json</module>
         <module>core-modules-mysql</module>
-        <module>core-modules-shared</module>
         <module>core-modules-cqrs</module>
         <module>core-modules-kafka</module>
         <module>core-modules-web</module>

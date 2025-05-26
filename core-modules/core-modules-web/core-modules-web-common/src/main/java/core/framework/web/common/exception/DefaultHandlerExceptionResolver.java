@@ -1,6 +1,6 @@
 package core.framework.web.common.exception;
 
-import core.framework.exception.marker.ErrorCodeMarker;
+import core.framework.kernel.log.marker.ErrorCodeMarker;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;

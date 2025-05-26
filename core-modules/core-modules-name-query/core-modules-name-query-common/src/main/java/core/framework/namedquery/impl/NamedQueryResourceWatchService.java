@@ -2,11 +2,11 @@ package core.framework.namedquery.impl;
 
 import core.framework.namedquery.NamedQueryRepository;
 import core.framework.namedquery.support.NamedQueryResourceHolder;
-import core.framework.shared.utils.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.StopWatch;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,13 +84,15 @@ public class NamedQueryResourceWatchService implements DisposableBean, Initializ
                         // Once for the content and once for the file modified time.
                         if (resourceHolder.isModified(file)) {
                             StopWatch stopWatch = new StopWatch();
+                            stopWatch.start();
                             LOGGER.info("Name query {} will perform hot loading.", resourceHolder.getFileName());
                             resourceHolder.getMixedNodes().forEach(namedQueryRepository::remove);
                             resourceHolder.getFragmentNodes().forEach(namedQueryRepository::remove);
                             resourceHolder.refresh();
                             resourceHolder.getMixedNodes().forEach(namedQueryRepository::register);
                             resourceHolder.getFragmentNodes().forEach(namedQueryRepository::register);
-                            long elapsed = stopWatch.elapsed();
+                            stopWatch.stop();
+                            long elapsed = stopWatch.getTotalTimeNanos();
                             LOGGER.info("Finished hot reload named query resource {} in {} ms.", resourceHolder.getFileName(), Duration.ofNanos(elapsed));
                         }
                     });

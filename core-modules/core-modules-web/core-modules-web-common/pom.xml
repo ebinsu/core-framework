@@ -15,11 +15,8 @@
     <dependencies>
         <dependency>
             <groupId>core.framework</groupId>
-            <artifactId>core-modules-exception</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>core.framework</groupId>
-            <artifactId>core-modules-shared</artifactId>
+            <artifactId>core-modules-kernel</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.servlet</groupId>
