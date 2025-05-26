@@ -1,4 +1,4 @@
-package core.framework.kernel.log.marker;
+package core.framework.kernel.log;
 
 import org.slf4j.MDC;
 
