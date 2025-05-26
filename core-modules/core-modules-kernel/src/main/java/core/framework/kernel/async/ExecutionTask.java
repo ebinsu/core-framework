@@ -2,9 +2,9 @@ package core.framework.kernel.async;
 
 import core.framework.kernel.exception.ErrorCodeRuntimeException;
 import core.framework.kernel.log.marker.ErrorCodeMarker;
+import core.framework.kernel.log.marker.Logs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import org.springframework.util.StopWatch;
 
 import java.time.Duration;
@@ -18,7 +18,7 @@ record ExecutionTask<T>(String action, Callable<T> callable, long maxProcessTime
 
     @Override
     public T call() throws Exception {
-        MDC.put("action", action);
+        Logs.action("task:" + action);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         T result;
@@ -34,7 +34,7 @@ record ExecutionTask<T>(String action, Callable<T> callable, long maxProcessTime
         }
         stopWatch.stop();
         long elapsed = stopWatch.getTotalTimeNanos();
-        MDC.put("elapsed", String.valueOf(elapsed));
+        Logs.put("elapsed", elapsed);
         if (elapsed > maxProcessTimeInNano) {
             LOGGER.warn(new ErrorCodeMarker("SLOW_PROCESS"), "async task took longer than of max process time, maxProcessTime={}, elapsed={}", Duration.ofNanos(elapsed), Duration.ofNanos(elapsed));
         }

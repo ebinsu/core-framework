@@ -1,5 +1,6 @@
 package core.framework.web.security.configuration;
 
+import core.framework.web.common.interceptor.InterceptorOrder;
 import core.framework.web.security.SecurityHandlerInterceptor;
 import core.framework.web.security.configuration.properties.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ public class SecurityWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        InterceptorRegistration interceptorRegistration = registry.addInterceptor(securityHandlerInterceptor);
+        InterceptorRegistration interceptorRegistration = registry.addInterceptor(securityHandlerInterceptor).order(InterceptorOrder.LEVEL_2);
         securityProperties.getPatterns().forEach(interceptorRegistration::addPathPatterns);
         securityProperties.getExcludePatterns().forEach(interceptorRegistration::excludePathPatterns);
     }

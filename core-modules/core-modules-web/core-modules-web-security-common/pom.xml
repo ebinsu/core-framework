@@ -19,6 +19,11 @@
         </dependency>
         <dependency>
             <groupId>core.framework</groupId>
+            <artifactId>core-modules-web-common</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-kernel</artifactId>
             <scope>compile</scope>
         </dependency>
