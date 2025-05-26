@@ -1,7 +1,7 @@
 package core.framework.web.common.interceptor;
 
+import core.framework.kernel.log.Logs;
 import core.framework.kernel.log.marker.ErrorCodeMarker;
-import core.framework.kernel.log.marker.Logs;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
