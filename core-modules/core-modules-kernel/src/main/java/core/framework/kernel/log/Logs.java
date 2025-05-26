@@ -17,6 +17,10 @@ public final class Logs {
     }
 
     public static void put(String key, Object value) {
-        MDC.put(CONTEXT_PRE + key, String.valueOf(value));
+        Logs.doPut(CONTEXT_PRE + key, String.valueOf(value));
+    }
+
+    private static void doPut(String key, String value) {
+        MDC.put(key, value);
     }
 }

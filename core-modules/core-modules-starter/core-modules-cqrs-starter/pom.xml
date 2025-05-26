@@ -15,6 +15,10 @@
     <dependencies>
         <dependency>
             <groupId>core.framework</groupId>
+            <artifactId>core-modules-kernel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>core.framework</groupId>
             <artifactId>core-modules-cqrs-command</artifactId>
         </dependency>
         <dependency>
